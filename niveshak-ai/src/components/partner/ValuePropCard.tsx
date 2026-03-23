@@ -1,0 +1,1 @@
+// placeholder — ValuePropCard.tsx — implementation coming

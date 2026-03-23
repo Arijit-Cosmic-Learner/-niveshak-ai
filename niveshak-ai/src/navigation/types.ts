@@ -1,0 +1,1 @@
+// placeholder — types.ts — implementation coming

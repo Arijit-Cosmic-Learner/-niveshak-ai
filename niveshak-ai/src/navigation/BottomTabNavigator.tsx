@@ -1,0 +1,1 @@
+// placeholder — BottomTabNavigator.tsx — implementation coming

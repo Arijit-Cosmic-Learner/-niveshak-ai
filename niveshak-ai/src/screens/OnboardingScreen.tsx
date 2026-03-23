@@ -1,0 +1,1 @@
+// placeholder — OnboardingScreen.tsx — implementation coming

@@ -1,0 +1,1 @@
+// placeholder — AllocationCard.tsx — implementation coming

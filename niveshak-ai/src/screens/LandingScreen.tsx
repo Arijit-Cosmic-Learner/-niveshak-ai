@@ -1,0 +1,1 @@
+// placeholder — LandingScreen.tsx — implementation coming
