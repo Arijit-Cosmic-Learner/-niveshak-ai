@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Button } from '@components/common/Button';
 import { useTranslation } from '@hooks/useTranslation';
+import { submitDemoLead } from '@lib/supabase';
 
 interface FormState {
   orgName:     string;
@@ -15,6 +16,7 @@ export function DemoRequestForm() {
     orgName: '', contactName: '', productType: '', phoneEmail: '',
   });
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading]     = useState(false);
   const [error, setError]         = useState('');
 
   const productOptions = [
@@ -25,13 +27,29 @@ export function DemoRequestForm() {
     { value: 'govtScheme', label: t('partner.form.productOptions.govtScheme') },
   ];
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.orgName || !form.contactName || !form.productType || !form.phoneEmail) {
       setError(t('partner.form.errorMessage'));
       return;
     }
     setError('');
+    setLoading(true);
+
+    const { ok, error: submitError } = await submitDemoLead({
+      org_name:     form.orgName,
+      contact_name: form.contactName,
+      product_type: form.productType,
+      phone_email:  form.phoneEmail,
+    });
+
+    setLoading(false);
+
+    if (!ok) {
+      setError(submitError ?? t('errors.genericError'));
+      return;
+    }
+
     setSubmitted(true);
   };
 
@@ -106,7 +124,9 @@ export function DemoRequestForm() {
 
       {error && <p className="text-error text-xs font-sora">{error}</p>}
 
-      <Button type="submit" fullWidth>{t('partner.form.submit')}</Button>
+      <Button type="submit" fullWidth disabled={loading}>
+        {loading ? 'Submitting…' : t('partner.form.submit')}
+      </Button>
     </form>
   );
 }

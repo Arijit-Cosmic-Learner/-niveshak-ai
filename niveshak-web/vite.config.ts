@@ -8,14 +8,19 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
+      includeAssets: ['favicon.svg', 'icon-192.png', 'icon-512.png', 'icon-maskable.png'],
       manifest: {
-        name: 'Niveshak.AI',
-        short_name: 'Niveshak',
-        description: 'Aapke sapno ke liye, sahi nivesh',
+        name: 'Niveshak.AI — Goal-Matched Investment Discovery',
+        short_name: 'Niveshak.AI',
+        description: 'Aapke sapno ke liye, sahi nivesh \u2014 India\u2019s first goal-matched investment discovery platform.',
         theme_color: '#0D0D0D',
         background_color: '#0D0D0D',
         display: 'standalone',
         orientation: 'portrait',
+        scope: '/',
+        start_url: '/',
+        lang: 'en-IN',
+        categories: ['finance', 'utilities'],
         icons: [
           {
             src: '/icon-192.png',
@@ -27,7 +32,51 @@ export default defineConfig({
             sizes: '512x512',
             type: 'image/png',
           },
+          {
+            src: '/icon-maskable.png',
+            sizes: '512x512',
+            type: 'image/png',
+            purpose: 'maskable',
+          },
         ],
+        screenshots: [
+          {
+            src: '/screenshot-landing.png',
+            sizes: '390x844',
+            type: 'image/png',
+            form_factor: 'narrow',
+            label: 'Landing page',
+          },
+        ],
+      },
+      workbox: {
+        // Cache app shell + pages
+        globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
+        // Network-first for navigation, stale-while-revalidate for assets
+        runtimeCaching: [
+          {
+            urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'google-fonts-cache',
+              expiration: { maxEntries: 10, maxAgeSeconds: 60 * 60 * 24 * 365 },
+              cacheableResponse: { statuses: [0, 200] },
+            },
+          },
+          {
+            urlPattern: /^https:\/\/fonts\.gstatic\.com\/.*/i,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'gstatic-fonts-cache',
+              expiration: { maxEntries: 10, maxAgeSeconds: 60 * 60 * 24 * 365 },
+              cacheableResponse: { statuses: [0, 200] },
+            },
+          },
+        ],
+      },
+      devOptions: {
+        // Keep SW enabled in dev so we can test it
+        enabled: false,
       },
     }),
   ],
@@ -48,5 +97,19 @@ export default defineConfig({
   server: {
     port: 3000,
     open: true,
+  },
+  build: {
+    // Meaningful chunk names, keep bundle lean
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            if (id.includes('react') || id.includes('react-router')) return 'vendor';
+            if (id.includes('zustand')) return 'zustand';
+            if (id.includes('i18n-js')) return 'i18n';
+          }
+        },
+      },
+    },
   },
 });

@@ -4,15 +4,7 @@ import { useOnboardingStore, ONBOARDING_TOTAL_STEPS } from '@store/useOnboarding
 import { onboardingSteps } from '@data/steps';
 import type { OnboardingAnswers } from '@t/onboarding';
 
-/**
- * useOnboarding — orchestrates the 11-step onboarding flow.
- *
- * Provides:
- *  - Current step data & progress
- *  - Navigation helpers (next, prev, skip)
- *  - Answer setter
- *  - Completion handler
- */
+// Orchestrates the 11-step onboarding flow.
 export function useOnboarding() {
   const navigate = useNavigate();
   const {
@@ -31,11 +23,11 @@ export function useOnboarding() {
     step => !step.showIf || step.showIf(answers)
   );
 
-  const totalSteps   = activeSteps.length;
+  const totalSteps      = activeSteps.length;
   const currentStepData = activeSteps[currentStep] ?? activeSteps[0];
-  const isFirstStep  = currentStep === 0;
-  const isLastStep   = currentStep === totalSteps - 1;
-  const progress     = ((currentStep + 1) / totalSteps) * 100;
+  const isFirstStep     = currentStep === 0;
+  const isLastStep      = currentStep === totalSteps - 1;
+  const progress        = ((currentStep + 1) / totalSteps) * 100;
 
   const setStepAnswer = useCallback(
     <K extends keyof OnboardingAnswers>(key: K, value: OnboardingAnswers[K]) => {
@@ -82,3 +74,4 @@ export function useOnboarding() {
     reset,
   };
 }
+

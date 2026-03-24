@@ -1,4 +1,4 @@
-import { TimelineType, type OnboardingAnswers, type InflationProjection } from '@t/onboarding';
+ï»¿import { TimelineType, type OnboardingAnswers, type InflationProjection } from '@t/onboarding';
 
 const INFLATION_RATE = 0.06;
 
@@ -21,7 +21,7 @@ export function projectInflation(
   const currentYear = new Date().getFullYear();
   const targetYear  = currentYear + yearsToGoal;
 
-  // Compound inflation: FV = PV × (1 + r)^n
+  // Compound inflation: FV = PV x (1 + r)^n
   const inflationMultiplier = Math.pow(1 + inflationRate, yearsToGoal);
   const adjustedCorpus      = Math.round(todayAmount * inflationMultiplier);
 
@@ -35,16 +35,16 @@ export function projectInflation(
   };
 }
 
-/** Format a rupee amount as compact string: ?1.2L, ?45K, ?1.5Cr */
+/** Format a rupee amount as compact string: \u20B91.2L, \u20B945K, \u20B91.5Cr */
 export function formatRupee(amount: number): string {
   if (amount >= 10_000_000) {
-    return `?${(amount / 10_000_000).toFixed(1)}Cr`;
+    return `\u20B9${(amount / 10_000_000).toFixed(1)}Cr`;
   }
   if (amount >= 100_000) {
-    return `?${(amount / 100_000).toFixed(1)}L`;
+    return `\u20B9${(amount / 100_000).toFixed(1)}L`;
   }
   if (amount >= 1_000) {
-    return `?${(amount / 1_000).toFixed(0)}K`;
+    return `\u20B9${(amount / 1_000).toFixed(0)}K`;
   }
-  return `?${amount}`;
+  return `\u20B9${amount}`;
 }

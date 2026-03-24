@@ -14,3 +14,38 @@ if (!supabaseUrl || !supabaseKey) {
 export const supabase = supabaseUrl && supabaseKey
   ? createClient(supabaseUrl, supabaseKey)
   : null;
+
+// ─── Lead Capture ────────────────────────────────────────────────────────────
+
+export interface DemoLead {
+  org_name:     string;
+  contact_name: string;
+  product_type: string;
+  phone_email:  string;
+}
+
+/**
+ * Inserts a demo-request lead into the `partner_leads` table.
+ * Falls back to a console.info when Supabase is not configured (dev mode).
+ * Returns { ok, error }.
+ */
+export async function submitDemoLead(
+  lead: DemoLead
+): Promise<{ ok: boolean; error: string | null }> {
+  if (!supabase) {
+    // Dev fallback: log and pretend success
+    console.info('[Supabase] Demo lead (Supabase not configured):', lead);
+    return { ok: true, error: null };
+  }
+
+  const { error } = await supabase
+    .from('partner_leads')
+    .insert([{ ...lead, created_at: new Date().toISOString() }]);
+
+  if (error) {
+    console.error('[Supabase] submitDemoLead error:', error.message);
+    return { ok: false, error: error.message };
+  }
+
+  return { ok: true, error: null };
+}

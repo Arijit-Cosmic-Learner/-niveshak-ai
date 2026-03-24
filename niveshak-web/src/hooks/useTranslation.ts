@@ -1,14 +1,8 @@
 import { useLanguageStore } from '@store/useLanguageStore';
 import { t as rawT, getLocale } from '@i18n/index';
 
-/**
- * useTranslation — reactive wrapper around i18n-js.
- *
- * Re-renders consumers whenever the language changes.
- * Usage:
- *   const { t, language, toggleLanguage } = useTranslation();
- *   t('landing.ctaPrimary')
- */
+// Reactive i18n wrapper.
+// Re-renders consumers whenever the language changes.
 export function useTranslation() {
   const { language, toggleLanguage, setLanguage } = useLanguageStore();
 

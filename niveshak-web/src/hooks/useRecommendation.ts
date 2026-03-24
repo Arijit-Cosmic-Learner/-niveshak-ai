@@ -6,12 +6,8 @@ import { projectInflation } from '@engine/inflationProjector';
 import { matchInstruments } from '@engine/instrumentMatcher';
 import { buildRecommendationResult } from '@engine/allocationBuilder';
 
-/**
- * useRecommendation — runs the full recommendation engine.
- *
- * Call generate() after onboarding is complete.
- * Results are stored in useResultsStore and persisted to localStorage.
- */
+// Runs the full recommendation engine pipeline.
+// Call generate() after onboarding is complete.
 export function useRecommendation() {
   const answers = useOnboardingStore(s => s.answers);
   const { results, isLoading, error, setResults, setLoading, setError, clearResults } =
