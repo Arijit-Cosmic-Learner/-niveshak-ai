@@ -1,1 +1,1 @@
-ï»¿// placeholder â€” GoalCard.tsx â€” implementation coming
+// placeholder — GoalCard.tsx — implementation coming

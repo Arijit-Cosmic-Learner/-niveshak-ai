@@ -1,1 +1,1 @@
-ï»¿// placeholder â€” PersonaCard.tsx â€” implementation coming
+// placeholder — PersonaCard.tsx — implementation coming

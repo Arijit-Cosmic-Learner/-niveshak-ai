@@ -1,1 +1,1 @@
-ï»¿// placeholder â€” HeroSection.tsx â€” implementation coming
+// placeholder — HeroSection.tsx — implementation coming

@@ -1,1 +1,1 @@
-ï»¿// placeholder â€” Badge.tsx â€” implementation coming
+// placeholder — Badge.tsx — implementation coming

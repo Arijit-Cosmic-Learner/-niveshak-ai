@@ -1,1 +1,1 @@
-ï»¿// placeholder â€” BottomNav.tsx â€” implementation coming
+// placeholder — BottomNav.tsx — implementation coming

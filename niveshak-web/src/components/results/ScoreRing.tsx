@@ -1,1 +1,1 @@
-ï»¿// placeholder â€” ScoreRing.tsx â€” implementation coming
+// placeholder — ScoreRing.tsx — implementation coming

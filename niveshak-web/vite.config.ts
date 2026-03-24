@@ -42,7 +42,7 @@ export default defineConfig({
       '@lib':        path.resolve(__dirname, './src/lib'),
       '@constants':  path.resolve(__dirname, './src/constants'),
       '@hooks':      path.resolve(__dirname, './src/hooks'),
-      '@types':      path.resolve(__dirname, './src/types'),
+      '@t':          path.resolve(__dirname, './src/types'),
     },
   },
   server: {

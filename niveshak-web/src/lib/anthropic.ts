@@ -1,1 +1,1 @@
-ï»¿// placeholder â€” anthropic.ts â€” implementation coming
+// placeholder — anthropic.ts — implementation coming

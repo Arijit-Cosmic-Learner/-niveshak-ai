@@ -1,1 +1,1 @@
-ï»¿// placeholder â€” GoalSlider.tsx â€” implementation coming
+// placeholder — GoalSlider.tsx — implementation coming

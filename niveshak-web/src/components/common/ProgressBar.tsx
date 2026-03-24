@@ -1,1 +1,1 @@
-ï»¿// placeholder â€” ProgressBar.tsx â€” implementation coming
+// placeholder — ProgressBar.tsx — implementation coming

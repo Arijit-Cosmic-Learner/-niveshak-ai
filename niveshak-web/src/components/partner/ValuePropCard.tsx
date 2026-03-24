@@ -1,1 +1,1 @@
-ï»¿// placeholder â€” ValuePropCard.tsx â€” implementation coming
+// placeholder — ValuePropCard.tsx — implementation coming

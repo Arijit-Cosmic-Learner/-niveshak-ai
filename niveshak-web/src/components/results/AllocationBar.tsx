@@ -1,1 +1,1 @@
-ï»¿// placeholder â€” AllocationBar.tsx â€” implementation coming
+// placeholder — AllocationBar.tsx — implementation coming

@@ -1,1 +1,1 @@
-ï»¿// placeholder â€” LanguageToggle.tsx â€” implementation coming
+// placeholder — LanguageToggle.tsx — implementation coming

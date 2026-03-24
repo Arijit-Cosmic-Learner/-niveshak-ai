@@ -1,4 +1,4 @@
-﻿import { Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { t } from '@i18n/index';
 
 function SmokeTest() {
@@ -18,7 +18,7 @@ function SmokeTest() {
       <div className="mt-8 flex flex-col gap-3 w-full px-8">
         <div className="bg-black-light rounded-lg p-4 border border-border-dark">
           <p className="text-off-white text-xs font-semibold uppercase tracking-widest mb-1 text-lime">
-            i18n ✓
+            i18n ?
           </p>
           <p className="text-white text-sm">
             {t('landing.ctaPrimary')}
@@ -26,7 +26,7 @@ function SmokeTest() {
         </div>
         <div className="bg-black-light rounded-lg p-4 border border-border-dark">
           <p className="text-xs font-semibold uppercase tracking-widest mb-1 text-lime">
-            Tailwind ✓
+            Tailwind ?
           </p>
           <p className="text-white text-sm">
             Design system loaded
@@ -34,7 +34,7 @@ function SmokeTest() {
         </div>
         <div className="bg-black-light rounded-lg p-4 border border-border-dark">
           <p className="text-xs font-semibold uppercase tracking-widest mb-1 text-lime">
-            Router ✓
+            Router ?
           </p>
           <p className="text-white text-sm">
             React Router v6 active

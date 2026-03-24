@@ -1,1 +1,1 @@
-ï»¿// placeholder â€” RevenueModelGrid.tsx â€” implementation coming
+// placeholder — RevenueModelGrid.tsx — implementation coming

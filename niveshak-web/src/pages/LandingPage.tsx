@@ -1,1 +1,1 @@
-ï»¿// placeholder â€” LandingPage.tsx â€” implementation coming
+// placeholder — LandingPage.tsx — implementation coming

@@ -1,1 +1,1 @@
-ï»¿// placeholder â€” InflationProjectionBox.tsx â€” implementation coming
+// placeholder — InflationProjectionBox.tsx — implementation coming

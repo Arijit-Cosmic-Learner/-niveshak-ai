@@ -1,1 +1,1 @@
-ï»¿// placeholder â€” LogoMark.tsx â€” implementation coming
+// placeholder — LogoMark.tsx — implementation coming

@@ -1,1 +1,1 @@
-ï»¿// placeholder â€” CorpusCard.tsx â€” implementation coming
+// placeholder — CorpusCard.tsx — implementation coming

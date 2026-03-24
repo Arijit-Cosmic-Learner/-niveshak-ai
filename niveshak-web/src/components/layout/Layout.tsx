@@ -1,1 +1,1 @@
-ï»¿// placeholder â€” Layout.tsx â€” implementation coming
+// placeholder — Layout.tsx — implementation coming

@@ -1,1 +1,1 @@
-ï»¿// placeholder â€” OptionList.tsx â€” implementation coming
+// placeholder — OptionList.tsx — implementation coming

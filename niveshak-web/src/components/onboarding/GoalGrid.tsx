@@ -1,1 +1,1 @@
-ï»¿// placeholder â€” GoalGrid.tsx â€” implementation coming
+// placeholder — GoalGrid.tsx — implementation coming

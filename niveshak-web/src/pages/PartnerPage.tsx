@@ -1,1 +1,1 @@
-ï»¿// placeholder â€” PartnerPage.tsx â€” implementation coming
+// placeholder — PartnerPage.tsx — implementation coming
