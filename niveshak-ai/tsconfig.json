@@ -1,35 +1,54 @@
 {
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
-    "strict":                       true,
-    "baseUrl":                      ".",
+    "strict": true,
+    "baseUrl": ".",
     "paths": {
-      "@screens/*":    ["src/screens/*"],
-      "@components/*": ["src/components/*"],
-      "@store/*":      ["src/store/*"],
-      "@i18n/*":       ["src/i18n/*"],
-      "@engine/*":     ["src/engine/*"],
-      "@data/*":       ["src/data/*"],
-      "@lib/*":        ["src/lib/*"],
-      "@constants/*":  ["src/constants/*"],
-      "@hooks/*":      ["src/hooks/*"],
-      "@types/*":      ["src/types/*"]
+      "@screens/*": [
+        "src/screens/*"
+      ],
+      "@components/*": [
+        "src/components/*"
+      ],
+      "@store/*": [
+        "src/store/*"
+      ],
+      "@i18n/*": [
+        "src/i18n/*"
+      ],
+      "@engine/*": [
+        "src/engine/*"
+      ],
+      "@data/*": [
+        "src/data/*"
+      ],
+      "@lib/*": [
+        "src/lib/*"
+      ],
+      "@constants/*": [
+        "src/constants/*"
+      ],
+      "@hooks/*": [
+        "src/hooks/*"
+      ],
+      "@types/*": [
+        "src/types/*"
+      ]
     },
-    "jsx":                          "react-native",
+    "jsx": "react-native",
     "allowSyntheticDefaultImports": true,
-    "esModuleInterop":              true,
-    "moduleResolution":             "node",
-    "resolveJsonModule":            true,
-    "skipLibCheck":                 true,
-    "noImplicitAny":                true,
-    "noUnusedLocals":               false,
-    "noUnusedParameters":           false
+    "esModuleInterop": true,
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "noImplicitAny": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false
   },
   "include": [
     "**/*.ts",
     "**/*.tsx",
-    ".expo/types/**/*.d.ts",
-    "expo-env.d.ts"
+    ".expo/types/**/*.d.ts"
   ],
   "exclude": [
     "node_modules"

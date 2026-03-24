@@ -1,0 +1,1 @@
+﻿// placeholder — AllocationBar.tsx — implementation coming

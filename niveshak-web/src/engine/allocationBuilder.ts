@@ -1,0 +1,1 @@
+﻿// placeholder — allocationBuilder.ts — implementation coming
