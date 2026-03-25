@@ -2,7 +2,7 @@ import { useTranslation } from '@hooks/useTranslation';
 import { formatRupee } from '@engine/inflationProjector';
 import type { InstrumentRecommendation } from '@t/instruments';
 
-const BAR_COLORS = ['#E07B39', '#1B2B4B', '#F0976A', '#2D4070', '#C4622A'];
+const BAR_COLORS = ['#1A7A52', '#1A4030', '#2D9966', '#0F4C3A', '#A8C4B0'];
 
 interface Props {
   recommendations: InstrumentRecommendation[];

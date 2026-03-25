@@ -41,11 +41,11 @@ export default {
 
         // ── Badge tints ──────────────────────────────────────────────────
         badge: {
-          govt: '#EEF2FA',
-          mf:   '#EEF2FA',
+          govt: '#DFF0E8',
+          mf:   '#DFF0E8',
           gold: '#FEF3D8',
-          bank: '#EEF2FA',
-          nps:  '#FDF7F0',
+          bank: '#DFF0E8',
+          nps:  '#E8F5EE',
         },
       },
       fontFamily: {

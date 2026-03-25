@@ -7,16 +7,16 @@ interface Props {
 }
 
 const profileColor: Record<RiskProfile, string> = {
-  [RiskProfile.CONSERVATIVE]: '#1B2B4B',
-  [RiskProfile.BALANCED]:     '#E07B39',
-  [RiskProfile.GROWTH]:       '#C4622A',
+  [RiskProfile.CONSERVATIVE]: '#1A4030',
+  [RiskProfile.BALANCED]:     '#1A7A52',
+  [RiskProfile.GROWTH]:       '#2D9966',
 };
 
 export function ScoreRing({ score, profile, label }: Props) {
   const radius        = 52;
   const circumference = 2 * Math.PI * radius;
   const dashOffset    = circumference - (score / 100) * circumference;
-  const color         = profileColor[profile] ?? '#E07B39';
+  const color         = profileColor[profile] ?? '#1A7A52';
 
   return (
     <div className="flex flex-col items-center gap-2">

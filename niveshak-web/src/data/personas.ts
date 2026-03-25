@@ -16,7 +16,7 @@ export const personas: Persona[] = [
     metaEn: '\u20B92,500/mo \u2014 Beti ki padhai \u2014 Sukanya + Post Office',
     metaHi: '\u20B92,500/\u092E\u093E\u0939 \u2014 \u092C\u0947\u091F\u0940 \u0915\u0940 \u092A\u095D\u093E\u0908 \u2014 \u0938\u0941\u0915\u0928\u094D\u092F\u093E + \u0921\u093E\u0915\u0918\u0930',
     avatarInitials: 'AJ',
-    colorClass: 'bg-accent',
+    colorClass: 'bg-navy',
   },
   {
     id: 'priya',
@@ -25,7 +25,7 @@ export const personas: Persona[] = [
     metaEn: '\u20B912,000/mo \u2014 Retirement \u2014 NPS + PPF + Gold SIP',
     metaHi: '\u20B912,000/\u092E\u093E\u0939 \u2014 \u0938\u0947\u0935\u093E\u0928\u093F\u0935\u0943\u0924\u094D\u0924\u093F \u2014 NPS + PPF + \u0938\u094B\u0928\u093E SIP',
     avatarInitials: 'PS',
-    colorClass: 'bg-navy',
+    colorClass: 'bg-accent',
   },
   {
     id: 'subhash',
