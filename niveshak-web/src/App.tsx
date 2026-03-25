@@ -1,6 +1,7 @@
-import { Suspense, lazy } from 'react';
+import { Suspense, lazy, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { Layout } from '@components/layout/Layout';
+import { useThemeStore } from '@store/useThemeStore';
 import { ErrorBoundary } from '@components/common/ErrorBoundary';
 
 // Lazy-load every page for smaller initial bundle
@@ -19,6 +20,16 @@ function PageLoader() {
 }
 
 export default function App() {
+  const theme = useThemeStore((s) => s.theme);
+
+  useEffect(() => {
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [theme]);
+
   return (
     <ErrorBoundary>
       <Suspense fallback={<PageLoader />}>
