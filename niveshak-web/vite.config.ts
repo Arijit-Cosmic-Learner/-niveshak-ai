@@ -13,8 +13,8 @@ export default defineConfig({
         name: 'Niveshak.AI — Goal-Matched Investment Discovery',
         short_name: 'Niveshak.AI',
         description: 'Aapke sapno ke liye, sahi nivesh \u2014 India\u2019s first goal-matched investment discovery platform.',
-        theme_color: '#0D0D0D',
-        background_color: '#0D0D0D',
+        theme_color: '#E07B39',
+        background_color: '#FAFAF8',
         display: 'standalone',
         orientation: 'portrait',
         scope: '/',
@@ -50,6 +50,8 @@ export default defineConfig({
         ],
       },
       workbox: {
+        skipWaiting: true,
+        clientsClaim: true,
         // Cache app shell + pages
         globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
         // Network-first for navigation, stale-while-revalidate for assets
