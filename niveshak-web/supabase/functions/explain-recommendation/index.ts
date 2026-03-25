@@ -1,6 +1,6 @@
 // supabase/functions/explain-recommendation/index.ts
-// Deno Edge Function — proxies AI explanation requests to Anthropic Claude.
-// Reads ANTHROPIC_API_KEY from Supabase secrets (Deno.env).
+// Deno Edge Function — proxies AI explanation requests.
+// Priority: ANTHROPIC_API_KEY (paid) → GEMINI_API_KEY (free)
 
 import { serve } from 'https://deno.land/std@0.177.0/http/server.ts';
 
@@ -66,6 +66,53 @@ ${lang}
 Do NOT include any greeting or sign-off. Just the explanation.`;
 }
 
+// ─── Anthropic Provider ──────────────────────────────────────────
+async function callAnthropic(prompt: string, apiKey: string): Promise<string> {
+  const res = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key': apiKey,
+      'anthropic-version': '2023-06-01',
+    },
+    body: JSON.stringify({
+      model: 'claude-haiku-4-5-20251001',
+      max_tokens: 600,
+      messages: [{ role: 'user', content: prompt }],
+    }),
+  });
+
+  if (!res.ok) {
+    const errBody = await res.text();
+    throw new Error(`Anthropic ${res.status}: ${errBody}`);
+  }
+
+  const data = await res.json();
+  return data.content?.[0]?.type === 'text' ? data.content[0].text : '';
+}
+
+// ─── Gemini Provider (free tier) ─────────────────────────────────
+async function callGemini(prompt: string, apiKey: string): Promise<string> {
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      contents: [{ parts: [{ text: prompt }] }],
+      generationConfig: { maxOutputTokens: 600, temperature: 0.7 },
+    }),
+  });
+
+  if (!res.ok) {
+    const errBody = await res.text();
+    throw new Error(`Gemini ${res.status}: ${errBody}`);
+  }
+
+  const data = await res.json();
+  return data.candidates?.[0]?.content?.parts?.[0]?.text ?? '';
+}
+
 serve(async (req: Request) => {
   // Handle CORS preflight
   if (req.method === 'OPTIONS') {
@@ -79,10 +126,12 @@ serve(async (req: Request) => {
     });
   }
 
-  const apiKey = Deno.env.get('ANTHROPIC_API_KEY');
-  if (!apiKey) {
+  const anthropicKey = Deno.env.get('ANTHROPIC_API_KEY');
+  const geminiKey = Deno.env.get('GEMINI_API_KEY');
+
+  if (!anthropicKey && !geminiKey) {
     return new Response(
-      JSON.stringify({ error: 'ANTHROPIC_API_KEY not configured' }),
+      JSON.stringify({ error: 'No AI provider configured. Set GEMINI_API_KEY or ANTHROPIC_API_KEY.' }),
       {
         status: 500,
         headers: { ...CORS_HEADERS, 'Content-Type': 'application/json' },
@@ -92,49 +141,26 @@ serve(async (req: Request) => {
 
   try {
     const payload: RequestPayload = await req.json();
-
     const prompt = buildPrompt(payload);
 
-    const anthropicRes = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': apiKey,
-        'anthropic-version': '2023-06-01',
-      },
-      body: JSON.stringify({
-        model: 'claude-haiku-4-5-20251001',
-        max_tokens: 600,
-        messages: [{ role: 'user', content: prompt }],
-      }),
-    });
-
-    if (!anthropicRes.ok) {
-      const errBody = await anthropicRes.text();
-      console.error('[explain-recommendation] Anthropic error:', errBody);
-      return new Response(
-        JSON.stringify({ error: 'AI service unavailable', detail: errBody }),
-        {
-          status: 502,
-          headers: { ...CORS_HEADERS, 'Content-Type': 'application/json' },
-        }
-      );
+    // Prefer Anthropic if available, fall back to Gemini (free)
+    let text: string;
+    if (anthropicKey) {
+      text = await callAnthropic(prompt, anthropicKey);
+    } else {
+      text = await callGemini(prompt, geminiKey!);
     }
-
-    const data = await anthropicRes.json();
-    const text =
-      data.content?.[0]?.type === 'text' ? data.content[0].text : '';
 
     return new Response(JSON.stringify({ explanation: text }), {
       status: 200,
       headers: { ...CORS_HEADERS, 'Content-Type': 'application/json' },
     });
   } catch (err) {
-    console.error('[explain-recommendation] Unexpected error:', err);
+    console.error('[explain-recommendation] Error:', err);
     return new Response(
-      JSON.stringify({ error: 'Internal server error' }),
+      JSON.stringify({ error: 'AI service unavailable', detail: String(err) }),
       {
-        status: 500,
+        status: 502,
         headers: { ...CORS_HEADERS, 'Content-Type': 'application/json' },
       }
     );
