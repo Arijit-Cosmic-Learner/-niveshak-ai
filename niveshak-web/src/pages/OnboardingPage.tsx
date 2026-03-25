@@ -61,7 +61,7 @@ export default function OnboardingPage() {
             onChange={e =>
               setStepAnswer(id as keyof OnboardingAnswers, e.target.value as never)
             }
-            className="w-full bg-black-mid border border-border-dark rounded-md px-4 py-3.5 text-white font-sora text-sm placeholder:text-grey-dark outline-none focus:border-lime/60 transition-colors"
+            className="w-full bg-input border border-line rounded-md px-4 py-3.5 text-content font-sora text-sm placeholder:text-hint outline-none focus:border-accent/60 transition-colors"
             autoFocus
           />
         );
@@ -73,7 +73,7 @@ export default function OnboardingPage() {
             onChange={e =>
               setStepAnswer(id as keyof OnboardingAnswers, e.target.value as never)
             }
-            className="w-full bg-black-mid border border-border-dark rounded-md px-4 py-3.5 text-white font-sora text-sm outline-none focus:border-lime/60 transition-colors"
+            className="w-full bg-input border border-line rounded-md px-4 py-3.5 text-content font-sora text-sm outline-none focus:border-accent/60 transition-colors"
           >
             <option value="" disabled>
               {isHindi ? 'राज्य चुनें' : 'Select your state'}

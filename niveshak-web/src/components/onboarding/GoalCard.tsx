@@ -15,14 +15,14 @@ export function GoalCard({ option, selected, onSelect }: Props) {
       onClick={() => onSelect(option.value)}
       className={`flex flex-col items-center justify-center gap-2 p-4 rounded-lg border-2 transition-all aspect-square ${
         selected
-          ? 'border-lime bg-lime/10'
-          : 'border-border-dark bg-black-light hover:border-lime/40'
+          ? 'border-accent bg-accent-pale'
+          : 'border-line bg-card hover:border-accent/40'
       }`}
     >
       <span className="text-2xl">{option.icon}</span>
       <p
         className={`font-sora font-semibold text-xs text-center leading-tight ${
-          selected ? 'text-lime' : 'text-white'
+          selected ? 'text-accent-dark' : 'text-content'
         }`}
       >
         {isHindi ? option.labelHi : option.labelEn}

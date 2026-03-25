@@ -15,12 +15,10 @@ export function GoalSlider({ sliderConfig, value, onChange, minLabel, maxLabel }
 
   return (
     <div className="flex flex-col gap-4">
-      {/* Value display */}
-      <div className="bg-black-mid border border-border-dark rounded-lg p-4 text-center">
-        <p className="font-sora font-extrabold text-lime text-3xl">{formatRupee(value)}</p>
+      <div className="bg-input border border-line rounded-lg p-4 text-center">
+        <p className="font-sora font-extrabold text-accent text-3xl">{formatRupee(value)}</p>
       </div>
 
-      {/* Range slider */}
       <input
         type="range"
         min={min}
@@ -33,16 +31,15 @@ export function GoalSlider({ sliderConfig, value, onChange, minLabel, maxLabel }
           [&::-webkit-slider-thumb]:w-5
           [&::-webkit-slider-thumb]:h-5
           [&::-webkit-slider-thumb]:rounded-full
-          [&::-webkit-slider-thumb]:bg-lime
+          [&::-webkit-slider-thumb]:bg-accent
           [&::-webkit-slider-thumb]:shadow-md
           [&::-webkit-slider-thumb]:cursor-pointer"
         style={{
-          background: `linear-gradient(to right, #AAFF00 ${percentage}%, #2A2A2A ${percentage}%)`,
+          background: `linear-gradient(to right, var(--accent-color) ${percentage}%, var(--surface-raised-color) ${percentage}%)`,
         }}
       />
 
-      {/* Min / Max labels */}
-      <div className="flex justify-between text-xs text-grey-dark font-sora">
+      <div className="flex justify-between text-xs text-hint font-sora">
         <span>{minLabel ?? formatRupee(min)}</span>
         <span>{maxLabel ?? formatRupee(max)}</span>
       </div>

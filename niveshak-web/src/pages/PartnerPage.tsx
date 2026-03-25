@@ -15,10 +15,10 @@ export default function PartnerPage() {
     <div className="flex flex-col gap-8 px-5 py-6">
       {/* Hero */}
       <div>
-        <h1 className="font-sora font-extrabold text-white text-2xl leading-tight mb-3">
+        <h1 className="font-sora font-extrabold text-content text-2xl leading-tight mb-3">
           {t('partner.heroTitle')}
         </h1>
-        <p className="text-grey-mid text-sm leading-relaxed">{t('partner.heroSub')}</p>
+        <p className="text-sub text-sm leading-relaxed">{t('partner.heroSub')}</p>
       </div>
 
       {/* Revenue model */}
@@ -26,7 +26,7 @@ export default function PartnerPage() {
 
       {/* Value props */}
       <div>
-        <p className="text-[10px] font-semibold text-lime uppercase tracking-widest mb-4">
+        <p className="text-[10px] font-semibold text-accent uppercase tracking-widest mb-4">
           {t('partner.valueProp.label')}
         </p>
         <div className="flex flex-col gap-3">
@@ -41,7 +41,7 @@ export default function PartnerPage() {
         </div>
       </div>
 
-      <div className="h-px bg-border-dark" />
+      <div className="h-px bg-line" />
 
       {/* Demo form */}
       <DemoRequestForm />

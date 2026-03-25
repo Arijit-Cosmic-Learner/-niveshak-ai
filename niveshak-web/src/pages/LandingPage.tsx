@@ -21,7 +21,7 @@ export default function LandingPage() {
     <div className="flex flex-col">
       <HeroSection />
 
-      <div className="h-px bg-border-dark mx-6" />
+      <div className="h-px bg-line mx-6" />
 
       {/* Personas */}
       <section className="px-6 py-8">
@@ -35,9 +35,9 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <div className="h-px bg-border-dark mx-6" />
+      <div className="h-px bg-line mx-6" />
       <HowItWorks />
-      <div className="h-px bg-border-dark mx-6" />
+      <div className="h-px bg-line mx-6" />
       <PartnerChips />
     </div>
   );

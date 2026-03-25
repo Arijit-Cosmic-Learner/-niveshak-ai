@@ -23,25 +23,20 @@ export function QuestionCard({
   const { t, isHindi } = useTranslation();
   return (
     <div className="flex flex-col gap-6">
-      {/* Progress */}
       <div>
-        <p className="text-[10px] font-semibold text-grey-dark uppercase tracking-widest mb-3">
+        <p className="text-[10px] font-semibold text-hint uppercase tracking-widest mb-3">
           {t('onboarding.stepLabel', { current: stepCurrent, total: stepTotal })}
         </p>
         <ProgressBar progress={progress} />
       </div>
-
-      {/* Question */}
       <div>
-        <h2 className="font-sora font-bold text-white text-xl leading-snug mb-2">
+        <h2 className="font-sora font-bold text-content text-xl leading-snug mb-2">
           {isHindi ? questionHi : questionEn}
         </h2>
-        <p className="text-grey-mid text-sm leading-relaxed">
+        <p className="text-sub text-sm leading-relaxed">
           {isHindi ? subHi : subEn}
         </p>
       </div>
-
-      {/* Input slot */}
       {children}
     </div>
   );

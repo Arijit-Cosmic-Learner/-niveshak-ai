@@ -1,11 +1,11 @@
 import { InstrumentType } from '@t/instruments';
 
 const badgeStyles: Record<InstrumentType, { bg: string; text: string; border: string }> = {
-  [InstrumentType.GOVERNMENT_SCHEME]: { bg: 'bg-badge-govt', text: 'text-[#3A7000]', border: 'border-lime-dark' },
-  [InstrumentType.MUTUAL_FUND]:       { bg: 'bg-badge-mf',   text: 'text-[#1A56A0]', border: 'border-[#93C5FD]' },
-  [InstrumentType.GOLD]:              { bg: 'bg-badge-gold', text: 'text-[#9A6C00]', border: 'border-[#FCD34D]' },
-  [InstrumentType.BANK_SCHEME]:       { bg: 'bg-badge-bank', text: 'text-[#6334A8]', border: 'border-[#C4B5FD]' },
-  [InstrumentType.NPS]:               { bg: 'bg-badge-nps',  text: 'text-[#A03000]', border: 'border-[#FDBA74]' },
+  [InstrumentType.GOVERNMENT_SCHEME]: { bg: 'bg-badge-govt', text: 'text-navy',         border: 'border-navy/30' },
+  [InstrumentType.MUTUAL_FUND]:       { bg: 'bg-badge-mf',   text: 'text-navy-light',   border: 'border-navy/30' },
+  [InstrumentType.GOLD]:              { bg: 'bg-badge-gold', text: 'text-[#9A6C00]',     border: 'border-[#FCD34D]' },
+  [InstrumentType.BANK_SCHEME]:       { bg: 'bg-badge-bank', text: 'text-navy',          border: 'border-navy/30' },
+  [InstrumentType.NPS]:               { bg: 'bg-badge-nps',  text: 'text-accent-dark',   border: 'border-accent/30' },
 };
 
 interface Props { type: InstrumentType; }

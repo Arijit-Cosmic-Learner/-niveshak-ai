@@ -30,8 +30,8 @@ export default function ResultsPage() {
   if (isLoading) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[50vh] gap-4 px-6">
-        <div className="w-10 h-10 border-[3px] border-lime border-t-transparent rounded-full animate-spin" />
-        <p className="text-grey-mid font-sora text-sm">
+        <div className="w-10 h-10 border-[3px] border-accent border-t-transparent rounded-full animate-spin" />
+        <p className="text-sub font-sora text-sm">
           {isHindi ? 'आपकी योजना तैयार हो रही है…' : 'Calculating your plan…'}
         </p>
       </div>
@@ -41,7 +41,7 @@ export default function ResultsPage() {
   if (!results) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[50vh] gap-6 px-6 text-center">
-        <p className="text-grey-mid text-sm">{t('results.noResults')}</p>
+        <p className="text-sub text-sm">{t('results.noResults')}</p>
         <Button onClick={() => navigate('/discover')}>{t('landing.ctaPrimary')}</Button>
       </div>
     );
@@ -63,24 +63,24 @@ export default function ResultsPage() {
     <div className="flex flex-col gap-5 px-5 py-6">
       {/* Greeting */}
       <div>
-        <p className="text-[10px] font-semibold text-lime uppercase tracking-widest mb-1">
+        <p className="text-[10px] font-semibold text-accent uppercase tracking-widest mb-1">
           {t('results.greeting')}
         </p>
         {answers.name && (
-          <h2 className="font-sora font-extrabold text-white text-2xl">
+          <h2 className="font-sora font-extrabold text-content text-2xl">
             {t('results.hello', { name: answers.name })}
           </h2>
         )}
       </div>
 
       {/* Score ring + profile description */}
-      <div className="bg-black-light border border-border-dark rounded-lg p-6 flex flex-col items-center gap-4">
+      <div className="bg-card border border-line rounded-lg p-6 flex flex-col items-center gap-4">
         <ScoreRing
           score={riskScore}
           profile={riskProfile}
           label={isHindi ? riskProfileLabelHi : riskProfileLabelEn}
         />
-        <p className="text-grey-mid text-xs text-center leading-relaxed">
+        <p className="text-sub text-xs text-center leading-relaxed">
           {isHindi ? riskProfileDescHi : riskProfileDescEn}
         </p>
       </div>
@@ -90,7 +90,7 @@ export default function ResultsPage() {
 
       {/* Allocation bar & monthly breakdown */}
       {recommendations.length > 0 && (
-        <div className="bg-black-light border border-border-dark rounded-lg p-4">
+        <div className="bg-card border border-line rounded-lg p-4">
           <AllocationBar recommendations={recommendations} />
         </div>
       )}
@@ -98,7 +98,7 @@ export default function ResultsPage() {
 
       {/* Instrument cards */}
       <div>
-        <p className="text-[10px] font-semibold text-lime uppercase tracking-widest mb-3">
+        <p className="text-[10px] font-semibold text-accent uppercase tracking-widest mb-3">
           {t('results.sections.instruments')}
         </p>
         <div className="flex flex-col gap-3">

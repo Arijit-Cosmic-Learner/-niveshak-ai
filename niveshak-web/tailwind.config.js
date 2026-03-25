@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  darkMode: 'class',
   content: [
     './index.html',
     './src/**/*.{js,ts,jsx,tsx}',
@@ -7,41 +8,44 @@ export default {
   theme: {
     extend: {
       colors: {
-        black: {
-          DEFAULT: '#0D0D0D',
-          light:   '#1A1A1A',
-          mid:     '#2A2A2A',
-          soft:    '#3A3A3A',
-        },
-        lime: {
-          DEFAULT: '#AAFF00',
-          light:   '#C2FF4D',
-          pale:    '#EEFFCC',
-          dark:    '#7ACC00',
-        },
-        'off-white':    '#F5F5F5',
-        'grey-light':   '#F0F0F0',
-        'grey-mid':     '#B0B0B0',
-        'grey-dark':    '#6B6B6B',
-        'border-dark':  '#2A2A2A',
-        'border-light': '#E0E0E0',
-        text: {
-          'on-black':  '#FFFFFF',
-          'on-lime':   '#0D0D0D',
-          primary:     '#0D0D0D',
-          secondary:   '#3A3A3A',
-          muted:       '#6B6B6B',
-        },
+        // ── Semantic surface tokens ──────────────────────────────────────
+        'page':         'rgb(var(--bg-primary-rgb) / <alpha-value>)',
+        'muted-bg':     'rgb(var(--bg-secondary-rgb) / <alpha-value>)',
+        'card':         'rgb(var(--surface-rgb) / <alpha-value>)',
+        'input':        'rgb(var(--surface-raised-rgb) / <alpha-value>)',
+
+        // ── Semantic text tokens ─────────────────────────────────────────
+        'content':      'rgb(var(--text-primary-rgb) / <alpha-value>)',
+        'sub':          'rgb(var(--text-secondary-rgb) / <alpha-value>)',
+        'hint':         'rgb(var(--text-muted-rgb) / <alpha-value>)',
+
+        // ── Accent — saffron orange ──────────────────────────────────────
+        'accent':       'rgb(var(--accent-rgb) / <alpha-value>)',
+        'accent-light': 'rgb(var(--accent-light-rgb) / <alpha-value>)',
+        'accent-pale':  'rgb(var(--accent-pale-rgb) / <alpha-value>)',
+        'accent-dark':  'rgb(var(--accent-dark-rgb) / <alpha-value>)',
+
+        // ── Navy — trust / financial ─────────────────────────────────────
+        'navy':         'rgb(var(--navy-rgb) / <alpha-value>)',
+        'navy-light':   'rgb(var(--navy-light-rgb) / <alpha-value>)',
+        'navy-pale':    'rgb(var(--navy-pale-rgb) / <alpha-value>)',
+
+        // ── Borders ──────────────────────────────────────────────────────
+        'line':         'rgb(var(--border-rgb) / <alpha-value>)',
+
+        // ── Status ───────────────────────────────────────────────────────
         success:      '#22C55E',
         'success-bg': '#DCFCE7',
         warning:      '#F59E0B',
         error:        '#EF4444',
+
+        // ── Badge tints ──────────────────────────────────────────────────
         badge: {
-          govt: '#EEFFCC',
-          mf:   '#E8F0FB',
+          govt: '#EEF2FA',
+          mf:   '#EEF2FA',
           gold: '#FEF3D8',
-          bank: '#F0EAFA',
-          nps:  '#FFF0E6',
+          bank: '#EEF2FA',
+          nps:  '#FDF7F0',
         },
       },
       fontFamily: {
@@ -62,4 +66,3 @@ export default {
   },
   plugins: [],
 };
-
