@@ -1,12 +1,22 @@
+import { useEffect } from 'react';
 import { useTranslation } from '@hooks/useTranslation';
 import { HeroSection } from '@components/landing/HeroSection';
 import { PersonaCard } from '@components/landing/PersonaCard';
 import { HowItWorks } from '@components/landing/HowItWorks';
 import { PartnerChips } from '@components/landing/PartnerChips';
 import { personas } from '@data/personas';
+import { useOnboardingStore } from '@store/useOnboardingStore';
+import { useResultsStore } from '@store/useResultsStore';
 
 export default function LandingPage() {
   const { t } = useTranslation();
+  const reset = useOnboardingStore(s => s.reset);
+  const clearResults = useResultsStore(s => s.clearResults);
+
+  useEffect(() => {
+    reset();
+    clearResults();
+  }, []);
   return (
     <div className="flex flex-col">
       <HeroSection />
