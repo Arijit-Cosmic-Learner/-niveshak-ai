@@ -1,0 +1,1436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Niveshak.AI — Complete Learning Guide</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap');
+
+  :root {
+    --black: #0D0D0D;
+    --lime: #AAFF00;
+    --lime-pale: #e8ffb3;
+    --white: #ffffff;
+    --gray-100: #f5f5f5;
+    --gray-200: #e5e5e5;
+    --gray-400: #aaaaaa;
+    --gray-700: #444444;
+    --blue: #3b82f6;
+    --purple: #8b5cf6;
+    --orange: #f97316;
+    --red: #ef4444;
+    --green: #22c55e;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #fafafa;
+    color: #1a1a1a;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  /* ── COVER PAGE ─────────────────────────────────── */
+  .cover {
+    background: var(--black);
+    color: var(--white);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 60px 40px;
+    page-break-after: always;
+  }
+
+  .cover-badge {
+    background: var(--lime);
+    color: var(--black);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 6px 18px;
+    border-radius: 100px;
+    margin-bottom: 32px;
+  }
+
+  .cover h1 {
+    font-size: 64px;
+    font-weight: 900;
+    line-height: 1.05;
+    margin-bottom: 12px;
+    letter-spacing: -2px;
+  }
+
+  .cover h1 span { color: var(--lime); }
+
+  .cover .subtitle {
+    font-size: 20px;
+    color: #aaaaaa;
+    margin-bottom: 48px;
+    max-width: 500px;
+  }
+
+  .cover-meta {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    max-width: 600px;
+    width: 100%;
+    margin-top: 48px;
+  }
+
+  .cover-meta-item {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    padding: 20px;
+  }
+
+  .cover-meta-item .num {
+    font-size: 32px;
+    font-weight: 900;
+    color: var(--lime);
+    display: block;
+  }
+
+  .cover-meta-item .label {
+    font-size: 12px;
+    color: #aaaaaa;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .cover-url {
+    margin-top: 48px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    color: var(--lime);
+    background: rgba(170,255,0,0.1);
+    border: 1px solid rgba(170,255,0,0.3);
+    padding: 10px 24px;
+    border-radius: 8px;
+  }
+
+  /* ── TOC ─────────────────────────────────────────── */
+  .toc {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 60px 40px;
+    page-break-after: always;
+  }
+
+  .toc h2 {
+    font-size: 32px;
+    font-weight: 800;
+    margin-bottom: 32px;
+    color: var(--black);
+  }
+
+  .toc-item {
+    display: flex;
+    align-items: center;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--gray-200);
+    gap: 16px;
+  }
+
+  .toc-num {
+    width: 36px;
+    height: 36px;
+    background: var(--black);
+    color: var(--lime);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 13px;
+    flex-shrink: 0;
+  }
+
+  .toc-title { font-weight: 600; font-size: 16px; flex: 1; }
+  .toc-pages { color: var(--gray-400); font-size: 13px; }
+
+  /* ── MAIN CONTENT ───────────────────────────────── */
+  .page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 60px 40px;
+    page-break-before: always;
+  }
+
+  .chapter-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 40px;
+    padding-bottom: 24px;
+    border-bottom: 3px solid var(--black);
+  }
+
+  .chapter-num {
+    width: 52px;
+    height: 52px;
+    background: var(--black);
+    color: var(--lime);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  .chapter-header h2 {
+    font-size: 36px;
+    font-weight: 800;
+    line-height: 1.1;
+  }
+
+  h3 {
+    font-size: 22px;
+    font-weight: 700;
+    margin: 36px 0 16px;
+    color: var(--black);
+  }
+
+  h4 {
+    font-size: 17px;
+    font-weight: 600;
+    margin: 24px 0 10px;
+    color: #333;
+  }
+
+  p { margin-bottom: 16px; color: #333; }
+
+  /* ── CALLOUT BOXES ──────────────────────────────── */
+  .callout {
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin: 24px 0;
+    border-left: 4px solid;
+  }
+
+  .callout-lime {
+    background: #f4ffe0;
+    border-color: var(--lime);
+    color: #2d4000;
+  }
+
+  .callout-blue {
+    background: #eff6ff;
+    border-color: var(--blue);
+    color: #1e3a5f;
+  }
+
+  .callout-purple {
+    background: #f5f3ff;
+    border-color: var(--purple);
+    color: #3b0764;
+  }
+
+  .callout-orange {
+    background: #fff7ed;
+    border-color: var(--orange);
+    color: #7c2d12;
+  }
+
+  .callout-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    opacity: 0.7;
+  }
+
+  .callout p { margin: 0; color: inherit; }
+
+  /* ── CODE BLOCKS ────────────────────────────────── */
+  pre, code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+  }
+
+  pre {
+    background: var(--black);
+    color: #e2e8f0;
+    border-radius: 10px;
+    padding: 24px;
+    overflow-x: auto;
+    margin: 20px 0;
+    line-height: 1.6;
+  }
+
+  code {
+    background: #f0f0f0;
+    color: #c7254e;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 13px;
+  }
+
+  pre code {
+    background: none;
+    color: inherit;
+    padding: 0;
+  }
+
+  .code-comment { color: #6a9955; }
+  .code-keyword { color: #569cd6; }
+  .code-string  { color: #ce9178; }
+  .code-lime    { color: var(--lime); }
+  .code-yellow  { color: #dcdcaa; }
+
+  /* ── TABLES ─────────────────────────────────────── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 14px;
+  }
+
+  th {
+    background: var(--black);
+    color: var(--white);
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 13px;
+  }
+
+  td {
+    padding: 11px 16px;
+    border-bottom: 1px solid var(--gray-200);
+    vertical-align: top;
+  }
+
+  tr:nth-child(even) td { background: var(--gray-100); }
+
+  /* ── FLOW DIAGRAMS ──────────────────────────────── */
+  .flow {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin: 24px 0;
+  }
+
+  .flow-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .flow-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .flow-dot {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--black);
+    color: var(--lime);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  .flow-line {
+    width: 2px;
+    flex: 1;
+    background: var(--gray-200);
+    min-height: 24px;
+    margin: 4px 0;
+  }
+
+  .flow-content {
+    padding-bottom: 28px;
+    flex: 1;
+  }
+
+  .flow-content h4 {
+    margin: 8px 0 6px;
+    font-size: 16px;
+  }
+
+  .flow-content p { margin: 0; font-size: 14px; }
+
+  /* ── CARDS GRID ─────────────────────────────────── */
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin: 20px 0;
+  }
+
+  .card {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  }
+
+  .card-icon {
+    font-size: 28px;
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  .card h4 { margin: 0 0 8px; font-size: 15px; }
+  .card p  { margin: 0; font-size: 13px; color: var(--gray-700); }
+
+  /* ── FILE TREE ──────────────────────────────────── */
+  .tree {
+    background: var(--black);
+    color: #cdd9e5;
+    border-radius: 10px;
+    padding: 24px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    line-height: 2;
+    margin: 20px 0;
+  }
+
+  .tree .dir   { color: #6cb6ff; }
+  .tree .ts    { color: var(--lime); }
+  .tree .json  { color: #e3b341; }
+  .tree .html  { color: #f97316; }
+  .tree .css   { color: #79c0ff; }
+  .tree .md    { color: #aaa; }
+  .tree .gray  { color: #666; }
+
+  /* ── HIGHLIGHT STRIP ────────────────────────────── */
+  .strip {
+    background: var(--black);
+    color: var(--white);
+    border-radius: 12px;
+    padding: 28px 32px;
+    margin: 28px 0;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+  }
+
+  .strip-icon { font-size: 40px; flex-shrink: 0; }
+
+  .strip h4 { color: var(--lime); margin: 0 0 6px; font-size: 16px; }
+  .strip p  { margin: 0; color: #ccc; font-size: 14px; }
+
+  /* ── TAG PILLS ──────────────────────────────────── */
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+
+  .tag {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .tag-black  { background: var(--black);   color: var(--lime); }
+  .tag-lime   { background: var(--lime-pale); color: #2d4000; }
+  .tag-blue   { background: #dbeafe;        color: #1e40af; }
+  .tag-purple { background: #ede9fe;        color: #5b21b6; }
+  .tag-orange { background: #ffedd5;        color: #9a3412; }
+
+  /* ── NUMBERED LIST ──────────────────────────────── */
+  .numlist { counter-reset: num; list-style: none; margin: 16px 0; }
+
+  .numlist li {
+    counter-increment: num;
+    display: flex;
+    gap: 14px;
+    margin-bottom: 16px;
+    align-items: flex-start;
+  }
+
+  .numlist li::before {
+    content: counter(num);
+    width: 28px;
+    height: 28px;
+    background: var(--lime);
+    color: var(--black);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 13px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* ── SECTION DIVIDER ────────────────────────────── */
+  .divider {
+    border: none;
+    border-top: 2px dashed var(--gray-200);
+    margin: 36px 0;
+  }
+
+  /* ── PRINT ──────────────────────────────────────── */
+  @media print {
+    .cover { page-break-after: always; min-height: auto; padding: 80px 60px; }
+    .toc   { page-break-after: always; }
+    .page  { page-break-before: always; }
+    pre    { white-space: pre-wrap; }
+    body   { font-size: 13px; }
+    .cover h1 { font-size: 48px; }
+  }
+
+  @page {
+    margin: 15mm;
+    size: A4;
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════
+     COVER PAGE
+═══════════════════════════════════════════════════════════ -->
+<div class="cover">
+  <div class="cover-badge">Complete Learning Guide · March 2026</div>
+  <h1>Niveshak<span>.AI</span></h1>
+  <p class="subtitle">Everything you need to understand what was built, how it works, and where it is going — explained simply.</p>
+
+  <div class="cover-meta">
+    <div class="cover-meta-item">
+      <span class="num">11</span>
+      <span class="label">Onboarding Steps</span>
+    </div>
+    <div class="cover-meta-item">
+      <span class="num">9</span>
+      <span class="label">Instruments</span>
+    </div>
+    <div class="cover-meta-item">
+      <span class="num">4</span>
+      <span class="label">Engine Modules</span>
+    </div>
+  </div>
+
+  <div class="cover-url">🌐 niveshak-web.vercel.app</div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     TABLE OF CONTENTS
+═══════════════════════════════════════════════════════════ -->
+<div class="toc">
+  <h2>Table of Contents</h2>
+
+  <div class="toc-item"><div class="toc-num">1</div><span class="toc-title">What is Niveshak.AI? — The Big Picture</span><span class="toc-pages">The idea</span></div>
+  <div class="toc-item"><div class="toc-num">2</div><span class="toc-title">The Technology Stack — Tools We Used</span><span class="toc-pages">What & why</span></div>
+  <div class="toc-item"><div class="toc-num">3</div><span class="toc-title">Project Structure — Every File Explained</span><span class="toc-pages">File by file</span></div>
+  <div class="toc-item"><div class="toc-num">4</div><span class="toc-title">The Brain — How the Engine Works</span><span class="toc-pages">Core logic</span></div>
+  <div class="toc-item"><div class="toc-num">5</div><span class="toc-title">State Management — How the App Remembers</span><span class="toc-pages">Zustand</span></div>
+  <div class="toc-item"><div class="toc-num">6</div><span class="toc-title">The 4 Screens — What the User Sees</span><span class="toc-pages">UI walkthrough</span></div>
+  <div class="toc-item"><div class="toc-num">7</div><span class="toc-title">Language System — Hindi + English</span><span class="toc-pages">i18n</span></div>
+  <div class="toc-item"><div class="toc-num">8</div><span class="toc-title">The Database — Supabase Explained</span><span class="toc-pages">Backend</span></div>
+  <div class="toc-item"><div class="toc-num">9</div><span class="toc-title">Deployment — How the World Sees It</span><span class="toc-pages">Vercel + PWA</span></div>
+  <div class="toc-item"><div class="toc-num">10</div><span class="toc-title">What's Still Left to Build</span><span class="toc-pages">Roadmap</span></div>
+  <div class="toc-item"><div class="toc-num">11</div><span class="toc-title">Glossary — Every Tech Term Explained</span><span class="toc-pages">Dictionary</span></div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     CHAPTER 1
+═══════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="chapter-header">
+    <div class="chapter-num">1</div>
+    <h2>What is Niveshak.AI?<br>The Big Picture</h2>
+  </div>
+
+  <h3>The Problem Being Solved</h3>
+  <p>Imagine you are Arun — an auto-rickshaw driver in Ranchi earning ₹2,500 a month. You want to save money for your daughter's education. But when you walk into a bank, the relationship manager uses terms like "risk appetite", "asset allocation", "ELSS", and "NPS Tier-1". You feel lost. You leave without investing anything.</p>
+  <p>This is the reality for <strong>400 million working Indians</strong>. They want to invest but don't know how. Financial advisors are expensive or intimidating. Existing apps assume you already understand finance.</p>
+
+  <div class="callout callout-lime">
+    <div class="callout-label">💡 The Insight</div>
+    <p>People don't need financial education first. They need a <strong>personalised recommendation first</strong>, in their own language, that tells them exactly what to do and why. Understanding follows action.</p>
+  </div>
+
+  <h3>What Niveshak.AI Does</h3>
+  <p>Niveshak.AI is a web application that works like a <strong>smart financial advisor in your pocket</strong>. Here is the user journey in plain language:</p>
+
+  <div class="flow">
+    <div class="flow-step">
+      <div class="flow-left"><div class="flow-dot">1</div><div class="flow-line"></div></div>
+      <div class="flow-content">
+        <h4>User answers 11 simple questions</h4>
+        <p>Name, where they live, what work they do, how much they earn, what their financial goal is, how long they have, and how much risk they can stomach. All in Hindi or English.</p>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-left"><div class="flow-dot">2</div><div class="flow-line"></div></div>
+      <div class="flow-content">
+        <h4>The engine calculates their profile</h4>
+        <p>In milliseconds, the app scores their risk tolerance (0–100), projects how much money they'll actually need after inflation, and filters all 9 investment instruments to find the best matches.</p>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-left"><div class="flow-dot">3</div><div class="flow-line"></div></div>
+      <div class="flow-content">
+        <h4>Shows a personalised investment plan</h4>
+        <p>A clear breakdown: "Put 50% in Sukanya Samriddhi, 30% in PPF, 20% in Gold SIP" — with a reason for each choice, the expected return, and a direct link to open the account.</p>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-left"><div class="flow-dot">4</div><div class="flow-line"></div></div>
+      <div class="flow-content">
+        <h4>Partners (banks, NBFCs) pay to be listed</h4>
+        <p>The B2B business model: financial institutions pay Niveshak.AI to be recommended to users. A partner form on the website captures their contact details for follow-up.</p>
+      </div>
+    </div>
+  </div>
+
+  <h3>Who is This For?</h3>
+  <div class="cards">
+    <div class="card">
+      <span class="card-icon">🚗</span>
+      <h4>Arun Jadav — Auto Driver, Ranchi</h4>
+      <p>₹2,500/month. Wants to save for daughter's education. Conservative investor. Never invested before.</p>
+    </div>
+    <div class="card">
+      <span class="card-icon">👩‍🏫</span>
+      <h4>Priya Sharma — Teacher, Bhopal</h4>
+      <p>₹12,000/month. Planning for retirement in 20 years. Balanced investor. Has an FD but wants more.</p>
+    </div>
+    <div class="card">
+      <span class="card-icon">💻</span>
+      <h4>Subhash Mukherjee — PM, Bengaluru</h4>
+      <p>₹60,000/month. Wants to grow wealth aggressively. Growth investor. Already has mutual funds.</p>
+    </div>
+    <div class="card">
+      <span class="card-icon">🏦</span>
+      <h4>NBFC / Bank (B2B Partner)</h4>
+      <p>Wants to reach first-time investors at the moment of intent, not after they've already chosen a competitor.</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     CHAPTER 2
+═══════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="chapter-header">
+    <div class="chapter-num">2</div>
+    <h2>The Technology Stack<br>Tools We Used</h2>
+  </div>
+
+  <div class="callout callout-blue">
+    <div class="callout-label">🧠 Mental Model</div>
+    <p>Think of building an app like building a house. React is the walls and rooms. TypeScript is the building inspector who checks everything is safe. Tailwind is the interior designer. Zustand is the memory (like post-it notes on a fridge). Supabase is the filing cabinet in the back office. Vercel is the delivery truck that puts the house on the internet.</p>
+  </div>
+
+  <table>
+    <tr>
+      <th>Tool</th>
+      <th>What It Is</th>
+      <th>Why We Chose It</th>
+    </tr>
+    <tr>
+      <td><strong>React 18</strong></td>
+      <td>The UI framework — builds the buttons, screens, and components the user sees</td>
+      <td>Industry standard, massive ecosystem, handles updates to the screen efficiently</td>
+    </tr>
+    <tr>
+      <td><strong>TypeScript</strong></td>
+      <td>A stricter version of JavaScript that catches mistakes before the app runs</td>
+      <td>Prevents bugs — if you pass the wrong data type, it tells you immediately</td>
+    </tr>
+    <tr>
+      <td><strong>Vite 8</strong></td>
+      <td>The build tool — bundles all the code files into files a browser can understand</td>
+      <td>Extremely fast. In 0.7 seconds it compiles the entire app for production</td>
+    </tr>
+    <tr>
+      <td><strong>Tailwind CSS</strong></td>
+      <td>A styling system — instead of writing CSS files, you add class names like <code>bg-black text-lime</code></td>
+      <td>Fast to write, consistent design, no style conflicts between components</td>
+    </tr>
+    <tr>
+      <td><strong>React Router v6</strong></td>
+      <td>Handles navigation — when you click a link, it shows the right screen without reloading the page</td>
+      <td>The standard for React navigation</td>
+    </tr>
+    <tr>
+      <td><strong>Zustand v4</strong></td>
+      <td>State management — stores data (like your answers) that multiple screens need to share</td>
+      <td>Simpler than Redux, tiny (1KB), persists data to localStorage automatically</td>
+    </tr>
+    <tr>
+      <td><strong>i18n-js</strong></td>
+      <td>Internationalisation — switches all text between Hindi and English</td>
+      <td>Simple API, works well with TypeScript</td>
+    </tr>
+    <tr>
+      <td><strong>Supabase</strong></td>
+      <td>The backend-as-a-service (like Firebase but open-source) — stores partner lead data in a PostgreSQL database</td>
+      <td>Free tier, real-time, built-in authentication, Row Level Security</td>
+    </tr>
+    <tr>
+      <td><strong>vite-plugin-pwa</strong></td>
+      <td>Makes the app installable on phones like a native app, and adds offline support</td>
+      <td>One plugin, handles everything — service worker, manifest, caching</td>
+    </tr>
+    <tr>
+      <td><strong>Vercel</strong></td>
+      <td>Hosting + deployment — puts the app on the internet at a real URL</td>
+      <td>Free tier, instant deploys, global CDN, works perfectly with Vite</td>
+    </tr>
+  </table>
+
+  <h3>The Design System</h3>
+  <p>All visual design uses exactly two colours and one font:</p>
+  <div class="cards">
+    <div class="card" style="display:flex;align-items:center;gap:16px;">
+      <div style="width:48px;height:48px;background:#0D0D0D;border-radius:8px;flex-shrink:0;"></div>
+      <div><h4 style="margin:0 0 4px">#0D0D0D — Near Black</h4><p>Background, text, buttons, navbar</p></div>
+    </div>
+    <div class="card" style="display:flex;align-items:center;gap:16px;">
+      <div style="width:48px;height:48px;background:#AAFF00;border-radius:8px;flex-shrink:0;"></div>
+      <div><h4 style="margin:0 0 4px">#AAFF00 — Electric Lime</h4><p>Accents, CTAs, highlights, scores</p></div>
+    </div>
+  </div>
+  <p>The high-contrast black-on-lime palette is intentional: it works on cheap Android screens in bright sunlight, which is the primary device of the target audience.</p>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     CHAPTER 3
+═══════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="chapter-header">
+    <div class="chapter-num">3</div>
+    <h2>Project Structure<br>Every File Explained</h2>
+  </div>
+
+  <div class="tree">
+<span class="dir">niveshak-web/</span><br>
+├── <span class="html">index.html</span>          <span class="gray">← The single HTML page the browser loads</span><br>
+├── <span class="ts">App.tsx</span>            <span class="gray">← Root component — wires all routes together</span><br>
+├── <span class="json">vite.config.ts</span>     <span class="gray">← Build tool config (PWA, chunks, aliases)</span><br>
+├── <span class="json">vercel.json</span>        <span class="gray">← Deployment config (SPA rewrites, security headers)</span><br>
+├── <span class="json">tailwind.config.js</span> <span class="gray">← Design tokens (colours, fonts, spacing)</span><br>
+├── <span class="md">.env.local</span>         <span class="gray">← Secret keys (NOT committed to git)</span><br>
+├── <span class="md">.npmrc</span>             <span class="gray">← npm config (fixes a peer dependency conflict)</span><br>
+│<br>
+├── <span class="dir">src/</span><br>
+│   ├── <span class="dir">pages/</span>          <span class="gray">← The 4 main screens</span><br>
+│   │   ├── <span class="ts">LandingPage.tsx</span>    <span class="gray">← Home page with hero, personas, CTA</span><br>
+│   │   ├── <span class="ts">OnboardingPage.tsx</span> <span class="gray">← 11-step wizard</span><br>
+│   │   ├── <span class="ts">ResultsPage.tsx</span>    <span class="gray">← Personalised investment plan</span><br>
+│   │   ├── <span class="ts">PartnerPage.tsx</span>    <span class="gray">← B2B demo request form</span><br>
+│   │   └── <span class="ts">NotFoundPage.tsx</span>   <span class="gray">← 404 page</span><br>
+│   │<br>
+│   ├── <span class="dir">engine/</span>         <span class="gray">← The brain — pure calculation functions</span><br>
+│   │   ├── <span class="ts">riskScorer.ts</span>      <span class="gray">← Converts answers to risk profile</span><br>
+│   │   ├── <span class="ts">inflationProjector.ts</span> <span class="gray">← Calculates future value of goal</span><br>
+│   │   ├── <span class="ts">instrumentMatcher.ts</span>  <span class="gray">← Picks the best instruments</span><br>
+│   │   └── <span class="ts">allocationBuilder.ts</span>  <span class="gray">← Assigns % to each instrument</span><br>
+│   │<br>
+│   ├── <span class="dir">store/</span>          <span class="gray">← App memory (Zustand)</span><br>
+│   │   ├── <span class="ts">useOnboardingStore.ts</span> <span class="gray">← Stores answers + current step</span><br>
+│   │   ├── <span class="ts">useLanguageStore.ts</span>   <span class="gray">← Stores 'en' or 'hi'</span><br>
+│   │   └── <span class="ts">useResultsStore.ts</span>    <span class="gray">← Stores computed recommendations</span><br>
+│   │<br>
+│   ├── <span class="dir">data/</span>           <span class="gray">← Static content</span><br>
+│   │   ├── <span class="ts">steps.ts</span>           <span class="gray">← All 11 questions with EN+HI text</span><br>
+│   │   ├── <span class="ts">instruments.ts</span>     <span class="gray">← All 9 investment products</span><br>
+│   │   └── <span class="ts">personas.ts</span>        <span class="gray">← 3 demo user profiles</span><br>
+│   │<br>
+│   ├── <span class="dir">hooks/</span>          <span class="gray">← Reusable logic that connects UI to engine</span><br>
+│   │   ├── <span class="ts">useOnboarding.ts</span>   <span class="gray">← Controls step flow + navigation</span><br>
+│   │   ├── <span class="ts">useRecommendation.ts</span> <span class="gray">← Runs the full engine pipeline</span><br>
+│   │   └── <span class="ts">useTranslation.ts</span>  <span class="gray">← Returns text in correct language</span><br>
+│   │<br>
+│   ├── <span class="dir">lib/</span>            <span class="gray">← External service connectors</span><br>
+│   │   ├── <span class="ts">supabase.ts</span>        <span class="gray">← submitDemoLead() function</span><br>
+│   │   └── <span class="ts">anthropic.ts</span>       <span class="gray">← AI explanation stub (not yet wired)</span><br>
+│   │<br>
+│   ├── <span class="dir">components/</span>     <span class="gray">← Reusable UI building blocks</span><br>
+│   │   ├── <span class="dir">common/</span>            <span class="gray">← Used everywhere</span><br>
+│   │   ├── <span class="dir">landing/</span>           <span class="gray">← Only on landing page</span><br>
+│   │   ├── <span class="dir">onboarding/</span>        <span class="gray">← Only in the wizard</span><br>
+│   │   ├── <span class="dir">results/</span>           <span class="gray">← Only on results screen</span><br>
+│   │   └── <span class="dir">partner/</span>           <span class="gray">← Only on partner page</span><br>
+│   │<br>
+│   ├── <span class="dir">types/</span>          <span class="gray">← TypeScript type definitions</span><br>
+│   └── <span class="dir">i18n/</span>           <span class="gray">← en.ts and hi.ts translation files</span><br>
+│<br>
+└── <span class="dir">supabase/migrations/</span><br>
+    └── <span class="md">001_partner_leads.sql</span>  <span class="gray">← Database table definition</span>
+  </div>
+
+  <h3>What is a Component?</h3>
+  <p>A <strong>component</strong> is a reusable piece of the UI — like a LEGO brick. Instead of writing the same button 50 times, you write it once as a <code>Button</code> component and use it everywhere.</p>
+
+  <div class="callout callout-purple">
+    <div class="callout-label">Example</div>
+    <p>The <code>ScoreRing</code> component draws the circular risk score chart. It takes a number (0–100) and draws the right arc. You write it once, use it on the results screen, share it in demos. Change the colour once in ScoreRing and it changes everywhere it appears.</p>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     CHAPTER 4
+═══════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="chapter-header">
+    <div class="chapter-num">4</div>
+    <h2>The Brain<br>How the Engine Works</h2>
+  </div>
+
+  <p>The engine is the most important part of Niveshak.AI. It is a series of pure functions — meaning they take input, do maths, and return output. No databases, no UI, no side effects. Just calculation.</p>
+
+  <div class="strip">
+    <span class="strip-icon">⚙️</span>
+    <div>
+      <h4>Why "pure functions"?</h4>
+      <p>Because they are easy to test, debug, and reason about. Given the same input, you always get the same output. You can run the entire engine in a unit test with zero infrastructure.</p>
+    </div>
+  </div>
+
+  <h3>Step 1 — Risk Scorer</h3>
+  <p>File: <code>src/engine/riskScorer.ts</code></p>
+  <p>This function reads 4 answers from the onboarding quiz and converts them into a score from 0 to 100:</p>
+
+  <table>
+    <tr><th>Answer</th><th>Max Points</th><th>Logic</th></tr>
+    <tr><td>Investment experience</td><td>25</td><td>Never=0, FD only=5, Gold=12, Occasional MF=20, Regular=25</td></tr>
+    <tr><td>Risk tolerance</td><td>35</td><td>Panic sell=0, Worry but wait=10, Stay calm=25, Buy more=35</td></tr>
+    <tr><td>Timeline</td><td>25</td><td>Under 1yr=0, 1-3yr=5, 3-7yr=12, 7-15yr=20, 15+yr=25</td></tr>
+    <tr><td>Occupation</td><td>15</td><td>Daily wage=3, Retired=2, Student=10, Salaried=8-12, Self-employed=15</td></tr>
+  </table>
+
+  <p>Then:</p>
+  <ul class="numlist">
+    <li>Score 0–33 → <strong>Conservative</strong> (safety first, government-backed instruments)</li>
+    <li>Score 34–66 → <strong>Balanced</strong> (mix of safe + market-linked)</li>
+    <li>Score 67–100 → <strong>Growth</strong> (equity-heavy, higher risk for higher return)</li>
+  </ul>
+
+  <h3>Step 2 — Inflation Projector</h3>
+  <p>File: <code>src/engine/inflationProjector.ts</code></p>
+  <p>If Arun says "I need ₹5 lakh for my daughter's education", that is the value <em>today</em>. In 10 years, education will cost more because of inflation. This function calculates the real target:</p>
+
+  <pre><code><span class="code-comment">// Formula: Future Value = Present Value × (1 + inflation rate)^years</span>
+<span class="code-comment">// Inflation rate assumed: 6% per year</span>
+
+₹5,00,000 × (1.06)^10 = <span class="code-lime">₹8,95,423</span>
+
+<span class="code-comment">// So Arun actually needs ~₹9 lakh, not ₹5 lakh.</span>
+<span class="code-comment">// This is what the "Corpus Target" card shows on the results screen.</span></code></pre>
+
+  <h3>Step 3 — Instrument Matcher</h3>
+  <p>File: <code>src/engine/instrumentMatcher.ts</code></p>
+  <p>This is the heart of the recommendation engine. It filters all 9 instruments through 4 gates:</p>
+
+  <table>
+    <tr><th>Gate</th><th>Question Asked</th><th>Example</th></tr>
+    <tr><td>Timeline</td><td>Is the instrument's minimum timeline ≤ the user's timeline?</td><td>SSY needs 15+ years. User has 10 years → SSY passes (10 ≥ 7-15 bucket)</td></tr>
+    <tr><td>Risk</td><td>Is the instrument's max risk profile ≥ user's profile?</td><td>ELSS is for Growth investors. Conservative user → ELSS fails</td></tr>
+    <tr><td>Goal</td><td>Does the instrument support this goal type?</td><td>SSY supports Child Education + Child Marriage only</td></tr>
+    <tr><td>Budget</td><td>Is the instrument's minimum monthly ≤ user's surplus?</td><td>NPS needs ₹500/month. User has ₹300 → NPS fails</td></tr>
+  </table>
+
+  <p>After filtering, instruments are sorted (government-backed first for conservative users), top 4 are selected, and allocations are assigned:</p>
+
+  <table>
+    <tr><th>Profile</th><th>Allocation Weights (top 4)</th></tr>
+    <tr><td>Conservative</td><td>50% / 30% / 15% / 5%</td></tr>
+    <tr><td>Balanced</td><td>40% / 30% / 20% / 10%</td></tr>
+    <tr><td>Growth</td><td>40% / 25% / 20% / 15%</td></tr>
+  </table>
+
+  <h3>Complete Example: Arun's Journey</h3>
+  <pre><code><span class="code-comment">// Input: Arun's answers</span>
+{
+  occupation:       "daily_wage",
+  experience:       "never",
+  riskTolerance:    "worry_and_wait",
+  timeline:         "seven_to_15",
+  inHandIncome:     2500,
+  monthlySurplus:   800,
+  goal:             "child_education",
+  goalAmount:       500000
+}
+
+<span class="code-comment">// Step 1: Risk Score</span>
+experience(0) + riskTolerance(10) + timeline(20) + occupation(3) = <span class="code-lime">33</span>
+→ Profile: <span class="code-lime">CONSERVATIVE</span>
+
+<span class="code-comment">// Step 2: Inflation Projection (10 years at 6%)</span>
+₹5,00,000 × 1.79 = <span class="code-lime">₹8,95,423</span>
+
+<span class="code-comment">// Step 3: Filtered instruments for CONSERVATIVE + child_education + 10yr + ₹800</span>
+SSY   ✅ (min ₹250, govt, child education, 7-15yr)
+PPF   ✅ (min ₹500, govt, child education, 7-15yr)
+NSC   ✅ (min ₹1000 — fails budget! ❌ if surplus &lt; 1000)
+RD    ✅ (min ₹100, bank, child education, 1-3yr)
+
+<span class="code-comment">// Step 4: Allocation (top 3, renormalized)</span>
+SSY: 50% → ₹400/month
+PPF: 30% → ₹240/month
+RD:  20% → ₹160/month</code></pre>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     CHAPTER 5
+═══════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="chapter-header">
+    <div class="chapter-num">5</div>
+    <h2>State Management<br>How the App Remembers</h2>
+  </div>
+
+  <div class="callout callout-orange">
+    <div class="callout-label">🧠 Analogy</div>
+    <p>Imagine the app is a conversation. You answer question 3. You move to question 4. The app needs to remember your answer to question 3. Without state management, every time you click "Next" the app forgets everything. State management is the app's memory.</p>
+  </div>
+
+  <h3>What is Zustand?</h3>
+  <p>Zustand (German for "state") is a library that creates a global store — like a shared whiteboard that any component in the app can read from or write to. It is much simpler than the older approach (Redux) and weighs only 1 kilobyte.</p>
+
+  <h3>The Three Stores</h3>
+
+  <h4>1. useOnboardingStore — The Quiz Memory</h4>
+  <p>Stores everything about the user's quiz progress:</p>
+  <pre><code>{
+  currentStep: 5,              <span class="code-comment">// which question they're on</span>
+  answers: {
+    name: "Arun",
+    occupation: "daily_wage",
+    goal: "child_education",
+    goalAmount: 500000,
+    timeline: "seven_to_15",
+    ... and 6 more
+  },
+  isComplete: false            <span class="code-comment">// has the quiz been finished?</span>
+}</code></pre>
+
+  <h4>2. useLanguageStore — The Language Memory</h4>
+  <p>Just one value — which language is active:</p>
+  <pre><code>{ language: "hi" }   <span class="code-comment">// or "en"</span></code></pre>
+
+  <h4>3. useResultsStore — The Results Memory</h4>
+  <p>Stores the computed recommendation so the results screen doesn't need to recalculate every time:</p>
+  <pre><code>{
+  result: {
+    riskScore: 33,
+    riskProfile: "CONSERVATIVE",
+    recommendations: [SSY, PPF, RD],
+    inflationProjection: { adjustedCorpus: 895423 }
+  }
+}</code></pre>
+
+  <h3>Why localStorage?</h3>
+  <p>All three stores are persisted to <code>localStorage</code> — the browser's built-in key-value storage. This means:</p>
+  <ul style="margin: 12px 0 12px 20px; line-height: 2.2;">
+    <li>If you close the browser tab and reopen it, your answers are still there</li>
+    <li>Your language preference is remembered across visits</li>
+    <li>The results page can be refreshed without losing data</li>
+  </ul>
+
+  <div class="strip">
+    <span class="strip-icon">🔍</span>
+    <div>
+      <h4>Try it yourself</h4>
+      <p>Open Chrome → F12 → Application tab → Local Storage → <code>niveshak-onboarding</code>. You can see your answers stored as JSON in real time as you fill the quiz.</p>
+    </div>
+  </div>
+
+  <h3>React Hooks — The Connector Layer</h3>
+  <p>Raw Zustand stores are like raw data. Hooks turn them into useful tools for the UI:</p>
+
+  <table>
+    <tr><th>Hook</th><th>What it provides to UI components</th></tr>
+    <tr>
+      <td><code>useOnboarding()</code></td>
+      <td>currentStep, currentStepData, goNext(), goPrev(), canContinue(), progress (0-100%)</td>
+    </tr>
+    <tr>
+      <td><code>useTranslation()</code></td>
+      <td><code>t('key')</code> function that returns Hindi or English based on active language</td>
+    </tr>
+    <tr>
+      <td><code>useRecommendation()</code></td>
+      <td>Runs riskScorer → inflationProjector → instrumentMatcher, returns full RecommendationResult</td>
+    </tr>
+  </table>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     CHAPTER 6
+═══════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="chapter-header">
+    <div class="chapter-num">6</div>
+    <h2>The 4 Screens<br>What the User Sees</h2>
+  </div>
+
+  <h3>Screen 1 — Landing Page <code>/</code></h3>
+  <div class="cards">
+    <div class="card">
+      <span class="card-icon">🦸</span>
+      <h4>Hero Section</h4>
+      <p>Big bold headline. Language toggle (EN/HI). "Get My Free Plan" CTA button that goes to /onboard.</p>
+    </div>
+    <div class="card">
+      <span class="card-icon">👥</span>
+      <h4>Persona Cards</h4>
+      <p>Shows Arun, Priya, Subhash — real-life examples. Clicking one pre-fills the quiz with their data for a demo.</p>
+    </div>
+    <div class="card">
+      <span class="card-icon">❓</span>
+      <h4>How It Works</h4>
+      <p>3 steps: Answer → Calculate → Get Plan. Builds trust before the user starts.</p>
+    </div>
+    <div class="card">
+      <span class="card-icon">🤝</span>
+      <h4>Partner CTA</h4>
+      <p>"Are you a bank or NBFC?" section that links to the Partner page.</p>
+    </div>
+  </div>
+
+  <h3>Screen 2 — Onboarding <code>/onboard</code></h3>
+  <p>This is the 11-step quiz. Each step is one question. The <code>OnboardingPage.tsx</code> reads the current step from <code>useOnboarding()</code> and renders the appropriate input component:</p>
+
+  <table>
+    <tr><th>Step</th><th>Question</th><th>Input Type</th></tr>
+    <tr><td>0</td><td>What is your name?</td><td>Text field</td></tr>
+    <tr><td>1</td><td>Which state do you live in?</td><td>Dropdown</td></tr>
+    <tr><td>2</td><td>What is your occupation?</td><td>Option list (8 choices)</td></tr>
+    <tr><td>3</td><td>Monthly take-home income?</td><td>Slider (₹2,000 – ₹5,00,000)</td></tr>
+    <tr><td>4</td><td>Monthly surplus after expenses?</td><td>Slider (₹500 – ₹3,00,000)</td></tr>
+    <tr><td>5</td><td>What do you want the money for?</td><td>Goal grid (8 icons)</td></tr>
+    <tr><td>6</td><td>How much money will you need?</td><td>Slider (₹50,000 – ₹2 Cr)</td></tr>
+    <tr><td>7</td><td>How soon do you need it?</td><td>Option list (6 timeframes)</td></tr>
+    <tr><td>8</td><td>How much can you set aside/month?</td><td>Slider (₹500 – ₹2,00,000)</td></tr>
+    <tr><td>9</td><td>Have you invested before?</td><td>Option list (5 experience levels)</td></tr>
+    <tr><td>10</td><td>If investment dropped 15%, what would you do?</td><td>Option list (4 reactions)</td></tr>
+  </table>
+
+  <p>On the last step, clicking "Next" calls <code>markComplete()</code> and navigates to <code>/results</code>.</p>
+
+  <h3>Screen 3 — Results <code>/results</code></h3>
+  <p>The payoff screen. Shows the complete personalised investment plan:</p>
+  <div class="cards">
+    <div class="card">
+      <span class="card-icon">🎯</span>
+      <h4>Score Ring</h4>
+      <p>Circular chart showing risk score (0–100) and profile label — "Conservative Investor"</p>
+    </div>
+    <div class="card">
+      <span class="card-icon">💰</span>
+      <h4>Corpus Card</h4>
+      <p>"You'll need ₹8.95L by 2036" — the inflation-adjusted target with a progress indicator</p>
+    </div>
+    <div class="card">
+      <span class="card-icon">📊</span>
+      <h4>Allocation Bar</h4>
+      <p>Visual bar showing the % split: SSY 50% | PPF 30% | RD 20%</p>
+    </div>
+    <div class="card">
+      <span class="card-icon">🏦</span>
+      <h4>Instrument Cards</h4>
+      <p>One card per recommended instrument with name, return rate, reason, and "Open Account" CTA</p>
+    </div>
+  </div>
+
+  <h3>Screen 4 — Partner <code>/partner</code></h3>
+  <p>A B2B page for banks and NBFCs. Contains a form with 4 fields:</p>
+  <ul style="margin: 12px 0 12px 20px; line-height: 2.4;">
+    <li><strong>Organisation name</strong> — e.g. "HDFC Bank"</li>
+    <li><strong>Contact person name</strong> — e.g. "Rajesh Agarwal"</li>
+    <li><strong>Product type</strong> — what they want to offer (MF, Insurance, FD, etc.)</li>
+    <li><strong>Phone or email</strong> — how to reach them</li>
+  </ul>
+  <p>On submit, <code>submitDemoLead()</code> fires and saves it to Supabase's <code>partner_leads</code> table. The form shows a loading spinner, then a success message.</p>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     CHAPTER 7
+═══════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="chapter-header">
+    <div class="chapter-num">7</div>
+    <h2>Language System<br>Hindi + English</h2>
+  </div>
+
+  <h3>Why Bilingual Matters</h3>
+  <p>English internet penetration in India is only about 30%. The remaining 70% of first-time investors are more comfortable in their regional language. Hindi reaches over 500 million people. Building bilingual from day one removes the single biggest barrier to adoption.</p>
+
+  <h3>How It Works — The Data Layer</h3>
+  <p>Every piece of user-facing text exists in both languages in the data files themselves. For example, in <code>steps.ts</code>:</p>
+
+  <pre><code>{
+  id: 'goal',
+  questionEn: <span class="code-string">'What do you want this money to do for you?'</span>,
+  questionHi: <span class="code-string">'\u0906\u092A \u092F\u0939 \u092A\u0948\u0938\u093E \u0915\u093F\u0938 \u0915\u093E\u092E \u092E\u0947\u0902 \u0932\u0917\u093E\u0928\u093E \u091A\u093E\u0939\u0924\u0947 \u0939\u0948\u0902?'</span>,
+  <span class="code-comment">// Those \u codes are Unicode for Devanagari letters</span>
+  <span class="code-comment">// In the browser they render as: आप यह पैसा किस काम में लगाना चाहते हैं?</span>
+}</code></pre>
+
+  <div class="callout callout-orange">
+    <div class="callout-label">⚠️ Important Technical Note</div>
+    <p>Hindi text is stored as <code>\uXXXX</code> Unicode escape codes (e.g. <code>\u0906</code> for "आ") rather than the actual Hindi characters. This is because Windows PowerShell — which we used to write files — corrupts Devanagari characters when saving. Unicode escapes avoid this problem entirely. The browser converts them back to readable Hindi automatically.</p>
+  </div>
+
+  <h3>The Language Toggle</h3>
+  <p>The <code>LanguageToggle</code> component in the header is a simple button. When clicked, it calls <code>useLanguageStore.setLanguage('hi')</code> or <code>'en'</code>. Because it's in Zustand (persisted to localStorage), the language choice survives page refreshes.</p>
+
+  <h3>The Translation Hook</h3>
+  <p>The <code>useTranslation</code> hook is how components access text:</p>
+
+  <pre><code><span class="code-keyword">const</span> { language } = useLanguageStore();
+
+<span class="code-comment">// To show a question:</span>
+<span class="code-keyword">const</span> question = language === <span class="code-string">'hi'</span>
+  ? step.questionHi
+  : step.questionEn;
+
+<span class="code-comment">// For an instrument name:</span>
+<span class="code-keyword">const</span> name = language === <span class="code-string">'hi'</span>
+  ? instrument.nameHi
+  : instrument.nameEn;</code></pre>
+
+  <h3>The 9 Instruments in Both Languages</h3>
+  <table>
+    <tr><th>ID</th><th>English Name</th><th>Hindi Name</th></tr>
+    <tr><td>sukanya_samriddhi</td><td>Sukanya Samriddhi Yojana</td><td>सुकन्या समृद्धि योजना</td></tr>
+    <tr><td>ppf</td><td>Public Provident Fund</td><td>पब्लिक प्रोविडेंट फंड</td></tr>
+    <tr><td>nsc</td><td>National Savings Certificate</td><td>राष्ट्रीय बचत प्रमाणपत्र</td></tr>
+    <tr><td>nps_tier1</td><td>National Pension System</td><td>राष्ट्रीय पेंशन प्रणाली</td></tr>
+    <tr><td>gold_sip</td><td>Digital Gold / Gold SIP</td><td>डिजिटल सोना / सोना SIP</td></tr>
+    <tr><td>bank_rd</td><td>Recurring Deposit</td><td>आवर्ती जमा (RD)</td></tr>
+    <tr><td>debt_mf</td><td>Debt Mutual Fund</td><td>डेट म्यूचुअल फंड</td></tr>
+    <tr><td>elss</td><td>ELSS Tax-Saving MF</td><td>ELSS कर-बचत म्यूचुअल फंड</td></tr>
+    <tr><td>nifty50_index</td><td>Nifty 50 Index Fund SIP</td><td>Nifty 50 इंडेक्स फंड SIP</td></tr>
+  </table>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     CHAPTER 8
+═══════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="chapter-header">
+    <div class="chapter-num">8</div>
+    <h2>The Database<br>Supabase Explained</h2>
+  </div>
+
+  <div class="callout callout-blue">
+    <div class="callout-label">🧠 Analogy</div>
+    <p>Supabase is like Google Sheets for your app, but much more powerful. Instead of a spreadsheet, it's a proper PostgreSQL database. Instead of sharing a link, your app talks to it via an API. Instead of everyone having full access, you set rules (RLS policies) for who can see what.</p>
+  </div>
+
+  <h3>What We're Using Supabase For</h3>
+  <p>Currently, only one thing: <strong>storing partner demo requests</strong>. When a bank fills the Partner form, that data goes to Supabase.</p>
+
+  <h3>The partner_leads Table</h3>
+  <pre><code><span class="code-keyword">create table</span> public.partner_leads (
+  id            uuid <span class="code-keyword">primary key default</span> gen_random_uuid(),
+  org_name      text <span class="code-keyword">not null</span>,       <span class="code-comment">-- "HDFC Bank"</span>
+  contact_name  text <span class="code-keyword">not null</span>,       <span class="code-comment">-- "Rajesh Agarwal"</span>
+  product_type  text <span class="code-keyword">not null</span>,       <span class="code-comment">-- "Mutual Funds"</span>
+  phone_email   text <span class="code-keyword">not null</span>,       <span class="code-comment">-- "rajesh@hdfc.com"</span>
+  created_at    timestamptz <span class="code-keyword">default</span> now() <span class="code-comment">-- auto timestamp</span>
+);</code></pre>
+
+  <h3>Row Level Security (RLS) — Why It Matters</h3>
+  <p>RLS is a set of rules that controls who can do what with the data. We set up two rules:</p>
+
+  <table>
+    <tr><th>Policy Name</th><th>Who</th><th>What They Can Do</th><th>Why</th></tr>
+    <tr>
+      <td><code>anon_insert_leads</code></td>
+      <td>Anyone (even without login)</td>
+      <td>INSERT only</td>
+      <td>The form on the website needs to save leads without user authentication</td>
+    </tr>
+    <tr>
+      <td><code>auth_select_leads</code></td>
+      <td>Authenticated users only</td>
+      <td>SELECT only</td>
+      <td>Only you (logged into Supabase) can view the collected leads</td>
+    </tr>
+  </table>
+
+  <div class="callout callout-lime">
+    <div class="callout-label">🔐 Security Note</div>
+    <p>The anon key in the frontend code is safe to expose because RLS policies restrict it to INSERT only. Even if someone copies the anon key from the browser, they can only submit leads — they cannot read anyone else's data, delete records, or modify the table structure.</p>
+  </div>
+
+  <h3>How the Form Saves Data</h3>
+  <p>The flow from button click to database row:</p>
+  <div class="flow">
+    <div class="flow-step">
+      <div class="flow-left"><div class="flow-dot">1</div><div class="flow-line"></div></div>
+      <div class="flow-content"><h4>User clicks "Request Demo"</h4><p>DemoRequestForm.tsx calls <code>submitDemoLead(formData)</code></p></div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-left"><div class="flow-dot">2</div><div class="flow-line"></div></div>
+      <div class="flow-content"><h4>lib/supabase.ts runs</h4><p>Checks if Supabase is configured. Calls <code>supabase.from('partner_leads').insert([...])</code></p></div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-left"><div class="flow-dot">3</div><div class="flow-line"></div></div>
+      <div class="flow-content"><h4>Supabase API receives the request</h4><p>Validates the anon key, checks RLS policy, inserts the row</p></div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-left"><div class="flow-dot">4</div><div class="flow-line"></div></div>
+      <div class="flow-content"><h4>UI shows success or error</h4><p>Form resets, button re-enables. You can now see the row in Supabase Table Editor.</p></div>
+    </div>
+  </div>
+
+  <h3>Your Supabase Project Details</h3>
+  <table>
+    <tr><th>Item</th><th>Value</th></tr>
+    <tr><td>Project URL</td><td><code>https://biahaugabildprbvummf.supabase.co</code></td></tr>
+    <tr><td>Region</td><td>South Asia (Mumbai) — ap-south-1</td></tr>
+    <tr><td>Plan</td><td>Nano (free tier)</td></tr>
+    <tr><td>Table</td><td>partner_leads</td></tr>
+  </table>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     CHAPTER 9
+═══════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="chapter-header">
+    <div class="chapter-num">9</div>
+    <h2>Deployment<br>How the World Sees It</h2>
+  </div>
+
+  <h3>The Build Process</h3>
+  <p>When you run <code>npm run build</code>, two things happen:</p>
+  <ol class="numlist">
+    <li><strong>TypeScript compiler</strong> checks every file for type errors. If anything is wrong, it stops here.</li>
+    <li><strong>Vite bundler</strong> takes all 349 modules and compresses them into a small set of optimised files in the <code>dist/</code> folder.</li>
+  </ol>
+
+  <p>The output is: 16 total files, ~415 KB total (after gzip compression: ~130 KB).</p>
+
+  <h3>Code Splitting — Why the App Loads Fast</h3>
+  <p>Instead of one giant JavaScript file, the app is split into chunks. The browser only downloads what it needs right now:</p>
+
+  <table>
+    <tr><th>Chunk File</th><th>Contents</th><th>When Loaded</th><th>Size (gzip)</th></tr>
+    <tr><td>vendor.js</td><td>React, ReactDOM, React Router</td><td>Always (every page)</td><td>73 KB</td></tr>
+    <tr><td>i18n.js</td><td>Translation library + all strings</td><td>Always</td><td>26 KB</td></tr>
+    <tr><td>zustand.js</td><td>State management library</td><td>Always</td><td>1 KB</td></tr>
+    <tr><td>LandingPage.js</td><td>Landing screen components</td><td>Only on /</td><td>1.7 KB</td></tr>
+    <tr><td>OnboardingPage.js</td><td>Quiz components</td><td>Only on /onboard</td><td>6.7 KB</td></tr>
+    <tr><td>ResultsPage.js</td><td>Results components + engine</td><td>Only on /results</td><td>6.9 KB</td></tr>
+    <tr><td>PartnerPage.js</td><td>Partner form</td><td>Only on /partner</td><td>1.7 KB</td></tr>
+  </table>
+
+  <h3>Progressive Web App (PWA)</h3>
+  <p>The app is a PWA — it behaves like a native mobile app even though it's a website:</p>
+
+  <div class="cards">
+    <div class="card">
+      <span class="card-icon">📱</span>
+      <h4>Installable</h4>
+      <p>On mobile Chrome, users see "Add to Home Screen". The app opens full screen without browser bars.</p>
+    </div>
+    <div class="card">
+      <span class="card-icon">⚡</span>
+      <h4>Offline Shell</h4>
+      <p>Service worker caches all JS/CSS files. The app loads instantly on repeat visits, even with slow internet.</p>
+    </div>
+    <div class="card">
+      <span class="card-icon">🔤</span>
+      <h4>Font Caching</h4>
+      <p>Google Fonts (Inter) cached for 1 year. No font flash on repeat visits, even offline.</p>
+    </div>
+    <div class="card">
+      <span class="card-icon">🔒</span>
+      <h4>Security Headers</h4>
+      <p>X-Frame-Options, X-Content-Type-Options, Referrer-Policy — prevents common web attacks.</p>
+    </div>
+  </div>
+
+  <h3>Vercel Deployment</h3>
+  <p>Vercel is the hosting platform. Every time <code>vercel --prod</code> is run from the terminal, it:</p>
+  <ol class="numlist">
+    <li>Uploads the source code to Vercel's servers in Washington DC</li>
+    <li>Runs <code>npm install</code> and <code>npm run build</code> on their servers</li>
+    <li>Distributes the <code>dist/</code> folder to a global Content Delivery Network (CDN)</li>
+    <li>Users in Mumbai get files from a Mumbai server. Users in Singapore from Singapore. Load time: &lt;100ms.</li>
+  </ol>
+
+  <h3>The SPA Rewrite Rule</h3>
+  <p>This is a subtlety about Single Page Applications. The app only has one HTML file (<code>index.html</code>). All routing (<code>/onboard</code>, <code>/results</code>) is handled by React Router in the browser.</p>
+  <p>But if a user pastes <code>https://niveshak-web.vercel.app/results</code> directly into their browser, the server would look for a file at <code>/results</code>, not find it, and return a 404. The fix in <code>vercel.json</code>:</p>
+
+  <pre><code><span class="code-comment">// Redirect ALL URL paths to index.html</span>
+<span class="code-comment">// React Router then reads the URL and shows the right screen</span>
+{
+  "rewrites": [
+    {
+      "source": "/((?!assets|sw|manifest).*)",
+      "destination": "/index.html"
+    }
+  ]
+}</code></pre>
+
+  <h3>Live URLs</h3>
+  <table>
+    <tr><th>URL</th><th>What It Is</th></tr>
+    <tr><td><code>https://niveshak-web.vercel.app</code></td><td>Clean alias — share this publicly</td></tr>
+    <tr><td><code>https://github.com/Arijit-Cosmic-Learner/-niveshak-ai</code></td><td>Source code on GitHub</td></tr>
+    <tr><td><code>https://biahaugabildprbvummf.supabase.co</code></td><td>Supabase project dashboard</td></tr>
+  </table>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     CHAPTER 10
+═══════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="chapter-header">
+    <div class="chapter-num">10</div>
+    <h2>What's Still Left<br>to Build</h2>
+  </div>
+
+  <h3>🔴 Immediate (Before Sharing Publicly)</h3>
+  <table>
+    <tr><th>Feature</th><th>What it is</th><th>Effort</th></tr>
+    <tr>
+      <td><strong>Run Supabase Migration</strong></td>
+      <td>The SQL for <code>partner_leads</code> table needs to be executed in Supabase SQL Editor (copy-paste + run)</td>
+      <td>5 mins</td>
+    </tr>
+    <tr>
+      <td><strong>Test the full flow</strong></td>
+      <td>Go through the live site end-to-end — onboarding → results → partner form submit → verify row appears in Supabase</td>
+      <td>15 mins</td>
+    </tr>
+  </table>
+
+  <h3>🟡 High Priority (Week 1)</h3>
+  <table>
+    <tr><th>Feature</th><th>Why It Matters</th><th>How It Works</th></tr>
+    <tr>
+      <td><strong>AI Explanation Card</strong></td>
+      <td>This is the #1 differentiator — "Why did I get these recommendations?" answered in 2-3 sentences by Claude</td>
+      <td>Supabase Edge Function calls Anthropic API with user's profile → returns explanation → shown on Results screen</td>
+    </tr>
+    <tr>
+      <td><strong>Analytics</strong></td>
+      <td>Need to know: how many people start the quiz? How many finish? Where do they drop off?</td>
+      <td>Add <code>&lt;Analytics /&gt;</code> from Vercel Analytics package — one line of code</td>
+    </tr>
+    <tr>
+      <td><strong>Custom Domain</strong></td>
+      <td>niveshak.ai looks professional; .vercel.app looks like a prototype</td>
+      <td>Buy domain → add in Vercel dashboard → add DNS CNAME record at registrar</td>
+    </tr>
+  </table>
+
+  <h3>🟢 Medium Priority (Month 1)</h3>
+  <table>
+    <tr><th>Feature</th><th>Description</th></tr>
+    <tr><td><strong>Share Results</strong></td><td>"Share my plan" button generates a unique URL that encodes the recommendations — user can send to family/advisor</td></tr>
+    <tr><td><strong>Admin Dashboard</strong></td><td>Simple password-protected page showing all partner leads collected in Supabase — so you can follow up</td></tr>
+    <tr><td><strong>SIP Calculator</strong></td><td>Interactive chart on Results screen showing how monthly SIP amount compounds to the corpus target over time</td></tr>
+    <tr><td><strong>WhatsApp CTA</strong></td><td>"Send plan to WhatsApp" button — critical for India where WhatsApp is the primary communication channel</td></tr>
+    <tr><td><strong>PDF Export</strong></td><td>Download the investment plan as a nicely formatted PDF to show at a bank</td></tr>
+  </table>
+
+  <h3>🔵 Future (Quarter 1)</h3>
+  <table>
+    <tr><th>Feature</th><th>Description</th></tr>
+    <tr><td><strong>More Instruments</strong></td><td>Sovereign Gold Bonds, REITs, InvITs, SCSS (Senior Citizens Savings Scheme), Kisan Vikas Patra</td></tr>
+    <tr><td><strong>State-Specific Schemes</strong></td><td>Many state governments have schemes. Step 1 collects state — wire it to filter schemes available only in that state</td></tr>
+    <tr><td><strong>React Native App</strong></td><td>Port the web app to the existing Expo mobile project for Play Store / App Store distribution</td></tr>
+    <tr><td><strong>Partner Dashboard</strong></td><td>Separate login portal for partner banks to see their recommendation traffic and lead quality</td></tr>
+    <tr><td><strong>Hindi Voice Input</strong></td><td>Web Speech API — users speak their answers in Hindi, no typing needed</td></tr>
+  </table>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     CHAPTER 11 — GLOSSARY
+═══════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="chapter-header">
+    <div class="chapter-num">11</div>
+    <h2>Glossary<br>Every Tech Term Explained</h2>
+  </div>
+
+  <table>
+    <tr><th>Term</th><th>Plain English Explanation</th></tr>
+    <tr><td><strong>React</strong></td><td>A JavaScript library made by Meta (Facebook) for building user interfaces. You describe what the screen should look like, React handles making it happen efficiently.</td></tr>
+    <tr><td><strong>Component</strong></td><td>A reusable piece of UI — like a Button, a Card, or an entire Page. Write once, use many times.</td></tr>
+    <tr><td><strong>TypeScript</strong></td><td>JavaScript with types. If you say a variable is a number and try to put a word in it, TypeScript screams at you before the app even runs.</td></tr>
+    <tr><td><strong>Vite</strong></td><td>The tool that takes your 349 source files and compiles them into 16 optimised files a browser can understand. Very fast — takes 0.7 seconds for this project.</td></tr>
+    <tr><td><strong>Tailwind CSS</strong></td><td>A styling toolkit. Instead of writing <code>color: #AAFF00</code> in a CSS file, you write <code>text-lime</code> in the HTML. All styles are generated from utility classes.</td></tr>
+    <tr><td><strong>Zustand</strong></td><td>A tiny library (1KB) that creates a global state store — a shared memory that any component can read or write. Automatically saved to localStorage.</td></tr>
+    <tr><td><strong>Hook</strong></td><td>A React function that starts with "use" — like <code>useOnboarding()</code>. Hooks let components access shared logic without copy-pasting code.</td></tr>
+    <tr><td><strong>localStorage</strong></td><td>A key-value store built into every browser. Data persists across page refreshes. Max size ~5MB. Used to save quiz answers and language preference.</td></tr>
+    <tr><td><strong>Supabase</strong></td><td>An open-source Firebase alternative. Gives you a PostgreSQL database, API, authentication, and storage — all managed, no server setup required.</td></tr>
+    <tr><td><strong>PostgreSQL</strong></td><td>One of the world's most popular open-source relational databases. Supabase uses it under the hood.</td></tr>
+    <tr><td><strong>RLS (Row Level Security)</strong></td><td>A database feature that lets you write rules like "users can only see their own rows". We use it so only authenticated users can read partner leads.</td></tr>
+    <tr><td><strong>API</strong></td><td>Application Programming Interface — a way for two programs to talk to each other. Supabase provides a REST API so the app can read/write the database over HTTPS.</td></tr>
+    <tr><td><strong>Vercel</strong></td><td>A hosting platform optimised for frontend apps. One command (`vercel --prod`) deploys your app globally in under a minute.</td></tr>
+    <tr><td><strong>CDN</strong></td><td>Content Delivery Network — a network of servers worldwide. Vercel serves your app from the server closest to the user, so load times are fast everywhere.</td></tr>
+    <tr><td><strong>PWA</strong></td><td>Progressive Web App — a website that behaves like a native mobile app. Installable, offline-capable, full screen.</td></tr>
+    <tr><td><strong>Service Worker</strong></td><td>A background script (<code>sw.js</code>) the browser runs separately from the page. It intercepts network requests and serves cached files when offline.</td></tr>
+    <tr><td><strong>Workbox</strong></td><td>Google's library for writing service workers easily. We use CacheFirst strategy — serve from cache first, network only if cache misses.</td></tr>
+    <tr><td><strong>Code Splitting</strong></td><td>Breaking the app's JavaScript into multiple files (chunks). The browser only downloads the chunk it needs — makes first load faster.</td></tr>
+    <tr><td><strong>Lazy Loading</strong></td><td>Delaying loading of a component until it's actually needed. The Results page code isn't downloaded until the user navigates to /results.</td></tr>
+    <tr><td><strong>SPA</strong></td><td>Single Page Application — the entire app lives in one HTML file. Navigation between pages doesn't reload the page; React Router swaps the content instead.</td></tr>
+    <tr><td><strong>i18n</strong></td><td>Internationalisation (abbreviated because there are 18 letters between the i and n). The practice of making software work in multiple languages.</td></tr>
+    <tr><td><strong>Unicode / \uXXXX</strong></td><td>Unicode is the standard for encoding text in all world's languages. <code>\u0906</code> is the code for "आ" in Devanagari. Used to safely store Hindi in English-encoded files.</td></tr>
+    <tr><td><strong>Git</strong></td><td>Version control — tracks every change made to the code. Like "track changes" in Word but for code. Every commit is a saved snapshot you can go back to.</td></tr>
+    <tr><td><strong>GitHub</strong></td><td>A website that hosts git repositories (code history). Also the remote backup of the project.</td></tr>
+    <tr><td><strong>Pure Function</strong></td><td>A function where the output depends only on the input. Given the same input, always returns the same output. No side effects. Easy to test.</td></tr>
+    <tr><td><strong>env vars</strong></td><td>Environment variables — secret configuration values (like API keys) that live outside the code. Stored in <code>.env.local</code> file locally, in Vercel settings for production.</td></tr>
+    <tr><td><strong>anon key</strong></td><td>Supabase's public API key — safe to expose in frontend code because RLS policies limit what it can do.</td></tr>
+    <tr><td><strong>ELSS</strong></td><td>Equity Linked Savings Scheme — a type of mutual fund with a 3-year lock-in that qualifies for tax deduction under Section 80C.</td></tr>
+    <tr><td><strong>SSY</strong></td><td>Sukanya Samriddhi Yojana — government savings scheme for a girl child. 8.2% interest, tax-free. Minimum ₹250/month.</td></tr>
+    <tr><td><strong>NPS</strong></td><td>National Pension System — government-regulated retirement savings. Low cost, equity+debt mix, locked till age 60.</td></tr>
+    <tr><td><strong>PPF</strong></td><td>Public Provident Fund — 15-year government savings. 7.1% compound interest. Tax-free under EEE status.</td></tr>
+  </table>
+
+  <hr class="divider">
+
+  <div class="strip">
+    <span class="strip-icon">🚀</span>
+    <div>
+      <h4>You now understand everything that was built.</h4>
+      <p>The next session continues with the AI explanation feature — wiring Claude to explain each personalised plan in plain Hindi/English. That's what turns Niveshak.AI from a calculator into an advisor.</p>
+    </div>
+  </div>
+
+  <p style="text-align:center; color:#aaa; font-size:13px; margin-top:48px;">
+    Niveshak.AI Learning Guide · Built with GitHub Copilot · March 2026<br>
+    <strong style="color:#333;">niveshak-web.vercel.app</strong>
+  </p>
+</div>
+
+</body>
+</html>

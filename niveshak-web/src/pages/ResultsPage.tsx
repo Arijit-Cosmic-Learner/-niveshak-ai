@@ -9,6 +9,7 @@ import { CorpusCard } from '@components/results/CorpusCard';
 import { AllocationBar } from '@components/results/AllocationBar';
 import { AllocationCard } from '@components/results/AllocationCard';
 import { InstrumentCard } from '@components/results/InstrumentCard';
+import { AIExplanationCard } from '@components/results/AIExplanationCard';
 import { Disclaimer } from '@components/common/Disclaimer';
 import { Button } from '@components/common/Button';
 
@@ -106,6 +107,9 @@ export default function ResultsPage() {
           ))}
         </div>
       </div>
+
+      {/* AI Explanation */}
+      <AIExplanationCard />
 
       {/* Recalculate */}
       <Button variant="ghost" fullWidth onClick={() => navigate('/discover')}>

@@ -1,25 +1,100 @@
 /**
- * anthropic.ts — Stub for future AI-powered plan explanation.
+ * anthropic.ts — Calls the Supabase Edge Function to get an AI
+ * explanation of the user's personalised investment plan.
  *
- * When VITE_ANTHROPIC_API_KEY is set, this client can generate
- * a natural-language summary of the recommendation result.
- *
- * NOTE: Calling Anthropic directly from the browser leaks your API key.
- * Wire this through a Supabase Edge Function or Vercel serverless route
- * before enabling in production.
+ * The Edge Function holds the ANTHROPIC_API_KEY server-side.
+ * The browser only sends user profile data + receives the explanation.
  */
 
-export const ANTHROPIC_AVAILABLE =
-  Boolean(import.meta.env.VITE_ANTHROPIC_API_KEY) &&
-  import.meta.env.PROD === false; // Only allow in dev for now
+import type { RecommendationResult } from '@t/instruments';
+import type { OnboardingAnswers } from '@t/onboarding';
+
+export interface AIExplanationPayload {
+  riskScore: number;
+  riskProfile: string;
+  riskProfileLabel: string;
+  goalType: string;
+  goalAmount: number;
+  adjustedCorpus: number;
+  timeline: string;
+  monthlyInvestment: number;
+  instruments: Array<{
+    name: string;
+    allocationPercent: number;
+    monthlyAmount: number;
+    returnsLabel: string;
+    isGovernmentBacked: boolean;
+  }>;
+  language: 'en' | 'hi';
+  userName: string;
+}
+
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL as string;
+const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY as string;
+
+const EDGE_FN_URL = SUPABASE_URL
+  ? `${SUPABASE_URL}/functions/v1/explain-recommendation`
+  : '';
 
 /**
- * Placeholder — replace body with an Edge Function call when ready.
- * Returns null if Anthropic is not yet configured.
+ * Builds the payload from the recommendation result + onboarding answers.
  */
-export async function explainPlan(_planSummary: string): Promise<string | null> {
-  if (!ANTHROPIC_AVAILABLE) return null;
+export function buildExplanationPayload(
+  result: RecommendationResult,
+  answers: OnboardingAnswers,
+  language: 'en' | 'hi'
+): AIExplanationPayload {
+  return {
+    riskScore: result.riskScore,
+    riskProfile: result.riskProfile,
+    riskProfileLabel:
+      language === 'hi' ? result.riskProfileLabelHi : result.riskProfileLabelEn,
+    goalType: answers.goal ?? 'GROW_WEALTH',
+    goalAmount: answers.goalAmount ?? 0,
+    adjustedCorpus: result.inflationProjection.adjustedCorpus,
+    timeline: answers.timeline ?? 'NOT_SURE',
+    monthlyInvestment: answers.monthlyInvestment ?? 0,
+    instruments: result.recommendations.map((rec) => ({
+      name:
+        language === 'hi' ? rec.instrument.nameHi : rec.instrument.nameEn,
+      allocationPercent: rec.allocationPercent,
+      monthlyAmount: rec.monthlyAmount,
+      returnsLabel: rec.instrument.returnsLabel,
+      isGovernmentBacked: rec.instrument.isGovernmentBacked,
+    })),
+    language,
+    userName: answers.name ?? '',
+  };
+}
 
-  // TODO: call /api/explain-plan (Supabase Edge Function) with planSummary
-  return null;
+/**
+ * Calls the explain-recommendation Edge Function.
+ * Returns the explanation text, or throws on failure.
+ */
+export async function fetchAIExplanation(
+  payload: AIExplanationPayload,
+  signal?: AbortSignal
+): Promise<string> {
+  if (!EDGE_FN_URL || !SUPABASE_ANON_KEY) {
+    throw new Error('Supabase not configured');
+  }
+
+  const res = await fetch(EDGE_FN_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+      apikey: SUPABASE_ANON_KEY,
+    },
+    body: JSON.stringify(payload),
+    signal,
+  });
+
+  if (!res.ok) {
+    const body = await res.text();
+    throw new Error(`AI explanation failed (${res.status}): ${body}`);
+  }
+
+  const data: { explanation: string } = await res.json();
+  return data.explanation;
 }
