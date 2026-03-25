@@ -10,14 +10,26 @@ import type { RecommendationResult } from '@t/instruments';
 import type { OnboardingAnswers } from '@t/onboarding';
 
 export interface AIExplanationPayload {
+  // Risk
   riskScore: number;
   riskProfile: string;
   riskProfileLabel: string;
+  // User profile
+  userName: string;
+  state: string;
+  occupation: string;
+  inHandIncome: number;
+  monthlySurplus: number;
+  experience: string;
+  riskTolerance: string;
+  // Goal
   goalType: string;
   goalAmount: number;
   adjustedCorpus: number;
+  yearsToGoal: number;
   timeline: string;
   monthlyInvestment: number;
+  // Instruments
   instruments: Array<{
     name: string;
     allocationPercent: number;
@@ -26,7 +38,6 @@ export interface AIExplanationPayload {
     isGovernmentBacked: boolean;
   }>;
   language: 'en' | 'hi';
-  userName: string;
 }
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL as string;
@@ -49,9 +60,17 @@ export function buildExplanationPayload(
     riskProfile: result.riskProfile,
     riskProfileLabel:
       language === 'hi' ? result.riskProfileLabelHi : result.riskProfileLabelEn,
+    userName: answers.name ?? 'Friend',
+    state: answers.state ?? '',
+    occupation: answers.occupation ?? '',
+    inHandIncome: answers.inHandIncome ?? 0,
+    monthlySurplus: answers.monthlySurplus ?? 0,
+    experience: answers.experience ?? '',
+    riskTolerance: answers.riskTolerance ?? '',
     goalType: answers.goal ?? 'GROW_WEALTH',
     goalAmount: answers.goalAmount ?? 0,
     adjustedCorpus: result.inflationProjection.adjustedCorpus,
+    yearsToGoal: result.inflationProjection.yearsToGoal,
     timeline: answers.timeline ?? 'NOT_SURE',
     monthlyInvestment: answers.monthlyInvestment ?? 0,
     instruments: result.recommendations.map((rec) => ({
@@ -63,7 +82,6 @@ export function buildExplanationPayload(
       isGovernmentBacked: rec.instrument.isGovernmentBacked,
     })),
     language,
-    userName: answers.name ?? '',
   };
 }
 

@@ -11,14 +11,26 @@ const CORS_HEADERS = {
 };
 
 interface RequestPayload {
+  // Risk
   riskScore: number;
   riskProfile: string;
   riskProfileLabel: string;
+  // User profile
+  userName: string;
+  state: string;
+  occupation: string;
+  inHandIncome: number;
+  monthlySurplus: number;
+  experience: string;
+  riskTolerance: string;
+  // Goal
   goalType: string;
   goalAmount: number;
   adjustedCorpus: number;
+  yearsToGoal: number;
   timeline: string;
   monthlyInvestment: number;
+  // Instruments
   instruments: Array<{
     name: string;
     allocationPercent: number;
@@ -27,7 +39,10 @@ interface RequestPayload {
     isGovernmentBacked: boolean;
   }>;
   language: 'en' | 'hi';
-  userName: string;
+}
+
+function readable(val: string): string {
+  return val.replace(/_/g, ' ').toLowerCase();
 }
 
 function buildPrompt(p: RequestPayload): string {
@@ -40,30 +55,41 @@ function buildPrompt(p: RequestPayload): string {
 
   const lang =
     p.language === 'hi'
-      ? 'Reply ONLY in simple Hindi (Devanagari script). Use short sentences a daily-wage worker would understand.'
-      : 'Reply ONLY in simple English. Use short sentences a first-time investor with basic education would understand.';
+      ? 'Reply ONLY in simple Hindi (Devanagari script). Use very short sentences. Write like you are talking to a daily-wage worker.'
+      : 'Reply ONLY in simple English. Write like a trusted friend giving advice. No jargon.';
 
-  return `You are Niveshak.AI, a friendly Indian financial advisor for first-time investors.
+  return `You are Niveshak AI \u2014 a warm, knowledgeable Indian financial advisor helping first-time investors.
 
-A user named ${p.userName} just completed their risk assessment.
+USER PROFILE:
+- Name: ${p.userName}
+- State: ${p.state || 'India'}
+- Occupation: ${readable(p.occupation)}
+- Monthly take-home income: \u20B9${p.inHandIncome.toLocaleString('en-IN')}
+- Monthly surplus available to invest: \u20B9${p.monthlySurplus.toLocaleString('en-IN')}
+- Past investment experience: ${readable(p.experience)}
+- Reaction to a 15% market drop: ${readable(p.riskTolerance)}
+- Risk Score: ${p.riskScore}/100 \u2192 ${p.riskProfileLabel}
 
-PROFILE:
-- Risk Score: ${p.riskScore}/100 (${p.riskProfileLabel} investor)
-- Goal: ${p.goalType.replace(/_/g, ' ').toLowerCase()}
-- Target amount today: \u20B9${p.goalAmount.toLocaleString('en-IN')}
-- Inflation-adjusted target: \u20B9${p.adjustedCorpus.toLocaleString('en-IN')}
-- Timeline: ${p.timeline.replace(/_/g, ' ').toLowerCase()}
-- Monthly investment capacity: \u20B9${p.monthlyInvestment.toLocaleString('en-IN')}
+FINANCIAL GOAL:
+- Goal: ${readable(p.goalType)}
+- Amount needed in today's value: \u20B9${p.goalAmount.toLocaleString('en-IN')}
+- Inflation-adjusted target in ${p.yearsToGoal} years: \u20B9${p.adjustedCorpus.toLocaleString('en-IN')}
+- Timeline: ${readable(p.timeline)}
+- Committed monthly investment: \u20B9${p.monthlyInvestment.toLocaleString('en-IN')}
 
-RECOMMENDED INSTRUMENTS:
+RECOMMENDED INVESTMENT PLAN:
 ${instrumentLines}
 
-TASK:
-Write a 2\u20133 sentence personalised explanation of WHY these specific instruments were chosen for this person. Mention their risk profile and goal. Be warm and encouraging. Do NOT use jargon. Do NOT list the instruments again.
+YOUR TASK:
+Write a personalised advisory note of exactly 3\u20134 sentences for ${p.userName}.
+- Sentence 1: Acknowledge their specific life situation (occupation, income level, experience).
+- Sentence 2: Explain why THIS specific combination of instruments suits their goal and timeline.
+- Sentence 3: Highlight ONE concrete advantage of the top instrument for their exact situation.
+- Sentence 4: End with a warm, encouraging statement about their financial future.
 
 ${lang}
 
-Do NOT include any greeting or sign-off. Just the explanation.`;
+Do NOT list instruments. Do NOT use bullet points. Write flowing prose only. Do NOT include a greeting or sign-off.`;
 }
 
 // ─── Anthropic Provider ──────────────────────────────────────────
@@ -93,7 +119,7 @@ async function callAnthropic(prompt: string, apiKey: string): Promise<string> {
 
 // ─── Gemini Provider (free tier) ─────────────────────────────────
 async function callGemini(prompt: string, apiKey: string): Promise<string> {
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
 
   const res = await fetch(url, {
     method: 'POST',
