@@ -11,7 +11,7 @@ const NAV_ITEMS = [
 export function BottomNav() {
   const { t } = useTranslation();
   return (
-    <nav className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-mobile z-50 bg-card border-t border-line flex items-stretch">
+    <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-card border-t border-line flex items-stretch">
       {NAV_ITEMS.map(item => (
         <NavLink
           key={item.to}

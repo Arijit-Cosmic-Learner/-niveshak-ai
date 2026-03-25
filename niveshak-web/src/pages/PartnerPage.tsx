@@ -12,39 +12,42 @@ const VALUE_PROPS = [
 export default function PartnerPage() {
   const { t } = useTranslation();
   return (
-    <div className="flex flex-col gap-8 px-5 py-6">
+    <div className="max-w-7xl mx-auto w-full px-5 py-6">
       {/* Hero */}
-      <div>
-        <h1 className="font-sora font-extrabold text-content text-2xl leading-tight mb-3">
+      <div className="mb-8">
+        <h1 className="font-sora font-extrabold text-content text-2xl md:text-3xl leading-tight mb-3">
           {t('partner.heroTitle')}
         </h1>
         <p className="text-sub text-sm leading-relaxed">{t('partner.heroSub')}</p>
       </div>
 
-      {/* Revenue model */}
+      {/* Revenue model — full width */}
       <RevenueModelGrid />
 
-      {/* Value props */}
-      <div>
-        <p className="text-[10px] font-semibold text-accent uppercase tracking-widest mb-4">
-          {t('partner.valueProp.label')}
-        </p>
-        <div className="flex flex-col gap-3">
-          {VALUE_PROPS.map(item => (
-            <ValuePropCard
-              key={item.titleKey}
-              icon={item.icon}
-              title={t(item.titleKey)}
-              desc={t(item.descKey)}
-            />
-          ))}
+      {/* 2-col on desktop: value props left, form right */}
+      <div className="md:grid md:grid-cols-2 md:gap-10 mt-8">
+        {/* Left: value props */}
+        <div>
+          <p className="text-[10px] font-semibold text-accent uppercase tracking-widest mb-4">
+            {t('partner.valueProp.label')}
+          </p>
+          <div className="flex flex-col gap-3">
+            {VALUE_PROPS.map(item => (
+              <ValuePropCard
+                key={item.titleKey}
+                icon={item.icon}
+                title={t(item.titleKey)}
+                desc={t(item.descKey)}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Right: demo form */}
+        <div className="mt-8 md:mt-0">
+          <DemoRequestForm />
         </div>
       </div>
-
-      <div className="h-px bg-line" />
-
-      {/* Demo form */}
-      <DemoRequestForm />
     </div>
   );
 }

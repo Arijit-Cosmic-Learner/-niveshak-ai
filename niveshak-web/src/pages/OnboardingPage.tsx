@@ -132,34 +132,38 @@ export default function OnboardingPage() {
   };
 
   return (
-    <div className="flex flex-col px-5 py-6 gap-6 min-h-[calc(100dvh-56px-64px)]">
-      <QuestionCard
-        questionEn={questionEn}
-        questionHi={questionHi}
-        subEn={subEn}
-        subHi={subHi}
-        stepCurrent={currentStep + 1}
-        stepTotal={totalSteps}
-        progress={progress}
-      >
-        {renderInput()}
-      </QuestionCard>
+    <div className="min-h-[calc(100vh-57px)] md:flex md:items-center md:justify-center md:px-8 md:py-12">
+      <div className="w-full md:max-w-xl md:bg-card md:border md:border-line md:rounded-xl md:shadow-sm">
+        <div className="flex flex-col px-5 py-6 gap-6 md:min-h-0">
+          <QuestionCard
+            questionEn={questionEn}
+            questionHi={questionHi}
+            subEn={subEn}
+            subHi={subHi}
+            stepCurrent={currentStep + 1}
+            stepTotal={totalSteps}
+            progress={progress}
+          >
+            {renderInput()}
+          </QuestionCard>
 
-      {/* Navigation */}
-      <div className={`flex gap-3 mt-auto pt-2 ${isFirstStep ? '' : ''}`}>
-        {!isFirstStep && (
-          <Button variant="ghost" onClick={goPrev} className="flex-1">
-            {t('onboarding.back')}
-          </Button>
-        )}
-        <Button
-          onClick={goNext}
-          disabled={!canContinue()}
-          fullWidth={isFirstStep}
-          className={isFirstStep ? '' : 'flex-[2]'}
-        >
-          {isLastStep ? t('onboarding.finish') : t('onboarding.continue')}
-        </Button>
+          {/* Navigation */}
+          <div className={`flex gap-3 mt-auto pt-2 ${isFirstStep ? '' : ''}`}>
+            {!isFirstStep && (
+              <Button variant="ghost" onClick={goPrev} className="flex-1">
+                {t('onboarding.back')}
+              </Button>
+            )}
+            <Button
+              onClick={goNext}
+              disabled={!canContinue()}
+              fullWidth={isFirstStep}
+              className={isFirstStep ? '' : 'flex-[2]'}
+            >
+              {isLastStep ? t('onboarding.finish') : t('onboarding.continue')}
+            </Button>
+          </div>
+        </div>
       </div>
     </div>
   );

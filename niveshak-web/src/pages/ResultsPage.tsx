@@ -60,9 +60,9 @@ export default function ResultsPage() {
   } = results;
 
   return (
-    <div className="flex flex-col gap-5 px-5 py-6">
+    <div className="max-w-7xl mx-auto w-full px-5 py-6">
       {/* Greeting */}
-      <div>
+      <div className="mb-5">
         <p className="text-[10px] font-semibold text-accent uppercase tracking-widest mb-1">
           {t('results.greeting')}
         </p>
@@ -73,50 +73,59 @@ export default function ResultsPage() {
         )}
       </div>
 
-      {/* Score ring + profile description */}
-      <div className="bg-card border border-line rounded-lg p-6 flex flex-col items-center gap-4">
-        <ScoreRing
-          score={riskScore}
-          profile={riskProfile}
-          label={isHindi ? riskProfileLabelHi : riskProfileLabelEn}
-        />
-        <p className="text-sub text-xs text-center leading-relaxed">
-          {isHindi ? riskProfileDescHi : riskProfileDescEn}
-        </p>
-      </div>
+      {/* 2-col on desktop */}
+      <div className="md:grid md:grid-cols-2 md:gap-6">
+        {/* Left col */}
+        <div className="flex flex-col gap-5">
+          {/* Score ring */}
+          <div className="bg-card border border-line rounded-lg p-6 flex flex-col items-center gap-4">
+            <ScoreRing
+              score={riskScore}
+              profile={riskProfile}
+            label={isHindi ? riskProfileLabelHi : riskProfileLabelEn}
+            />
+            <p className="text-sub text-xs text-center leading-relaxed">
+              {isHindi ? riskProfileDescHi : riskProfileDescEn}
+            </p>
+          </div>
 
-      {/* Goal & inflation projection */}
-      <CorpusCard projection={inflationProjection} />
+          {/* Goal & inflation projection */}
+          <CorpusCard projection={inflationProjection} />
 
-      {/* Allocation bar & monthly breakdown */}
-      {recommendations.length > 0 && (
-        <div className="bg-card border border-line rounded-lg p-4">
-          <AllocationBar recommendations={recommendations} />
+          {/* Allocation bar */}
+          {recommendations.length > 0 && (
+            <div className="bg-card border border-line rounded-lg p-4">
+              <AllocationBar recommendations={recommendations} />
+            </div>
+          )}
+          <AllocationCard recommendations={recommendations} totalMonthly={totalMonthlyAmount} />
         </div>
-      )}
-      <AllocationCard recommendations={recommendations} totalMonthly={totalMonthlyAmount} />
 
-      {/* Instrument cards */}
-      <div>
-        <p className="text-[10px] font-semibold text-accent uppercase tracking-widest mb-3">
-          {t('results.sections.instruments')}
-        </p>
-        <div className="flex flex-col gap-3">
-          {recommendations.map(rec => (
-            <InstrumentCard key={rec.instrument.id} rec={rec} />
-          ))}
+        {/* Right col */}
+        <div className="flex flex-col gap-5 mt-5 md:mt-0">
+          {/* Instrument cards */}
+          <div>
+            <p className="text-[10px] font-semibold text-accent uppercase tracking-widest mb-3">
+              {t('results.sections.instruments')}
+            </p>
+            <div className="flex flex-col gap-3">
+              {recommendations.map(rec => (
+                <InstrumentCard key={rec.instrument.id} rec={rec} />
+              ))}
+            </div>
+          </div>
+
+          {/* AI Explanation */}
+          <AIExplanationCard />
+
+          {/* Recalculate */}
+          <Button variant="ghost" fullWidth onClick={() => navigate('/discover')}>
+            {t('results.recalculate')}
+          </Button>
+
+          <Disclaimer />
         </div>
       </div>
-
-      {/* AI Explanation */}
-      <AIExplanationCard />
-
-      {/* Recalculate */}
-      <Button variant="ghost" fullWidth onClick={() => navigate('/discover')}>
-        {t('results.recalculate')}
-      </Button>
-
-      <Disclaimer />
     </div>
   );
 }

@@ -9,11 +9,11 @@ const STEPS = [
 export function HowItWorks() {
   const { t } = useTranslation();
   return (
-    <section className="px-6 py-8">
+    <section className="px-6 py-8 md:px-0 md:pt-0">
       <p className="text-[10px] font-semibold text-accent uppercase tracking-widest mb-6">
         {t('landing.howItWorks.label')}
       </p>
-      <div className="flex flex-col gap-6">
+      <div className="flex flex-col md:grid md:grid-cols-3 gap-6">
         {STEPS.map(({ num, titleKey, descKey }) => (
           <div key={num} className="flex gap-4 items-start">
             <div className="w-8 h-8 rounded-sm bg-navy flex items-center justify-center flex-shrink-0">

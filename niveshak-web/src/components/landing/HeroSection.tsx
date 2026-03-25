@@ -6,7 +6,7 @@ export function HeroSection() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   return (
-    <section className="px-6 pt-8 pb-6">
+    <section className="px-6 pt-8 pb-6 md:px-10 md:pt-16 md:pb-10">
       {/* Category chip */}
       <div className="inline-flex items-center bg-navy-pale border border-navy/20 rounded-full px-3 py-1 mb-6">
         <span className="text-[10px] text-navy font-semibold font-sora tracking-wide">
@@ -15,7 +15,7 @@ export function HeroSection() {
       </div>
 
       {/* Headline */}
-      <h1 className="font-sora text-3xl font-extrabold text-content leading-tight mb-4">
+      <h1 className="font-sora text-3xl md:text-4xl font-extrabold text-content leading-tight mb-4">
         {t('landing.heroLine1')}<br />
         <span className="text-accent">{t('landing.heroLine2')}</span><br />
         {t('landing.heroLine3')}
