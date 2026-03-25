@@ -10,12 +10,14 @@ interface ThemeState {
 
 export const useThemeStore = create<ThemeState>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       theme: 'light',
-      toggleTheme: () =>
-        set((state) => ({
-          theme: state.theme === 'light' ? 'dark' : 'light',
-        })),
+      toggleTheme: () => {
+        const next: Theme = get().theme === 'light' ? 'dark' : 'light';
+        // Apply immediately — do not wait for React re-render cycle
+        document.documentElement.classList.toggle('dark', next === 'dark');
+        set({ theme: next });
+      },
     }),
     {
       name: 'niveshak-theme',

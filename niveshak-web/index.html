@@ -15,7 +15,7 @@
     <meta name="author" content="Niveshak.AI" />
 
     <!-- PWA -->
-    <meta name="theme-color" content="#0D0D0D" />
+    <meta name="theme-color" content="#E07B39" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -38,6 +38,19 @@
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Dark mode: apply class synchronously before first paint to avoid flash -->
+    <script>
+      (function(){
+        try {
+          var s = localStorage.getItem('niveshak-theme');
+          var d = s ? JSON.parse(s) : null;
+          if (d && d.state && d.state.theme === 'dark') {
+            document.documentElement.classList.add('dark');
+          }
+        } catch(e) {}
+      })();
+    </script>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />

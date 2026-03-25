@@ -22,12 +22,9 @@ function PageLoader() {
 export default function App() {
   const theme = useThemeStore((s) => s.theme);
 
+  // Safety net: sync DOM class if store rehydrates from localStorage after mount
   useEffect(() => {
-    if (theme === 'dark') {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
+    document.documentElement.classList.toggle('dark', theme === 'dark');
   }, [theme]);
 
   return (
