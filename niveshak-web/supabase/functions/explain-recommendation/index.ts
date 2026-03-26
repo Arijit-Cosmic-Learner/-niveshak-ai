@@ -35,6 +35,7 @@ interface RequestPayload {
   experience: string;
   riskTolerance: string;
   goalType: string;
+  goalCustom?: string;
   goalAmount: number;
   adjustedCorpus: number;
   yearsToGoal: number;
@@ -64,7 +65,7 @@ USER PROFILE:
 - Monthly income: Rs.${p.inHandIncome.toLocaleString('en-IN')} | Monthly surplus: Rs.${p.monthlySurplus.toLocaleString('en-IN')}
 - Investment experience: ${readable(p.experience)} | Risk reaction: ${readable(p.riskTolerance)}
 - Risk Score: ${p.riskScore}/100 -> ${p.riskProfileLabel}
-- Goal: ${readable(p.goalType)} | Timeline: ${readable(p.timeline)} | Years: ${p.yearsToGoal}
+- Goal: ${p.goalCustom ? `"${p.goalCustom}" (custom)` : readable(p.goalType)} | Timeline: ${readable(p.timeline)} | Years: ${p.yearsToGoal}
 - Corpus needed: Rs.${p.adjustedCorpus.toLocaleString('en-IN')} | Monthly investment budget: Rs.${p.monthlyInvestment.toLocaleString('en-IN')}
 
 ELIGIBLE INSTRUMENTS (choose 3 or 4 from this list -- do not invent new ones):

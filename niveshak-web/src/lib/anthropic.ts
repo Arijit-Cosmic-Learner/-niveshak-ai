@@ -24,6 +24,7 @@ export interface AIExplanationPayload {
   riskTolerance: string;
   // Goal
   goalType: string;
+  goalCustom?: string;   // free-text custom goal when user didn't pick a preset
   goalAmount: number;
   adjustedCorpus: number;
   yearsToGoal: number;
@@ -68,6 +69,7 @@ export function buildExplanationPayload(
     experience: answers.experience ?? '',
     riskTolerance: answers.riskTolerance ?? '',
     goalType: answers.goal ?? 'GROW_WEALTH',
+    goalCustom: answers.goalCustom,
     goalAmount: answers.goalAmount ?? 0,
     adjustedCorpus: result.inflationProjection.adjustedCorpus,
     yearsToGoal: result.inflationProjection.yearsToGoal,

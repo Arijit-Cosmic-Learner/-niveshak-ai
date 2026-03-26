@@ -79,6 +79,7 @@ export function useRecommendation() {
         experience:       answers.experience ?? '',
         riskTolerance:    answers.riskTolerance ?? '',
         goalType:         answers.goal ?? 'GROW_WEALTH',
+        goalCustom:       answers.goalCustom,
         goalAmount:       answers.goalAmount ?? 0,
         adjustedCorpus:   projection.adjustedCorpus,
         yearsToGoal:      projection.yearsToGoal,

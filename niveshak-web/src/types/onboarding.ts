@@ -67,6 +67,7 @@ export interface OnboardingAnswers {
 
 	// Goal
 	goal?:               GoalType;
+	goalCustom?:         string;   // free-text custom goal description
 	goalAmount?:         number;   // in today's rupee value
 	timeline?:           TimelineType;
 
@@ -83,7 +84,8 @@ export type StepInputType =
 	| 'slider'
 	| 'goal_grid'
 	| 'option_list'
-	| 'state_select';
+	| 'state_select'
+	| 'review';
 
 export interface SliderConfig {
 	min:      number;
