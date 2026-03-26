@@ -61,7 +61,7 @@ export function AllocationPieChart({ recommendations, totalMonthly }: Props) {
               key={rec.instrument.id}
               d={path}
               fill={color}
-              stroke="var(--surface-color, #E8E4DB)"
+              stroke="var(--surface-raised-color)"
               strokeWidth="1.5"
             />
           ))}

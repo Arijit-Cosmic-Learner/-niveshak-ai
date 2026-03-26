@@ -74,8 +74,26 @@
     font-family: 'Sora', sans-serif;
     background-color: rgb(var(--bg-primary-rgb));
     color: rgb(var(--text-primary-rgb));
+    color-scheme: light;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+  }
+
+  html.dark {
+    color-scheme: dark;
+  }
+
+  /* Smooth theme transitions — only active during toggle, not on initial paint */
+  html.theme-transitioning,
+  html.theme-transitioning *,
+  html.theme-transitioning *::before,
+  html.theme-transitioning *::after {
+    transition:
+      background-color 200ms ease,
+      color 200ms ease,
+      border-color 200ms ease,
+      fill 200ms ease,
+      stroke 200ms ease !important;
   }
 
   body {
