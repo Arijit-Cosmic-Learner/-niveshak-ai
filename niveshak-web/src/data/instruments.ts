@@ -201,6 +201,49 @@ export const instruments: Instrument[] = [
     minTimeline: TimelineType.SEVEN_TO_15,
     maxRiskProfile: RiskProfile.GROWTH,
   },
+  // ---- Liquid Fund (ultra-short term) -------------------------
+  {
+    id: 'liquid_fund',
+    nameEn: 'Liquid Mutual Fund',
+    nameHi: '\u0932\u093F\u0915\u094D\u0935\u093F\u0921 \u092E\u094D\u092F\u0942\u091A\u0941\u0905\u0932 \u092B\u0902\u0921',
+    type: InstrumentType.MUTUAL_FUND,
+    riskLevel: RiskLevel.VERY_LOW,
+    returnsLabel: '6\u20137% p.a.',
+    whyEn: 'Near-zero risk, better returns than a savings account. Park money for under a year with same-day withdrawal.',
+    whyHi: '\u0936\u0942\u0928\u094D\u092F \u091C\u094B\u0916\u093F\u092E, \u092C\u091A\u0924 \u0916\u093E\u0924\u0947 \u0938\u0947 \u092C\u0947\u0939\u0924\u0930 \u0930\u093F\u091F\u0930\u094D\u0928\u0964 1 \u0938\u093E\u0932 \u0938\u0947 \u0915\u092E \u0938\u092E\u092F \u0915\u0947 \u0932\u093F\u090F \u092A\u0948\u0938\u0947 \u0930\u0916\u0947\u0902 \u0914\u0930 \u0924\u0941\u0930\u0902\u0924 \u0928\u093F\u0915\u093E\u0932\u0947\u0902\u0964',
+    platform: 'Groww / Zerodha',
+    ctaLabelEn: 'Invest via Groww \u2192',
+    ctaLabelHi: 'Groww \u092A\u0930 \u0928\u093F\u0935\u0947\u0936 \u0915\u0930\u0947\u0902 \u2192',
+    minMonthly: 100,
+    isGovernmentBacked: false,
+    suitableGoals: [
+      GoalType.EMERGENCY_FUND, GoalType.BIG_PURCHASE, GoalType.GROW_WEALTH,
+    ],
+    minTimeline: TimelineType.UNDER_1_YEAR,
+    maxRiskProfile: RiskProfile.CONSERVATIVE,
+  },
+  // ---- Bank FD (short-medium term) ----------------------------
+  {
+    id: 'bank_fd',
+    nameEn: 'Bank Fixed Deposit (FD)',
+    nameHi: '\u092C\u0948\u0902\u0915 \u090F\u092B\u0921\u0940 (\u0938\u0941\u0928\u093F\u0936\u094D\u091A\u093F\u0924 \u091C\u092E\u093E)',
+    type: InstrumentType.BANK_SCHEME,
+    riskLevel: RiskLevel.VERY_LOW,
+    returnsLabel: '6.5\u20137.5% p.a.',
+    whyEn: 'Guaranteed returns, insured up to \u20B95L by DICGC. Best for short-term goals with no risk appetite.',
+    whyHi: '\u0917\u093E\u0930\u0902\u091F\u0940\u0921 \u0930\u093F\u091F\u0930\u094D\u0928, DICGC \u0926\u094D\u0935\u093E\u0930\u093E \u20B95L \u0924\u0915 \u092C\u0940\u092E\u093E\u0915\u0943\u0924\u0964 \u0915\u094B\u0908 \u0926\u093E\u0902\u0935 \u0928\u0939\u0940\u0902, \u0938\u0941\u0930\u0915\u094D\u0937\u093F\u0924 \u0928\u093F\u0935\u0947\u0936\u0964',
+    platform: 'Any Bank / NBFC',
+    ctaLabelEn: 'Open FD Online \u2192',
+    ctaLabelHi: '\u0911\u0928\u0932\u093E\u0907\u0928 FD \u0916\u094B\u0932\u0947\u0902 \u2192',
+    minMonthly: 500,
+    isGovernmentBacked: false,
+    suitableGoals: [
+      GoalType.EMERGENCY_FUND, GoalType.BIG_PURCHASE, GoalType.CHILD_EDUCATION,
+      GoalType.GROW_WEALTH,
+    ],
+    minTimeline: TimelineType.UNDER_1_YEAR,
+    maxRiskProfile: RiskProfile.CONSERVATIVE,
+  },
 ];
 
 export function getInstrumentById(id: string): Instrument | undefined {

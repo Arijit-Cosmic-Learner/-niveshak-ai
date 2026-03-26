@@ -28,15 +28,34 @@ export function getEligibleInstruments(
   const userTimelineRank = answers.timeline ? TIMELINE_RANK[answers.timeline] : 3;
   const userRiskRank     = RISK_PROFILE_RANK[riskResult.profile];
 
-  return instruments.filter(inst => {
-    const instTimelineRank = TIMELINE_RANK[inst.minTimeline];
-    const instRiskRank     = RISK_PROFILE_RANK[inst.maxRiskProfile];
-    const timelineOk = instTimelineRank <= userTimelineRank;
-    const riskOk     = instRiskRank >= userRiskRank || instRiskRank >= 1;
-    const goalOk     = !answers.goal || inst.suitableGoals.includes(answers.goal);
-    const affordOk   = inst.minMonthly <= monthlyBudget;
-    return timelineOk && riskOk && goalOk && affordOk;
-  });
+  const applyFilters = (timelineRank: number, enforceGoal: boolean): Instrument[] =>
+    instruments.filter(inst => {
+      const instTimelineRank = TIMELINE_RANK[inst.minTimeline];
+      const instRiskRank     = RISK_PROFILE_RANK[inst.maxRiskProfile];
+      const timelineOk = instTimelineRank <= timelineRank;
+      const riskOk     = instRiskRank >= userRiskRank || instRiskRank >= 1;
+      const goalOk     = !enforceGoal || !answers.goal || inst.suitableGoals.includes(answers.goal);
+      const affordOk   = inst.minMonthly <= monthlyBudget;
+      return timelineOk && riskOk && goalOk && affordOk;
+    });
+
+  // Pass 1: exact timeline + goal match
+  let result = applyFilters(userTimelineRank, true);
+  if (result.length >= 3) return result;
+
+  // Pass 2: relax timeline to maximum (show all timeline-appropriate instruments)
+  result = applyFilters(5, true);
+  if (result.length >= 3) return result;
+
+  // Pass 3: also relax goal filter — always guarantee at least some options
+  result = applyFilters(5, false);
+  if (result.length >= 2) return result;
+
+  // Pass 4: last resort — just return affordable instruments sorted by risk fit
+  return instruments
+    .filter(inst => inst.minMonthly <= monthlyBudget)
+    .sort((a, b) => RISK_PROFILE_RANK[b.maxRiskProfile] - RISK_PROFILE_RANK[a.maxRiskProfile])
+    .slice(0, 4);
 }
 
 export function matchInstruments(

@@ -1,6 +1,7 @@
 import { useCallback } from 'react';
 import { useOnboardingStore } from '@store/useOnboardingStore';
 import { useResultsStore } from '@store/useResultsStore';
+import { useLanguageStore } from '@store/useLanguageStore';
 import { scoreRisk } from '@engine/riskScorer';
 import { projectInflation } from '@engine/inflationProjector';
 import { matchInstruments, getEligibleInstruments } from '@engine/instrumentMatcher';
@@ -41,7 +42,8 @@ function buildRecommendationsFromAI(
 // Runs the full recommendation pipeline — AI picks instruments when available,
 // falls back to local algorithm if AI call fails.
 export function useRecommendation() {
-  const answers = useOnboardingStore(s => s.answers);
+  const answers  = useOnboardingStore(s => s.answers);
+  const language = useLanguageStore(s => s.language);
   const { results, isLoading, error, setResults, setLoading, setError, clearResults } =
     useResultsStore();
 
@@ -57,6 +59,14 @@ export function useRecommendation() {
 
       // Build AI payload with eligible instruments as candidates
       const eligible = getEligibleInstruments(answers, riskResult);
+
+      // If no eligible instruments at all, skip AI and use local fallback immediately
+      if (eligible.length === 0) {
+        const recommendations = matchInstruments(answers, riskResult, projection);
+        setResults(buildRecommendationResult(answers, riskResult, projection, recommendations, []));
+        return;
+      }
+
       const aiPayload: AIRecommendationPayload = {
         riskScore:        riskResult.score,
         riskProfile:      riskResult.profile,
@@ -74,7 +84,7 @@ export function useRecommendation() {
         yearsToGoal:      projection.yearsToGoal,
         timeline:         answers.timeline ?? 'NOT_SURE',
         monthlyInvestment: monthlyBudget,
-        language:         'en',
+        language,
         instruments:      [],
         availableInstruments: eligible.map(inst => ({
           id:                inst.id,
@@ -113,6 +123,9 @@ export function useRecommendation() {
     } catch (err) {
       const message = err instanceof Error ? err.message : 'An unexpected error occurred.';
       setError(message);
+    } finally {
+      // Safety net: ensure loading spinner never gets stuck
+      setLoading(false);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [answers]);
