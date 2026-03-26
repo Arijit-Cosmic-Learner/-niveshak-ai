@@ -117,26 +117,29 @@ async function callAnthropic(prompt: string, apiKey: string): Promise<string> {
   return data.content?.[0]?.type === 'text' ? data.content[0].text : '';
 }
 
-// ─── Gemini Provider (free tier) ─────────────────────────────────
-async function callGemini(prompt: string, apiKey: string): Promise<string> {
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`;
-
-  const res = await fetch(url, {
+// ─── Kimi Provider (Moonshot AI) ─────────────────────────────────
+async function callKimi(prompt: string, apiKey: string): Promise<string> {
+  const res = await fetch('https://api.moonshot.cn/v1/chat/completions', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${apiKey}`,
+    },
     body: JSON.stringify({
-      contents: [{ parts: [{ text: prompt }] }],
-      generationConfig: { maxOutputTokens: 600, temperature: 0.7 },
+      model: 'moonshot-v1-8k',
+      max_tokens: 600,
+      temperature: 0.7,
+      messages: [{ role: 'user', content: prompt }],
     }),
   });
 
   if (!res.ok) {
     const errBody = await res.text();
-    throw new Error(`Gemini ${res.status}: ${errBody}`);
+    throw new Error(`Kimi ${res.status}: ${errBody}`);
   }
 
   const data = await res.json();
-  return data.candidates?.[0]?.content?.parts?.[0]?.text ?? '';
+  return data.choices?.[0]?.message?.content ?? '';
 }
 
 serve(async (req: Request) => {
@@ -153,11 +156,11 @@ serve(async (req: Request) => {
   }
 
   const anthropicKey = Deno.env.get('ANTHROPIC_API_KEY');
-  const geminiKey = Deno.env.get('GEMINI_API_KEY');
+  const kimiKey = Deno.env.get('KIMI_API_KEY');
 
-  if (!anthropicKey && !geminiKey) {
+  if (!anthropicKey && !kimiKey) {
     return new Response(
-      JSON.stringify({ error: 'No AI provider configured. Set GEMINI_API_KEY or ANTHROPIC_API_KEY.' }),
+      JSON.stringify({ error: 'No AI provider configured. Set KIMI_API_KEY or ANTHROPIC_API_KEY.' }),
       {
         status: 500,
         headers: { ...CORS_HEADERS, 'Content-Type': 'application/json' },
@@ -169,12 +172,12 @@ serve(async (req: Request) => {
     const payload: RequestPayload = await req.json();
     const prompt = buildPrompt(payload);
 
-    // Prefer Anthropic if available, fall back to Gemini (free)
+    // Prefer Anthropic if available, fall back to Kimi
     let text: string;
     if (anthropicKey) {
       text = await callAnthropic(prompt, anthropicKey);
     } else {
-      text = await callGemini(prompt, geminiKey!);
+      text = await callKimi(prompt, kimiKey!);
     }
 
     return new Response(JSON.stringify({ explanation: text }), {
