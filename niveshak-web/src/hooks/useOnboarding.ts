@@ -1,6 +1,7 @@
 import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useOnboardingStore, ONBOARDING_TOTAL_STEPS } from '@store/useOnboardingStore';
+import { useResultsStore } from '@store/useResultsStore';
 import { onboardingSteps } from '@data/steps';
 import type { OnboardingAnswers } from '@t/onboarding';
 
@@ -18,6 +19,7 @@ export function useOnboarding() {
     markComplete,
     reset,
   } = useOnboardingStore();
+  const clearResults = useResultsStore(s => s.clearResults);
 
   const activeSteps = onboardingSteps.filter(
     step => !step.showIf || step.showIf(answers)
@@ -39,11 +41,12 @@ export function useOnboarding() {
   const goNext = useCallback(() => {
     if (isLastStep) {
       markComplete();
+      clearResults(); // ensures loader shows + fresh AI picks on results page
       navigate('/results');
     } else {
       storeNextStep();
     }
-  }, [isLastStep, markComplete, navigate, storeNextStep]);
+  }, [isLastStep, markComplete, clearResults, navigate, storeNextStep]);
 
   const goPrev = useCallback(() => {
     if (!isFirstStep) storePrevStep();

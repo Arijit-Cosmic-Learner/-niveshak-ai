@@ -20,27 +20,32 @@ const RISK_PROFILE_RANK: Record<RiskProfile, number> = {
   [RiskProfile.GROWTH]:       3,
 };
 
+export function getEligibleInstruments(
+  answers: OnboardingAnswers,
+  riskResult: RiskScoreResult
+): Instrument[] {
+  const monthlyBudget    = answers.monthlyInvestment ?? answers.monthlySurplus ?? 1000;
+  const userTimelineRank = answers.timeline ? TIMELINE_RANK[answers.timeline] : 3;
+  const userRiskRank     = RISK_PROFILE_RANK[riskResult.profile];
+
+  return instruments.filter(inst => {
+    const instTimelineRank = TIMELINE_RANK[inst.minTimeline];
+    const instRiskRank     = RISK_PROFILE_RANK[inst.maxRiskProfile];
+    const timelineOk = instTimelineRank <= userTimelineRank;
+    const riskOk     = instRiskRank >= userRiskRank || instRiskRank >= 1;
+    const goalOk     = !answers.goal || inst.suitableGoals.includes(answers.goal);
+    const affordOk   = inst.minMonthly <= monthlyBudget;
+    return timelineOk && riskOk && goalOk && affordOk;
+  });
+}
+
 export function matchInstruments(
   answers: OnboardingAnswers,
   riskResult: RiskScoreResult,
   projection: InflationProjection
 ): InstrumentRecommendation[] {
   const monthlyBudget    = answers.monthlyInvestment ?? answers.monthlySurplus ?? 1000;
-  const userTimelineRank = answers.timeline ? TIMELINE_RANK[answers.timeline] : 3;
-  const userRiskRank     = RISK_PROFILE_RANK[riskResult.profile];
-
-  // Filter: instrument timeline must be <= user's timeline
-  const eligible: Instrument[] = instruments.filter(inst => {
-    const instTimelineRank = TIMELINE_RANK[inst.minTimeline];
-    const instRiskRank     = RISK_PROFILE_RANK[inst.maxRiskProfile];
-
-    const timelineOk = instTimelineRank <= userTimelineRank;
-    const riskOk     = instRiskRank >= userRiskRank || instRiskRank >= 1;
-    const goalOk     = !answers.goal || inst.suitableGoals.includes(answers.goal);
-    const affordOk   = inst.minMonthly <= monthlyBudget;
-
-    return timelineOk && riskOk && goalOk && affordOk;
-  });
+  const eligible = getEligibleInstruments(answers, riskResult);
 
   // Sort: govt-backed first for conservative users; by timeline fit
   const sorted = eligible.sort((a, b) => {

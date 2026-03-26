@@ -58,6 +58,7 @@ export interface RecommendationResult {
 	riskProfileDescHi:    string;
 	inflationProjection:  InflationProjection;
 	recommendations:      InstrumentRecommendation[];
+	bullets:              string[];
 	totalMonthlyAmount:   number;
 	generatedAt:          Date;
 }

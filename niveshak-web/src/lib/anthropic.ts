@@ -116,3 +116,62 @@ export async function fetchAIExplanation(
   const data: { explanation: string } = await res.json();
   return data.explanation;
 }
+
+// ─── AI Recommendation (instruments + bullets) ────────────────────
+
+export interface AIInstrumentAllocation {
+  id: string;
+  allocationPercent: number;
+  reasonEn: string;
+  reasonHi: string;
+}
+
+export interface AIRecommendationResponse {
+  instrumentAllocations: AIInstrumentAllocation[];
+  bullets: string[];
+}
+
+export interface AIRecommendationPayload extends AIExplanationPayload {
+  availableInstruments: Array<{
+    id: string;
+    nameEn: string;
+    nameHi: string;
+    type: string;
+    riskLevel: string;
+    returnsLabel: string;
+    whyEn: string;
+    isGovernmentBacked: boolean;
+    lockInYears?: number;
+    taxBenefit?: string;
+    minMonthly: number;
+  }>;
+}
+
+export async function fetchAIRecommendation(
+  payload: AIRecommendationPayload,
+  signal?: AbortSignal
+): Promise<AIRecommendationResponse> {
+  if (!EDGE_FN_URL || !SUPABASE_ANON_KEY) {
+    throw new Error('Supabase not configured');
+  }
+
+  const res = await fetch(EDGE_FN_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+      apikey: SUPABASE_ANON_KEY,
+    },
+    body: JSON.stringify(payload),
+    signal,
+  });
+
+  if (!res.ok) {
+    const body = await res.text();
+    throw new Error(`AI recommendation failed (${res.status}): ${body}`);
+  }
+
+  const data = await res.json();
+  if (data.error) throw new Error(data.detail ?? data.error);
+  return data as AIRecommendationResponse;
+}

@@ -7,7 +7,8 @@ export function buildRecommendationResult(
   answers: OnboardingAnswers,
   riskResult: RiskScoreResult,
   projection: InflationProjection,
-  recommendations: InstrumentRecommendation[]
+  recommendations: InstrumentRecommendation[],
+  bullets: string[] = []
 ): RecommendationResult {
   const totalMonthlyAmount = recommendations.reduce(
     (sum, r) => sum + r.monthlyAmount,
@@ -24,6 +25,7 @@ export function buildRecommendationResult(
     inflationProjection: projection,
     recommendations,
     totalMonthlyAmount,
+    bullets,
     generatedAt: new Date(),
   };
 }
