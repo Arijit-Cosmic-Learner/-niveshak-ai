@@ -155,23 +155,34 @@ export async function fetchAIRecommendation(
     throw new Error('Supabase not configured');
   }
 
-  const res = await fetch(EDGE_FN_URL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
-      apikey: SUPABASE_ANON_KEY,
-    },
-    body: JSON.stringify(payload),
-    signal,
-  });
+  // Abort after 15s so we can fall back to local engine promptly
+  const timeout = setTimeout(() => controller.abort(), 15_000);
+  const controller = new AbortController();
+  const combined = signal
+    ? AbortSignal.any([signal, controller.signal])
+    : controller.signal;
 
-  if (!res.ok) {
-    const body = await res.text();
-    throw new Error(`AI recommendation failed (${res.status}): ${body}`);
+  try {
+    const res = await fetch(EDGE_FN_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+        apikey: SUPABASE_ANON_KEY,
+      },
+      body: JSON.stringify(payload),
+      signal: combined,
+    });
+
+    if (!res.ok) {
+      const body = await res.text();
+      throw new Error(`AI recommendation failed (${res.status}): ${body}`);
+    }
+
+    const data = await res.json();
+    if (data.error) throw new Error(data.detail ?? data.error);
+    return data as AIRecommendationResponse;
+  } finally {
+    clearTimeout(timeout);
   }
-
-  const data = await res.json();
-  if (data.error) throw new Error(data.detail ?? data.error);
-  return data as AIRecommendationResponse;
 }
