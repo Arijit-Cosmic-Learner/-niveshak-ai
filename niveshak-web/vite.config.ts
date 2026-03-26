@@ -52,6 +52,8 @@ export default defineConfig({
       workbox: {
         skipWaiting: true,
         clientsClaim: true,
+        // Bump this string on each deploy to force SW cache invalidation
+        additionalManifestEntries: [{ url: '/', revision: `v${Date.now()}` }],
         // Cache app shell + pages
         globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
         // Network-first for navigation, stale-while-revalidate for assets
