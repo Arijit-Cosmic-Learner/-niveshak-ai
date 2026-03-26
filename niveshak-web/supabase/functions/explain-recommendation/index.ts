@@ -117,16 +117,16 @@ async function callAnthropic(prompt: string, apiKey: string): Promise<string> {
   return data.content?.[0]?.type === 'text' ? data.content[0].text : '';
 }
 
-// ─── Kimi Provider (Moonshot AI) ─────────────────────────────────
-async function callKimi(prompt: string, apiKey: string): Promise<string> {
-  const res = await fetch('https://api.moonshot.cn/v1/chat/completions', {
+// ─── Groq Provider (free tier — llama-3.1-8b-instant) ───────────
+async function callGroq(prompt: string, apiKey: string): Promise<string> {
+  const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${apiKey}`,
     },
     body: JSON.stringify({
-      model: 'moonshot-v1-8k',
+      model: 'llama-3.1-8b-instant',
       max_tokens: 600,
       temperature: 0.7,
       messages: [{ role: 'user', content: prompt }],
@@ -135,7 +135,7 @@ async function callKimi(prompt: string, apiKey: string): Promise<string> {
 
   if (!res.ok) {
     const errBody = await res.text();
-    throw new Error(`Kimi ${res.status}: ${errBody}`);
+    throw new Error(`Groq ${res.status}: ${errBody}`);
   }
 
   const data = await res.json();
@@ -156,11 +156,11 @@ serve(async (req: Request) => {
   }
 
   const anthropicKey = Deno.env.get('ANTHROPIC_API_KEY');
-  const kimiKey = Deno.env.get('KIMI_API_KEY');
+  const groqKey = Deno.env.get('GROQ_API_KEY');
 
-  if (!anthropicKey && !kimiKey) {
+  if (!anthropicKey && !groqKey) {
     return new Response(
-      JSON.stringify({ error: 'No AI provider configured. Set KIMI_API_KEY or ANTHROPIC_API_KEY.' }),
+      JSON.stringify({ error: 'No AI provider configured. Set GROQ_API_KEY or ANTHROPIC_API_KEY.' }),
       {
         status: 500,
         headers: { ...CORS_HEADERS, 'Content-Type': 'application/json' },
@@ -172,12 +172,12 @@ serve(async (req: Request) => {
     const payload: RequestPayload = await req.json();
     const prompt = buildPrompt(payload);
 
-    // Prefer Anthropic if available, fall back to Kimi
+    // Prefer Anthropic if available, fall back to Groq (free)
     let text: string;
     if (anthropicKey) {
       text = await callAnthropic(prompt, anthropicKey);
     } else {
-      text = await callKimi(prompt, kimiKey!);
+      text = await callGroq(prompt, groqKey!);
     }
 
     return new Response(JSON.stringify({ explanation: text }), {
