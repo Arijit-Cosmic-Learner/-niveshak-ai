@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useResultsStore } from '@store/useResultsStore';
 import { useOnboardingStore } from '@store/useOnboardingStore';
@@ -6,10 +6,10 @@ import { useRecommendation } from '@hooks/useRecommendation';
 import { useTranslation } from '@hooks/useTranslation';
 import { ScoreRing } from '@components/results/ScoreRing';
 import { CorpusCard } from '@components/results/CorpusCard';
-import { AllocationBar } from '@components/results/AllocationBar';
-import { AllocationCard } from '@components/results/AllocationCard';
+import { AllocationPieChart } from '@components/results/AllocationPieChart';
 import { InstrumentCard } from '@components/results/InstrumentCard';
 import { AIExplanationCard } from '@components/results/AIExplanationCard';
+import { FactsLoader } from '@components/results/FactsLoader';
 import { Disclaimer } from '@components/common/Disclaimer';
 import { Button } from '@components/common/Button';
 
@@ -19,6 +19,8 @@ export default function ResultsPage() {
   const { results, isLoading } = useResultsStore();
   const answers = useOnboardingStore(s => s.answers);
   const { generate } = useRecommendation();
+  // Show loader only for fresh computations — skip if results were already cached on mount
+  const [loaderDone, setLoaderDone] = useState(() => results !== null);
 
   useEffect(() => {
     if (!results && answers.name) {
@@ -27,6 +29,12 @@ export default function ResultsPage() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // 4-second facts loader (shown before revealing freshly computed results)
+  if (!loaderDone) {
+    return <FactsLoader onDone={() => setLoaderDone(true)} />;
+  }
+
+  // Unexpected loading state after loader (engine is synchronous, should not linger)
   if (isLoading) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[50vh] gap-4 px-6">
@@ -60,9 +68,9 @@ export default function ResultsPage() {
   } = results;
 
   return (
-    <div className="max-w-7xl mx-auto w-full px-5 py-6">
+    <div className="max-w-7xl mx-auto w-full px-5 py-6 flex flex-col gap-6">
       {/* Greeting */}
-      <div className="mb-5">
+      <div>
         <p className="text-[10px] font-semibold text-accent uppercase tracking-widest mb-1">
           {t('results.greeting')}
         </p>
@@ -73,58 +81,50 @@ export default function ResultsPage() {
         )}
       </div>
 
-      {/* 2-col on desktop */}
-      <div className="md:grid md:grid-cols-2 md:gap-6">
-        {/* Left col */}
-        <div className="flex flex-col gap-5">
-          {/* Score ring */}
-          <div className="bg-card border border-line rounded-lg p-6 flex flex-col items-center gap-4">
-            <ScoreRing
-              score={riskScore}
-              profile={riskProfile}
+      {/* Row A: Score ring + AI Advisor side by side */}
+      <div className="grid md:grid-cols-2 gap-5">
+        <div className="bg-card border border-line rounded-lg p-6 flex flex-col items-center gap-4">
+          <ScoreRing
+            score={riskScore}
+            profile={riskProfile}
             label={isHindi ? riskProfileLabelHi : riskProfileLabelEn}
-            />
-            <p className="text-sub text-xs text-center leading-relaxed">
-              {isHindi ? riskProfileDescHi : riskProfileDescEn}
-            </p>
-          </div>
-
-          {/* Goal & inflation projection */}
-          <CorpusCard projection={inflationProjection} />
-
-          {/* Allocation bar */}
-          {recommendations.length > 0 && (
-            <div className="bg-card border border-line rounded-lg p-4">
-              <AllocationBar recommendations={recommendations} />
-            </div>
-          )}
-          <AllocationCard recommendations={recommendations} totalMonthly={totalMonthlyAmount} />
+          />
+          <p className="text-sub text-xs text-center leading-relaxed">
+            {isHindi ? riskProfileDescHi : riskProfileDescEn}
+          </p>
         </div>
+        <AIExplanationCard />
+      </div>
 
-        {/* Right col */}
-        <div className="flex flex-col gap-5 mt-5 md:mt-0">
-          {/* Instrument cards */}
-          <div>
-            <p className="text-[10px] font-semibold text-accent uppercase tracking-widest mb-3">
-              {t('results.sections.instruments')}
-            </p>
-            <div className="flex flex-col gap-3">
-              {recommendations.map(rec => (
-                <InstrumentCard key={rec.instrument.id} rec={rec} />
-              ))}
-            </div>
-          </div>
+      {/* Row B: Goal summary + Pie chart side by side */}
+      <div className="grid md:grid-cols-2 gap-5">
+        <CorpusCard projection={inflationProjection} />
+        {recommendations.length > 0 && (
+          <AllocationPieChart
+            recommendations={recommendations}
+            totalMonthly={totalMonthlyAmount}
+          />
+        )}
+      </div>
 
-          {/* AI Explanation */}
-          <AIExplanationCard />
-
-          {/* Recalculate */}
-          <Button variant="ghost" fullWidth onClick={() => navigate('/discover')}>
-            {t('results.recalculate')}
-          </Button>
-
-          <Disclaimer />
+      {/* Row C: Instrument cards — full width 2-col grid */}
+      <div>
+        <p className="text-[10px] font-semibold text-accent uppercase tracking-widest mb-3">
+          {t('results.sections.instruments')}
+        </p>
+        <div className="grid md:grid-cols-2 gap-4">
+          {recommendations.map(rec => (
+            <InstrumentCard key={rec.instrument.id} rec={rec} />
+          ))}
         </div>
+      </div>
+
+      {/* Row D: Recalculate + Disclaimer — full width */}
+      <div className="flex flex-col gap-4">
+        <Button variant="ghost" fullWidth onClick={() => navigate('/discover')}>
+          {t('results.recalculate')}
+        </Button>
+        <Disclaimer />
       </div>
     </div>
   );
