@@ -94,12 +94,12 @@ export const onboardingSteps: OnboardingStep[] = [
   {
     id: 'goalAmount',
     inputType: 'slider',
-    questionEn: 'How much money do you think you will need?',
-    questionHi: '\u0906\u092A\u0915\u094B \u0915\u093F\u0924\u0928\u0947 \u092A\u0948\u0938\u0947 \u0915\u0940 \u091C\u093C\u0930\u0942\u0930\u0924 \u0932\u0917\u0924\u0940 \u0939\u0948?',
-    subEn: "Give your best estimate in today's value \u2014 we will adjust for inflation automatically.",
-    subHi: '\u0906\u091C \u0915\u0940 \u0915\u0940\u092E\u0924 \u092E\u0947\u0902 \u0905\u0928\u0941\u092E\u093E\u0928 \u0926\u0947\u0902 \u2014 \u0939\u092E \u092E\u0941\u0926\u094D\u0930\u093E\u0938\u094D\u092B\u0940\u0924\u093F \u0938\u094D\u0935\u0924\u0903 \u0938\u092E\u0902\u091C\u093F\u0924 \u0915\u0930\u0947\u0902\u0917\u0947\u0964',
+    questionEn: 'How much money will you need for your goal?',
+    questionHi: 'आपके लक्ष्य के लिए कितनी राशि चाहिए?',
+    subEn: "Give your best estimate in today's value — we'll adjust for inflation automatically.",
+    subHi: 'आज की कीमत में अनुमान दें — हम मुद्रास्फीति स्वतः समंजित करेंगे।',
     isRequired: true,
-    sliderConfig: { min: 50000, max: 20000000, step: 50000, default: 1000000, prefix: '\u20B9' },
+    sliderConfig: { min: 50000, max: 20000000, step: 50000, default: 1000000, prefix: '₹' },
   },
   // Step 7 - Timeline
   {

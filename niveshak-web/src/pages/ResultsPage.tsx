@@ -68,22 +68,22 @@ export default function ResultsPage() {
   } = results;
 
   return (
-    <div className="max-w-7xl mx-auto w-full px-5 py-6 flex flex-col gap-6">
+    <div className="max-w-7xl mx-auto w-full px-4 py-6 flex flex-col gap-5 overflow-x-hidden">
       {/* Greeting */}
       <div>
         <p className="text-[10px] font-semibold text-accent uppercase tracking-widest mb-1">
           {t('results.greeting')}
         </p>
         {answers.name && (
-          <h2 className="font-sora font-extrabold text-content text-2xl">
+          <h2 className="font-sora font-extrabold text-content text-xl sm:text-2xl">
             {t('results.hello', { name: answers.name })}
           </h2>
         )}
       </div>
 
       {/* Row A: Score ring + AI Advisor side by side */}
-      <div className="grid md:grid-cols-2 gap-5">
-        <div className="bg-card border border-line rounded-lg p-6 flex flex-col items-center gap-4">
+      <div className="grid sm:grid-cols-2 gap-4">
+        <div className="bg-card border border-line rounded-lg p-5 flex flex-col items-center gap-4">
           <ScoreRing
             score={riskScore}
             profile={riskProfile}
@@ -97,7 +97,7 @@ export default function ResultsPage() {
       </div>
 
       {/* Row B: Goal summary + Pie chart side by side */}
-      <div className="grid md:grid-cols-2 gap-5">
+      <div className="grid sm:grid-cols-2 gap-4">
         <CorpusCard projection={inflationProjection} />
         {recommendations.length > 0 && (
           <AllocationPieChart
@@ -112,7 +112,7 @@ export default function ResultsPage() {
         <p className="text-[10px] font-semibold text-accent uppercase tracking-widest mb-3">
           {t('results.sections.instruments')}
         </p>
-        <div className="grid md:grid-cols-2 gap-4">
+        <div className="grid sm:grid-cols-2 gap-4">
           {recommendations.map(rec => (
             <InstrumentCard key={rec.instrument.id} rec={rec} />
           ))}

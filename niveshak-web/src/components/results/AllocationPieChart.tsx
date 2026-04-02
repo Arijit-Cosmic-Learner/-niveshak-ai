@@ -49,11 +49,11 @@ export function AllocationPieChart({ recommendations, totalMonthly }: Props) {
         {t('results.sections.monthlyAlloc', { amount: formatRupee(totalMonthly) })}
       </p>
 
-      <div className="flex items-center gap-4">
+      <div className="flex flex-col sm:flex-row items-center gap-4">
         {/* Pie chart */}
         <svg
           viewBox="0 0 160 160"
-          className="w-32 h-32 flex-shrink-0"
+          className="w-28 h-28 sm:w-32 sm:h-32 flex-shrink-0"
           aria-hidden="true"
         >
           {slices.map(({ path, color, rec }) => (
@@ -70,7 +70,7 @@ export function AllocationPieChart({ recommendations, totalMonthly }: Props) {
         </svg>
 
         {/* Legend */}
-        <div className="flex flex-col gap-2 flex-1 min-w-0">
+        <div className="flex flex-col gap-2 flex-1 min-w-0 w-full">
           {slices.map(({ color, rec }) => (
             <div key={rec.instrument.id} className="flex items-center gap-2">
               <div

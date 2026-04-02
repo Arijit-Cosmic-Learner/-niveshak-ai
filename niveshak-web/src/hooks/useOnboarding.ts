@@ -55,6 +55,10 @@ export function useOnboarding() {
   const canContinue = useCallback(() => {
     if (!currentStepData) return false;
     if (!currentStepData.isRequired) return true;
+    // Goal step: accepts either a preset choice OR a typed custom description
+    if (currentStepData.id === 'goal') {
+      return !!(answers.goal || answers.goalCustom);
+    }
     const value = answers[currentStepData.id];
     return value !== undefined && value !== '' && value !== null;
   }, [currentStepData, answers]);
