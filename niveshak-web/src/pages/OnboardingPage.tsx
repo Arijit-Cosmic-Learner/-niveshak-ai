@@ -281,12 +281,10 @@ export default function OnboardingPage() {
     if (text) setAnswer('goal', undefined);
   };
 
-  // Goal step is complete if either a preset or custom text is set
-  const goalStepCanContinue =
-    id === 'goal' ? !!(answers.goal || answers.goalCustom) : true;
-
-  // Combined continue check
-  const isStepDone = goalStepCanContinue && canContinue();
+  // Combined continue check — goal step is satisfied by either preset OR custom text
+  const isStepDone = id === 'goal'
+    ? !!(answers.goal || answers.goalCustom)
+    : canContinue();
 
   // Handle continue with validation
   const handleContinue = () => {
