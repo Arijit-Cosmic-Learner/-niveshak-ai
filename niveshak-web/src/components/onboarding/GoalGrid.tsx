@@ -30,8 +30,8 @@ export function GoalGrid({ options, selected, onSelect, customValue = '', onCust
         ))}
       </div>
 
-      {/* Custom / own goal entry */}
-      <div className={`flex items-center gap-3 rounded-lg border-2 transition-all px-4 py-3 ${
+      {/* Custom / own goal entry — label wrapper focuses input on any tap */}
+      <label className={`flex items-center gap-3 rounded-lg border-2 transition-all px-4 py-3 cursor-text ${
         isCustomActive
           ? 'border-accent bg-accent-pale'
           : 'border-line bg-card hover:border-accent/40'
@@ -45,14 +45,11 @@ export function GoalGrid({ options, selected, onSelect, customValue = '', onCust
           type="text"
           maxLength={80}
           value={customValue}
-          onChange={e => {
-            const val = e.target.value;
-            onCustomChange(val);
-          }}
+          onChange={e => onCustomChange(e.target.value)}
           placeholder={isHindi ? 'मेरा अपना लक्ष्य लिखें...' : 'Describe your own goal...'}
           className="flex-1 bg-transparent font-sora text-sm text-content placeholder:text-hint outline-none"
         />
-      </div>
+      </label>
     </div>
   );
 }

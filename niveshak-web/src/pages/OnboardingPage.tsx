@@ -221,6 +221,9 @@ export default function OnboardingPage() {
   const navigate = useNavigate();
   const { setAnswer } = useOnboardingStore();
 
+  // Fresh selector — bypasses useCallback closure to guarantee reactivity
+  const storeAnswers = useOnboardingStore(state => state.answers);
+
   const [showReview, setShowReview] = useState(false);
   const [investError, setInvestError] = useState('');
 
@@ -277,12 +280,21 @@ export default function OnboardingPage() {
   };
 
   const handleGoalCustomChange = (text: string) => {
+    // Setting goalCustom is sufficient — isStepDone reads both fields from storeAnswers.
+    // Clear any preset selection when the user starts typing their own goal.
     setAnswer('goalCustom', text || undefined);
-    if (text) setAnswer('goal', undefined);
+    if (text && storeAnswers.goal) setAnswer('goal', undefined);
   };
 
-  // Combined continue check — handled in useOnboarding (goal step checks goalCustom too)
-  const isStepDone = canContinue();
+  // Compute step completion directly from fresh store selector — avoids any
+  // useCallback stale-closure issue with Zustand v5 + React 19.
+  const isStepDone = (() => {
+    if (!currentStepData) return false;
+    if (!currentStepData.isRequired) return true;
+    if (currentStepData.id === 'goal') return !!(storeAnswers.goal || storeAnswers.goalCustom);
+    const val = storeAnswers[currentStepData.id as keyof OnboardingAnswers];
+    return val !== undefined && val !== '' && val !== null;
+  })();
 
   // Handle continue with validation
   const handleContinue = () => {
