@@ -3,13 +3,15 @@ import { Routes, Route } from 'react-router-dom';
 import { Layout } from '@components/layout/Layout';
 import { useThemeStore } from '@store/useThemeStore';
 import { ErrorBoundary } from '@components/common/ErrorBoundary';
+import { AuthProvider } from '@components/common/AuthProvider';
 
 // Lazy-load every page for smaller initial bundle
-const LandingPage    = lazy(() => import('@pages/LandingPage'));
-const OnboardingPage = lazy(() => import('@pages/OnboardingPage'));
-const ResultsPage    = lazy(() => import('@pages/ResultsPage'));
-const PartnerPage    = lazy(() => import('@pages/PartnerPage'));
-const NotFoundPage   = lazy(() => import('@pages/NotFoundPage'));
+const LandingPage        = lazy(() => import('@pages/LandingPage'));
+const OnboardingPage     = lazy(() => import('@pages/OnboardingPage'));
+const ResultsPage        = lazy(() => import('@pages/ResultsPage'));
+const PartnerPage        = lazy(() => import('@pages/PartnerPage'));
+const NotFoundPage       = lazy(() => import('@pages/NotFoundPage'));
+const AuthCallbackPage   = lazy(() => import('@pages/AuthCallbackPage'));
 
 function PageLoader() {
   return (
@@ -29,17 +31,20 @@ export default function App() {
 
   return (
     <ErrorBoundary>
-      <Suspense fallback={<PageLoader />}>
-        <Routes>
-          <Route element={<Layout />}>
-            <Route path="/"         element={<LandingPage />} />
-            <Route path="/discover" element={<OnboardingPage />} />
-            <Route path="/results"  element={<ResultsPage />} />
-            <Route path="/partner"  element={<PartnerPage />} />
-            <Route path="*"         element={<NotFoundPage />} />
-          </Route>
-        </Routes>
-      </Suspense>
+      <AuthProvider>
+        <Suspense fallback={<PageLoader />}>
+          <Routes>
+            <Route path="/auth/callback" element={<AuthCallbackPage />} />
+            <Route element={<Layout />}>
+              <Route path="/"         element={<LandingPage />} />
+              <Route path="/discover" element={<OnboardingPage />} />
+              <Route path="/results"  element={<ResultsPage />} />
+              <Route path="/partner"  element={<PartnerPage />} />
+              <Route path="*"         element={<NotFoundPage />} />
+            </Route>
+          </Routes>
+        </Suspense>
+      </AuthProvider>
     </ErrorBoundary>
   );
 }
