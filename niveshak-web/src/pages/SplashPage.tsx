@@ -10,44 +10,54 @@ import { MarketPulse } from '@components/common/MarketPulse';
 import { useTranslation } from '@hooks/useTranslation';
 
 // ── Trusted partner list ───────────────────────────────────────────────────
-const PARTNERS: { name: string; color: string; domain: string; category: 'bank' | 'psp' | 'mf' }[] = [
-  { name: 'HDFC Bank',        color: '#004C8F', domain: 'hdfcbank.com',         category: 'bank' },
-  { name: 'Axis Bank',        color: '#97144D', domain: 'axisbank.com',         category: 'bank' },
-  { name: 'SBI',              color: '#2D64AF', domain: 'sbi.co.in',            category: 'bank' },
-  { name: 'ICICI Bank',       color: '#F47820', domain: 'icicibank.com',        category: 'bank' },
-  { name: 'Google Pay',       color: '#4285F4', domain: 'pay.google.com',       category: 'psp'  },
-  { name: 'PhonePe',          color: '#5F259F', domain: 'phonepe.com',          category: 'psp'  },
-  { name: 'Paytm',            color: '#002970', domain: 'paytm.com',            category: 'psp'  },
-  { name: 'Groww',            color: '#00D09C', domain: 'groww.in',             category: 'psp'  },
-  { name: 'Zerodha',          color: '#387ED1', domain: 'zerodha.com',          category: 'psp'  },
-  { name: 'Parag Parikh MF',  color: '#1A4030', domain: 'ppfas.com',            category: 'mf'   },
-  { name: 'Motilal Oswal MF', color: '#E31837', domain: 'motilaloswalmf.com',   category: 'mf'   },
-  { name: 'Bandhan Bank',     color: '#ED1C24', domain: 'bandhanbank.com',      category: 'bank' },
-  { name: 'PNB',              color: '#FF6B00', domain: 'pnbindia.in',          category: 'bank' },
-  { name: 'Juspay',           color: '#2B47AD', domain: 'juspay.in',            category: 'psp'  },
+// logo: local path (/logos/x.png) overrides the Google favicon fallback
+const PARTNERS: { name: string; color: string; domain: string; logo?: string; category: 'bank' | 'psp' | 'mf' }[] = [
+  { name: 'HDFC Bank',        color: '#004C8F', domain: 'hdfcbank.com',       category: 'bank' },
+  { name: 'Axis Bank',        color: '#97144D', domain: 'axisbank.com',       category: 'bank' },
+  { name: 'SBI',              color: '#2D64AF', domain: 'sbi.co.in',          logo: '/logos/sbi.png',          category: 'bank' },
+  { name: 'ICICI Bank',       color: '#F47820', domain: 'icicibank.com',      category: 'bank' },
+  { name: 'Google Pay',       color: '#4285F4', domain: 'pay.google.com',     logo: '/logos/googlepay.png',    category: 'psp'  },
+  { name: 'PhonePe',          color: '#5F259F', domain: 'phonepe.com',        category: 'psp'  },
+  { name: 'Paytm',            color: '#002970', domain: 'paytm.com',          logo: '/logos/paytm.png',        category: 'psp'  },
+  { name: 'Groww',            color: '#00D09C', domain: 'groww.in',           category: 'psp'  },
+  { name: 'Zerodha',          color: '#387ED1', domain: 'zerodha.com',        category: 'psp'  },
+  { name: 'Parag Parikh MF',  color: '#1A4030', domain: 'ppfas.com',          category: 'mf'   },
+  { name: 'Motilal Oswal MF', color: '#E31837', domain: 'motilaloswalmf.com', category: 'mf'   },
+  { name: 'Bandhan Bank',     color: '#ED1C24', domain: 'bandhanbank.com',    logo: '/logos/bandhan.png',      category: 'bank' },
+  { name: 'PNB',              color: '#8B0000', domain: 'pnbindia.in',        logo: '/logos/pnb.png',          category: 'bank' },
+  { name: 'Juspay',           color: '#2B47AD', domain: 'juspay.in',          category: 'psp'  },
+  { name: 'Jar',              color: '#2E1A6E', domain: 'jar.app',            logo: '/logos/jar.png',          category: 'psp'  },
+  { name: 'Gullak',           color: '#F5A623', domain: 'gullak.money',       logo: '/logos/gullak.png',       category: 'psp'  },
+  { name: 'Stable Money',     color: '#1A1A1A', domain: 'stablemoney.in',     logo: '/logos/stablemoney.png',  category: 'psp'  },
 ];
 
-// Pill chip — real logo via Google favicon, colored dot as fallback
-function PartnerChip({ name, color, domain }: { name: string; color: string; domain: string }) {
-  const [logoOk, setLogoOk] = useState(true);
-  // Google's favicon service: reliable, no API key, 64px available
-  const src = `https://www.google.com/s2/favicons?domain=${domain}&sz=64`;
+// Pill chip — prefers local logo file, falls back to Google favicon, then colored dot
+function PartnerChip({ name, color, domain, logo }: { name: string; color: string; domain: string; logo?: string }) {
+  const [imgSrc, setImgSrc] = useState<string>(logo ?? `https://www.google.com/s2/favicons?domain=${domain}&sz=64`);
+  const [useDot, setUseDot] = useState(false);
+
+  const handleError = () => {
+    if (logo && imgSrc === logo) {
+      // Local file missing — fall back to Google favicon
+      setImgSrc(`https://www.google.com/s2/favicons?domain=${domain}&sz=64`);
+    } else {
+      // Google favicon also failed — show colored dot
+      setUseDot(true);
+    }
+  };
 
   return (
     <div className="flex items-center gap-2 px-3 py-1.5 bg-card border border-line rounded-full flex-shrink-0">
-      {logoOk ? (
+      {useDot ? (
+        <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: color }} />
+      ) : (
         <img
-          src={src}
+          src={imgSrc}
           alt={name}
           width={16}
           height={16}
           className="w-4 h-4 rounded-sm object-contain flex-shrink-0"
-          onError={() => setLogoOk(false)}
-        />
-      ) : (
-        <span
-          className="w-2 h-2 rounded-full flex-shrink-0"
-          style={{ backgroundColor: color }}
+          onError={handleError}
         />
       )}
       <span className="font-sora text-xs text-sub whitespace-nowrap">{name}</span>
@@ -211,7 +221,7 @@ export default function SplashPage() {
           />
           <div className="flex gap-2.5 px-3 w-max animate-marquee">
             {[...PARTNERS, ...PARTNERS].map((p, i) => (
-              <PartnerChip key={i} name={p.name} color={p.color} domain={p.domain} />
+              <PartnerChip key={i} name={p.name} color={p.color} domain={p.domain} logo={p.logo} />
             ))}
           </div>
         </div>
