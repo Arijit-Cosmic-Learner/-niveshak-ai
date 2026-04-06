@@ -7,6 +7,37 @@ import { LogoMark } from '@components/common/LogoMark';
 import { LanguageToggle } from '@components/common/LanguageToggle';
 import { useTranslation } from '@hooks/useTranslation';
 
+// ── Trusted partner list ───────────────────────────────────────────────────
+const PARTNERS: { name: string; color: string; category: 'bank' | 'psp' | 'mf' }[] = [
+  { name: 'HDFC Bank',          color: '#004C8F', category: 'bank' },
+  { name: 'Axis Bank',          color: '#97144D', category: 'bank' },
+  { name: 'SBI',                color: '#2D64AF', category: 'bank' },
+  { name: 'ICICI Bank',         color: '#F47820', category: 'bank' },
+  { name: 'Google Pay',         color: '#4285F4', category: 'psp'  },
+  { name: 'PhonePe',            color: '#5F259F', category: 'psp'  },
+  { name: 'Paytm',              color: '#002970', category: 'psp'  },
+  { name: 'Groww',              color: '#00D09C', category: 'psp'  },
+  { name: 'Zerodha',            color: '#387ED1', category: 'psp'  },
+  { name: 'Parag Parikh MF',    color: '#1A4030', category: 'mf'   },
+  { name: 'Motilal Oswal MF',   color: '#E31837', category: 'mf'   },
+  { name: 'Bandhan Bank',       color: '#ED1C24', category: 'bank' },
+  { name: 'PNB',                color: '#FF6B00', category: 'bank' },
+  { name: 'Juspay',             color: '#2B47AD', category: 'psp'  },
+];
+
+// Pill chip for one partner
+function PartnerChip({ name, color }: { name: string; color: string }) {
+  return (
+    <div className="flex items-center gap-2 px-3 py-1.5 bg-card border border-line rounded-full flex-shrink-0">
+      <span
+        className="w-2 h-2 rounded-full flex-shrink-0"
+        style={{ backgroundColor: color }}
+      />
+      <span className="font-sora text-xs text-sub whitespace-nowrap">{name}</span>
+    </div>
+  );
+}
+
 const REDIRECT_URL = `${window.location.origin}/auth/callback`;
 
 async function signInWithGoogle() {
@@ -82,8 +113,8 @@ export default function SplashPage() {
         </div>
       </header>
 
-      {/* Main content — centred */}
-      <div className="flex-1 flex flex-col items-center justify-center px-6 gap-10">
+      {/* Main content */}
+      <div className="flex-1 flex flex-col items-center justify-center px-6 gap-8">
         {/* Logo + wordmark */}
         <div className="flex flex-col items-center gap-5 text-center">
           <div className="w-16 h-16 bg-navy rounded-xl flex items-center justify-center shadow-md">
@@ -136,6 +167,31 @@ export default function SplashPage() {
         <p className="text-hint text-xs text-center font-sora">
           {isHindi ? '🔒 सुरक्षित · कोई शुल्क नहीं · SEBI-पंजीकृत सलाहकारों द्वारा समर्थित' : '🔒 Secure · Free to use · Backed by SEBI-registered advisors'}
         </p>
+      </div>
+
+      {/* ── Partner carousel strip ────────────────────────────────────────── */}
+      <div className="py-5 border-t border-line bg-card shrink-0">
+        <p className="text-center text-[10px] text-hint font-sora uppercase tracking-widest mb-3 px-4">
+          {isHindi ? 'आपके पसंदीदा ऐप्स के साथ काम करता है' : 'Works with your favourite apps & banks'}
+        </p>
+        <div className="relative overflow-hidden">
+          {/* Left edge fade */}
+          <div
+            className="pointer-events-none absolute left-0 top-0 bottom-0 w-12 z-10"
+            style={{ background: 'linear-gradient(to right, rgb(var(--surface-rgb)), transparent)' }}
+          />
+          {/* Right edge fade */}
+          <div
+            className="pointer-events-none absolute right-0 top-0 bottom-0 w-12 z-10"
+            style={{ background: 'linear-gradient(to left, rgb(var(--surface-rgb)), transparent)' }}
+          />
+          {/* Scrolling track — items duplicated for seamless loop */}
+          <div className="flex gap-3 px-3 w-max animate-marquee">
+            {[...PARTNERS, ...PARTNERS].map((p, i) => (
+              <PartnerChip key={i} name={p.name} color={p.color} />
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );

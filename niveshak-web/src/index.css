@@ -128,6 +128,18 @@
   ::-webkit-scrollbar-thumb:hover { background: rgb(var(--accent-rgb)); }
 }
 
+/* ── Infinite marquee animation ───────────────────────────────────────────── */
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.animate-marquee {
+  animation: marquee-scroll 30s linear infinite;
+}
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
 @layer utilities {
   .font-hindi {
     font-family: 'Noto Sans Devanagari', sans-serif;
