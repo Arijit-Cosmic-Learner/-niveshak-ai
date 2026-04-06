@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '@store/useAuthStore';
 import { useThemeStore } from '@store/useThemeStore';
@@ -9,31 +9,45 @@ import { TradingViewChart } from '@components/common/TradingViewChart';
 import { useTranslation } from '@hooks/useTranslation';
 
 // ── Trusted partner list ───────────────────────────────────────────────────
-const PARTNERS: { name: string; color: string; category: 'bank' | 'psp' | 'mf' }[] = [
-  { name: 'HDFC Bank',          color: '#004C8F', category: 'bank' },
-  { name: 'Axis Bank',          color: '#97144D', category: 'bank' },
-  { name: 'SBI',                color: '#2D64AF', category: 'bank' },
-  { name: 'ICICI Bank',         color: '#F47820', category: 'bank' },
-  { name: 'Google Pay',         color: '#4285F4', category: 'psp'  },
-  { name: 'PhonePe',            color: '#5F259F', category: 'psp'  },
-  { name: 'Paytm',              color: '#002970', category: 'psp'  },
-  { name: 'Groww',              color: '#00D09C', category: 'psp'  },
-  { name: 'Zerodha',            color: '#387ED1', category: 'psp'  },
-  { name: 'Parag Parikh MF',    color: '#1A4030', category: 'mf'   },
-  { name: 'Motilal Oswal MF',   color: '#E31837', category: 'mf'   },
-  { name: 'Bandhan Bank',       color: '#ED1C24', category: 'bank' },
-  { name: 'PNB',                color: '#FF6B00', category: 'bank' },
-  { name: 'Juspay',             color: '#2B47AD', category: 'psp'  },
+const PARTNERS: { name: string; color: string; domain: string; category: 'bank' | 'psp' | 'mf' }[] = [
+  { name: 'HDFC Bank',        color: '#004C8F', domain: 'hdfcbank.com',         category: 'bank' },
+  { name: 'Axis Bank',        color: '#97144D', domain: 'axisbank.com',         category: 'bank' },
+  { name: 'SBI',              color: '#2D64AF', domain: 'sbi.co.in',            category: 'bank' },
+  { name: 'ICICI Bank',       color: '#F47820', domain: 'icicibank.com',        category: 'bank' },
+  { name: 'Google Pay',       color: '#4285F4', domain: 'pay.google.com',       category: 'psp'  },
+  { name: 'PhonePe',          color: '#5F259F', domain: 'phonepe.com',          category: 'psp'  },
+  { name: 'Paytm',            color: '#002970', domain: 'paytm.com',            category: 'psp'  },
+  { name: 'Groww',            color: '#00D09C', domain: 'groww.in',             category: 'psp'  },
+  { name: 'Zerodha',          color: '#387ED1', domain: 'zerodha.com',          category: 'psp'  },
+  { name: 'Parag Parikh MF',  color: '#1A4030', domain: 'ppfas.com',            category: 'mf'   },
+  { name: 'Motilal Oswal MF', color: '#E31837', domain: 'motilaloswalmf.com',   category: 'mf'   },
+  { name: 'Bandhan Bank',     color: '#ED1C24', domain: 'bandhanbank.com',      category: 'bank' },
+  { name: 'PNB',              color: '#FF6B00', domain: 'pnbindia.in',          category: 'bank' },
+  { name: 'Juspay',           color: '#2B47AD', domain: 'juspay.in',            category: 'psp'  },
 ];
 
-// Pill chip for one partner
-function PartnerChip({ name, color }: { name: string; color: string }) {
+// Pill chip for one partner — shows real logo via Clearbit, falls back to colored dot
+function PartnerChip({ name, color, domain }: { name: string; color: string; domain: string }) {
+  const [logoOk, setLogoOk] = useState(true);
+  const src = `https://logo.clearbit.com/${domain}`;
+
   return (
     <div className="flex items-center gap-2 px-3 py-1.5 bg-card border border-line rounded-full flex-shrink-0">
-      <span
-        className="w-2 h-2 rounded-full flex-shrink-0"
-        style={{ backgroundColor: color }}
-      />
+      {logoOk ? (
+        <img
+          src={src}
+          alt={name}
+          width={16}
+          height={16}
+          className="w-4 h-4 rounded-sm object-contain flex-shrink-0"
+          onError={() => setLogoOk(false)}
+        />
+      ) : (
+        <span
+          className="w-2 h-2 rounded-full flex-shrink-0"
+          style={{ backgroundColor: color }}
+        />
+      )}
       <span className="font-sora text-xs text-sub whitespace-nowrap">{name}</span>
     </div>
   );
@@ -209,7 +223,7 @@ export default function SplashPage() {
           />
           <div className="flex gap-2.5 px-3 w-max animate-marquee">
             {[...PARTNERS, ...PARTNERS].map((p, i) => (
-              <PartnerChip key={i} name={p.name} color={p.color} />
+              <PartnerChip key={i} name={p.name} color={p.color} domain={p.domain} />
             ))}
           </div>
         </div>
