@@ -5,7 +5,8 @@ import { useThemeStore } from '@store/useThemeStore';
 import { supabase } from '@lib/supabase';
 import { LogoMark } from '@components/common/LogoMark';
 import { LanguageToggle } from '@components/common/LanguageToggle';
-import { TradingViewChart } from '@components/common/TradingViewChart';
+import { TradingViewChart as _TVC } from '@components/common/TradingViewChart'; void _TVC;
+import { MarketPulse } from '@components/common/MarketPulse';
 import { useTranslation } from '@hooks/useTranslation';
 
 // ── Trusted partner list ───────────────────────────────────────────────────
@@ -26,10 +27,11 @@ const PARTNERS: { name: string; color: string; domain: string; category: 'bank' 
   { name: 'Juspay',           color: '#2B47AD', domain: 'juspay.in',            category: 'psp'  },
 ];
 
-// Pill chip for one partner — shows real logo via Clearbit, falls back to colored dot
+// Pill chip — real logo via Google favicon, colored dot as fallback
 function PartnerChip({ name, color, domain }: { name: string; color: string; domain: string }) {
   const [logoOk, setLogoOk] = useState(true);
-  const src = `https://logo.clearbit.com/${domain}`;
+  // Google's favicon service: reliable, no API key, 64px available
+  const src = `https://www.google.com/s2/favicons?domain=${domain}&sz=64`;
 
   return (
     <div className="flex items-center gap-2 px-3 py-1.5 bg-card border border-line rounded-full flex-shrink-0">
@@ -187,23 +189,9 @@ export default function SplashPage() {
           </p>
         </div>
 
-        {/* ── Right: Live market charts ────────────────────────────────── */}
-        <div className="flex-1 flex flex-col px-5 py-5 gap-3 border-t border-line lg:border-t-0 lg:overflow-y-auto">
-          <p className="text-[10px] font-semibold text-hint font-sora uppercase tracking-widest">
-            {isHindi ? 'लाइव बाज़ार' : 'Live Market Pulse'}
-          </p>
-          <TradingViewChart
-            symbol="NSE:NIFTY50"
-            label={isHindi ? 'निफ्टी 50' : 'Nifty 50'}
-          />
-          <TradingViewChart
-            symbol="MCX:GOLD1!"
-            label={isHindi ? 'सोना · MCX (₹/10g)' : 'Gold · MCX (₹ / 10g)'}
-          />
-          <TradingViewChart
-            symbol="FX_IDC:USDINR"
-            label={isHindi ? 'USD → INR' : 'USD / INR'}
-          />
+        {/* ── Right: Live market numbers ─────────────────────────────── */}
+        <div className="flex-1 flex flex-col px-5 py-5 border-t border-line lg:border-t-0 lg:overflow-y-auto">
+          <MarketPulse isHindi={isHindi} />
         </div>
       </div>
 
