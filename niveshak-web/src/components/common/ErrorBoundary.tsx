@@ -30,12 +30,20 @@ export class ErrorBoundary extends Component<Props, State> {
             </h2>
             <p className="text-grey-mid text-sm">{this.state.message}</p>
           </div>
-          <button
-            onClick={() => window.location.assign('/')}
-            className="bg-lime text-black font-sora font-semibold px-6 py-3 rounded-md text-sm"
-          >
-            Go back home
-          </button>
+          <div className="flex gap-3">
+            <button
+              onClick={() => window.location.reload()}
+              className="bg-lime text-black font-sora font-semibold px-6 py-3 rounded-md text-sm"
+            >
+              Retry
+            </button>
+            <button
+              onClick={() => window.location.assign('/')}
+              className="border border-white/20 text-white font-sora font-semibold px-6 py-3 rounded-md text-sm"
+            >
+              Go back home
+            </button>
+          </div>
         </div>
       );
     }

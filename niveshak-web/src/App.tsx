@@ -1,17 +1,35 @@
-import { Suspense, lazy, useEffect } from 'react';
+import React, { Suspense, lazy, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { Layout } from '@components/layout/Layout';
 import { useThemeStore } from '@store/useThemeStore';
 import { ErrorBoundary } from '@components/common/ErrorBoundary';
 import { AuthProvider } from '@components/common/AuthProvider';
 
-// Lazy-load every page for smaller initial bundle
-const LandingPage        = lazy(() => import('@pages/LandingPage'));
-const OnboardingPage     = lazy(() => import('@pages/OnboardingPage'));
-const ResultsPage        = lazy(() => import('@pages/ResultsPage'));
-const PartnerPage        = lazy(() => import('@pages/PartnerPage'));
-const NotFoundPage       = lazy(() => import('@pages/NotFoundPage'));
-const AuthCallbackPage   = lazy(() => import('@pages/AuthCallbackPage'));
+// Retry helper: if a lazy chunk fails (e.g. stale SW or CDN propagation),
+// unregister the service worker, wait briefly, then retry once.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function lazyWithRetry(factory: () => Promise<{ default: React.ComponentType<any> }>) {
+  return lazy(() =>
+    factory().catch(async () => {
+      // Unregister stale service workers so the next fetch hits the network
+      if ('serviceWorker' in navigator) {
+        const regs = await navigator.serviceWorker.getRegistrations();
+        await Promise.all(regs.map(r => r.unregister()));
+      }
+      // Brief pause then one final retry
+      await new Promise(r => setTimeout(r, 1000));
+      return factory();
+    })
+  );
+}
+
+// Lazy-load every page with automatic retry on first failure
+const LandingPage        = lazyWithRetry(() => import('@pages/LandingPage'));
+const OnboardingPage     = lazyWithRetry(() => import('@pages/OnboardingPage'));
+const ResultsPage        = lazyWithRetry(() => import('@pages/ResultsPage'));
+const PartnerPage        = lazyWithRetry(() => import('@pages/PartnerPage'));
+const NotFoundPage       = lazyWithRetry(() => import('@pages/NotFoundPage'));
+const AuthCallbackPage   = lazyWithRetry(() => import('@pages/AuthCallbackPage'));
 
 function PageLoader() {
   return (

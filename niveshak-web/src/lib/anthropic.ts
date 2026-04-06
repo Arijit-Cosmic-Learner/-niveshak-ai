@@ -158,11 +158,23 @@ export async function fetchAIRecommendation(
   }
 
   // Abort after 15s so we can fall back to local engine promptly
-  const timeout = setTimeout(() => controller.abort(), 15_000);
   const controller = new AbortController();
-  const combined = signal
-    ? AbortSignal.any([signal, controller.signal])
-    : controller.signal;
+  const timeout = setTimeout(() => controller.abort(), 15_000);
+  // AbortSignal.any is newer; fall back to manual combining for older browsers
+  let combined: AbortSignal;
+  if (signal) {
+    if (typeof AbortSignal.any === 'function') {
+      combined = AbortSignal.any([signal, controller.signal]);
+    } else {
+      const merged = new AbortController();
+      const forwardAbort = () => merged.abort();
+      signal.addEventListener('abort', forwardAbort, { once: true });
+      controller.signal.addEventListener('abort', forwardAbort, { once: true });
+      combined = merged.signal;
+    }
+  } else {
+    combined = controller.signal;
+  }
 
   try {
     const res = await fetch(EDGE_FN_URL, {

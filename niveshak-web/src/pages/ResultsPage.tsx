@@ -16,14 +16,19 @@ import { Button } from '@components/common/Button';
 export default function ResultsPage() {
   const { t, isHindi } = useTranslation();
   const navigate = useNavigate();
-  const { results, isLoading } = useResultsStore();
+  const { results, isLoading, error } = useResultsStore();
   const answers = useOnboardingStore(s => s.answers);
   const { generate } = useRecommendation();
   // Show loader only for fresh computations — skip if results were already cached on mount
   const [loaderDone, setLoaderDone] = useState(() => results !== null);
 
   useEffect(() => {
-    if (!results && answers.name) {
+    // If user lands here without any onboarding data, redirect them
+    if (!results && !answers.name && !answers.occupation) {
+      navigate('/discover');
+      return;
+    }
+    if (!results) {
       generate();
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -32,6 +37,16 @@ export default function ResultsPage() {
   // 4-second facts loader (shown before revealing freshly computed results)
   if (!loaderDone) {
     return <FactsLoader onDone={() => setLoaderDone(true)} />;
+  }
+
+  // Show engine/network error
+  if (error && !results) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[50vh] gap-6 px-6 text-center">
+        <p className="text-sub text-sm">{error}</p>
+        <Button onClick={() => { navigate('/discover'); }}>{t('landing.ctaPrimary')}</Button>
+      </div>
+    );
   }
 
   // Unexpected loading state after loader (engine is synchronous, should not linger)
