@@ -85,14 +85,14 @@ export default function SplashPage() {
   // so logged-in users never see a flash of the sign-in UI
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-page flex items-center justify-center">
+      <div className="h-screen bg-page flex items-center justify-center">
         <div className="w-8 h-8 border-[3px] border-accent border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-page flex flex-col">
+    <div className="h-screen bg-page flex flex-col overflow-hidden">
       {/* Top bar — matches Navbar style */}
       <header className="flex items-center justify-between px-5 py-3 border-b border-line bg-card">
         <div className="flex items-center gap-2">
@@ -114,7 +114,7 @@ export default function SplashPage() {
       </header>
 
       {/* Main content */}
-      <div className="flex-1 flex flex-col items-center justify-center px-6 gap-8">
+      <div className="flex-1 min-h-0 overflow-y-auto flex flex-col items-center justify-center px-6 gap-8">
         {/* Logo + wordmark */}
         <div className="flex flex-col items-center gap-5 text-center">
           <div className="w-16 h-16 bg-navy rounded-xl flex items-center justify-center shadow-md">
