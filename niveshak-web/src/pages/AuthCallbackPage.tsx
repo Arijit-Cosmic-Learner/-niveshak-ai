@@ -16,7 +16,7 @@ export default function AuthCallbackPage() {
   useEffect(() => {
     if (isLoading) return;
     // Signed-in successfully → go to results; otherwise back to home
-    navigate(user ? '/results' : '/', { replace: true });
+    navigate(user ? '/home' : '/', { replace: true });
   }, [isLoading, user, navigate]);
 
   return (

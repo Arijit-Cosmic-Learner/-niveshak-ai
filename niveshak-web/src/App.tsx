@@ -4,6 +4,7 @@ import { Layout } from '@components/layout/Layout';
 import { useThemeStore } from '@store/useThemeStore';
 import { ErrorBoundary } from '@components/common/ErrorBoundary';
 import { AuthProvider } from '@components/common/AuthProvider';
+import { ProtectedRoute } from '@components/common/ProtectedRoute';
 
 // Retry helper: if a lazy chunk fails (e.g. stale SW or CDN propagation),
 // unregister the service worker, wait briefly, then retry once.
@@ -24,6 +25,7 @@ function lazyWithRetry(factory: () => Promise<{ default: React.ComponentType<any
 }
 
 // Lazy-load every page with automatic retry on first failure
+const SplashPage         = lazyWithRetry(() => import('@pages/SplashPage'));
 const LandingPage        = lazyWithRetry(() => import('@pages/LandingPage'));
 const OnboardingPage     = lazyWithRetry(() => import('@pages/OnboardingPage'));
 const ResultsPage        = lazyWithRetry(() => import('@pages/ResultsPage'));
@@ -52,12 +54,15 @@ export default function App() {
       <AuthProvider>
         <Suspense fallback={<PageLoader />}>
           <Routes>
+            {/* Public routes — no Layout */}
+            <Route path="/"             element={<SplashPage />} />
             <Route path="/auth/callback" element={<AuthCallbackPage />} />
+            {/* Protected routes — inside Layout */}
             <Route element={<Layout />}>
-              <Route path="/"         element={<LandingPage />} />
-              <Route path="/discover" element={<OnboardingPage />} />
-              <Route path="/results"  element={<ResultsPage />} />
-              <Route path="/partner"  element={<PartnerPage />} />
+              <Route path="/home"     element={<ProtectedRoute><LandingPage /></ProtectedRoute>} />
+              <Route path="/discover" element={<ProtectedRoute><OnboardingPage /></ProtectedRoute>} />
+              <Route path="/results"  element={<ProtectedRoute><ResultsPage /></ProtectedRoute>} />
+              <Route path="/partner"  element={<ProtectedRoute><PartnerPage /></ProtectedRoute>} />
               <Route path="*"         element={<NotFoundPage />} />
             </Route>
           </Routes>

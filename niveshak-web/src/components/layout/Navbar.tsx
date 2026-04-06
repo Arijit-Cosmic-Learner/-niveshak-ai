@@ -27,7 +27,7 @@ function SunIcon() {
 }
 
 const NAV_LINKS = [
-  { to: '/',         label: 'Home'    },
+  { to: '/home',     label: 'Home'    },
   { to: '/discover', label: 'Discover' },
   { to: '/results',  label: 'My Plan' },
   { to: '/partner',  label: 'Partner' },
@@ -55,7 +55,7 @@ export function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const NAV_LABELS: Record<string, { en: string; hi: string }> = {
-    '/':         { en: 'Home',     hi: '\u0918\u0930' },
+    '/home':     { en: 'Home',     hi: '\u0918\u0930' },
     '/discover': { en: 'Discover', hi: '\u0916\u094B\u091C\u0947\u0902' },
     '/results':  { en: 'My Plan',  hi: '\u092E\u0947\u0930\u0940 \u092F\u094B\u091C\u0928\u093E' },
     '/partner':  { en: 'Partner',  hi: '\u092A\u093E\u0930\u094D\u091F\u0928\u0930' },
@@ -77,7 +77,7 @@ export function Navbar() {
           <NavLink
             key={to}
             to={to}
-            end={to === '/'}
+            end={to === '/home'}
             className={({ isActive }) =>
               `px-4 py-1.5 rounded-md font-sora font-medium text-sm transition-colors ${
                 isActive

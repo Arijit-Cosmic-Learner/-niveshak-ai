@@ -2,7 +2,7 @@ import { NavLink } from 'react-router-dom';
 import { useTranslation } from '@hooks/useTranslation';
 
 const NAV_ITEMS = [
-  { to: '/',         labelKey: 'nav.home',    icon: '\uD83C\uDFE0' },
+  { to: '/home',     labelKey: 'nav.home',    icon: '\uD83C\uDFE0' },
   { to: '/discover', labelKey: 'nav.discover', icon: '\uD83D\uDD0D' },
   { to: '/results',  labelKey: 'nav.myPlan',   icon: '\uD83D\uDCCA' },
   { to: '/partner',  labelKey: 'nav.partner',  icon: '\uD83E\uDD1D' },
@@ -16,7 +16,7 @@ export function BottomNav() {
         <NavLink
           key={item.to}
           to={item.to}
-          end={item.to === '/'}
+          end={item.to === '/home'}
           className={({ isActive }) =>
             `flex-1 flex flex-col items-center justify-center py-2 gap-0.5 text-[10px] font-sora font-medium transition-colors ${
               isActive ? 'text-accent' : 'text-hint'
