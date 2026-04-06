@@ -18,6 +18,9 @@ Thumbs.db
 # Editor
 .vscode/settings.json
 
+# Vite local cache
+.vite/
+
 # PWA
 dev-dist/
 
