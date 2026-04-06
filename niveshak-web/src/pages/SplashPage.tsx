@@ -50,6 +50,16 @@ export default function SplashPage() {
     }
   }, [isLoading, user, navigate]);
 
+  // While the Supabase session is hydrating, show a full-screen spinner
+  // so logged-in users never see a flash of the sign-in UI
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-page flex items-center justify-center">
+        <div className="w-8 h-8 border-[3px] border-accent border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-page flex flex-col">
       {/* Top bar — matches Navbar style */}
