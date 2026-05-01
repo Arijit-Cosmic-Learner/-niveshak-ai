@@ -19,19 +19,41 @@ export function AuthProvider({ children }: Props) {
       return;
     }
 
-    // Hydrate from existing session (e.g. page refresh)
-    supabase.auth.getSession().then(({ data }) => {
-      setUser(data.session?.user ?? null);
+    // Safety timeout: if Supabase is unreachable, stop loading after 4s
+    // so the app remains usable in guest mode
+    const timeout = setTimeout(() => {
       setLoading(false);
-    });
+    }, 4000);
+
+    // Hydrate from existing session (e.g. page refresh)
+    supabase.auth.getSession()
+      .then(({ data }) => {
+        clearTimeout(timeout);
+        setUser(data.session?.user ?? null);
+        setLoading(false);
+      })
+      .catch(() => {
+        clearTimeout(timeout);
+        console.warn('[Auth] Supabase unreachable — guest mode available');
+        setLoading(false);
+      });
 
     // Keep store in sync for sign-in / sign-out / token refresh events
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null);
-      setLoading(false);
-    });
+    let subscription: { unsubscribe: () => void } | null = null;
+    try {
+      const { data } = supabase.auth.onAuthStateChange((_event, session) => {
+        setUser(session?.user ?? null);
+        setLoading(false);
+      });
+      subscription = data.subscription;
+    } catch {
+      // Supabase listener failed — not critical
+    }
 
-    return () => subscription.unsubscribe();
+    return () => {
+      clearTimeout(timeout);
+      subscription?.unsubscribe();
+    };
   }, []);
 
   return <>{children}</>;

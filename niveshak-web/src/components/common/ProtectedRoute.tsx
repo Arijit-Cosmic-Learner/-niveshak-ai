@@ -7,6 +7,7 @@ interface Props { children: ReactNode; }
 export function ProtectedRoute({ children }: Props) {
   const user = useAuthStore(s => s.user);
   const isLoading = useAuthStore(s => s.isLoading);
+  const isGuest = useAuthStore(s => s.isGuest);
 
   // Still hydrating Supabase session — show full-screen spinner
   // (avoids flash of content before redirect)
@@ -18,8 +19,8 @@ export function ProtectedRoute({ children }: Props) {
     );
   }
 
-  // Not signed in — send to splash login page
-  if (!user) {
+  // Allow guest mode or signed-in users
+  if (!user && !isGuest) {
     return <Navigate to="/" replace />;
   }
 

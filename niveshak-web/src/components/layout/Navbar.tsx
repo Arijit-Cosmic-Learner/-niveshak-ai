@@ -51,7 +51,7 @@ async function signOut() {
 export function Navbar() {
   const { theme, toggleTheme } = useThemeStore();
   const { isHindi } = useTranslation();
-  const { user, isLoading } = useAuthStore();
+  const { user, isLoading, isGuest } = useAuthStore();
   const [menuOpen, setMenuOpen] = useState(false);
 
   const NAV_LABELS: Record<string, { en: string; hi: string }> = {
@@ -141,6 +141,13 @@ export function Navbar() {
                   </button>
                 </div>
               )}
+            </div>
+          ) : isGuest ? (
+            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-accent/10 border border-accent/30">
+              <span className="text-[10px]">👤</span>
+              <span className="font-sora font-semibold text-accent text-[10px]">
+                {isHindi ? 'अतिथि' : 'Guest'}
+              </span>
             </div>
           ) : (
             <button

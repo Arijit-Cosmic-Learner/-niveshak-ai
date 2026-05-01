@@ -98,15 +98,22 @@ export default function SplashPage() {
   const navigate   = useNavigate();
   const user       = useAuthStore(s => s.user);
   const isLoading  = useAuthStore(s => s.isLoading);
+  const isGuest    = useAuthStore(s => s.isGuest);
+  const setGuest   = useAuthStore(s => s.setGuest);
   const { theme, toggleTheme } = useThemeStore();
   const { isHindi } = useTranslation();
 
-  // Already signed in — skip splash and go straight to the app
+  // Already signed in or guest — skip splash and go straight to the app
   useEffect(() => {
-    if (!isLoading && user) {
+    if (!isLoading && (user || isGuest)) {
       navigate('/home', { replace: true });
     }
-  }, [isLoading, user, navigate]);
+  }, [isLoading, user, isGuest, navigate]);
+
+  const handleGuestMode = () => {
+    setGuest(true);
+    navigate('/home', { replace: true });
+  };
 
   // While the Supabase session is hydrating, show a full-screen spinner
   // so logged-in users never see a flash of the sign-in UI
@@ -184,6 +191,19 @@ export default function SplashPage() {
                 <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
               </svg>
               {isHindi ? 'Google से जारी रखें' : 'Continue with Google'}
+            </button>
+
+            <div className="flex items-center gap-3 my-0.5">
+              <div className="flex-1 h-px bg-line" />
+              <span className="text-hint text-[10px] font-sora">{isHindi ? 'या' : 'or'}</span>
+              <div className="flex-1 h-px bg-line" />
+            </div>
+
+            <button
+              onClick={handleGuestMode}
+              className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-accent/10 border border-accent/30 hover:bg-accent/20 transition-all font-sora font-semibold text-accent text-sm"
+            >
+              {isHindi ? 'बिना लॉगिन जारी रखें →' : 'Continue as Guest →'}
             </button>
 
             <p className="text-hint text-[11px] text-center leading-relaxed">
